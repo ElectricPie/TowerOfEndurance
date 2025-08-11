@@ -35,6 +35,15 @@ public class Wave
         return m_units.Count == 0 ? null : m_units[0];
     }
 
+    public Unit GetRandomUnit()
+    {
+        if (m_units.Count == 0)
+            return null;
+
+        int randomUnitIndex = Random.Range(0, m_units.Count - 1);
+        return m_units[randomUnitIndex];
+    }
+
     private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killer)
     {
         Unit killedUnit = killedUnitGameObject.GetComponent<Unit>();
@@ -122,8 +131,21 @@ public class TowerWaves : MonoBehaviour
         return m_waves[0].GetFirstUnit();
     }
 
+    public Unit GetRandomUnit()
+    {
+        if (m_waves == null)
+            return null;
+
+        if (m_waves.Count == 0)
+            return null;
+
+        int randomWaveIndex = Random.Range(0, m_waves.Count - 1);
+        Wave randomWave = m_waves[randomWaveIndex];
+        return randomWave.GetRandomUnit();
+    }
+
     // Start is called before the first frame update
-    void Awake()
+    protected void Awake()
     {
         m_waves = new List<Wave>();
 
@@ -134,7 +156,7 @@ public class TowerWaves : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         RotateWaves();
     }

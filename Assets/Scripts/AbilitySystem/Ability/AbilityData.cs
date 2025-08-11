@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public abstract class AbilityData : ScriptableObject
+[CreateAssetMenu(fileName = "New Ability", menuName = "Abilities/New Ability")]
+public class AbilityScriptableObject : ScriptableObject
 {
     [SerializeField]
     private string m_label;
-
-    [SerializeField] 
-    private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
+    
+    [SerializeReference] private AbilityData m_abilityData;
 
     public string Label => m_label;
-    public AbilityTrigger Trigger => m_trigger;
+    public AbilityData AbilityData => m_abilityData;
     
     protected void OnEnable()
     {
@@ -18,12 +19,28 @@ public abstract class AbilityData : ScriptableObject
             m_label = name;
         }
     }
+}
 
-    public virtual bool Execute(GameObject target, GameObject caster, int level = 1) { return true; }
-
-    public virtual AbilityInstance CreateAbilityInstance(AbilityInitData initData)
+[Serializable]
+public class AbilityData
+{
+    [SerializeField] 
+    private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
+    public AbilityTrigger Trigger => m_trigger;
+    
+    public virtual AbilityData Clone()
     {
-        return new AbilityInstance(this, initData);
+        return new AbilityData
+        {
+            m_trigger = this.m_trigger,
+        };
+    }
+    
+    public virtual void Init(AbilityInitData initData) { }
+
+    public virtual bool TryActivate(GameObject target, GameObject caster, int level = 1)
+    {
+        return false;
     }
 }
 

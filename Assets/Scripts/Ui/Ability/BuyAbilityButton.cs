@@ -16,14 +16,14 @@ namespace Ui.Ability
             m_towerAbilities = FindFirstObjectByType<TowerAbilities>();
             m_playerMoney = FindFirstObjectByType<PlayerMoney>();
 
-            m_abilityNameText.text = m_ability.AbilityData.Label;
+            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
         }
 
         public void TryBuyAbility()
         {
             if (m_playerMoney.RemoveMoney(m_ability.Cost))
             {
-                m_towerAbilities.AddAbility(m_ability.AbilityData);
+                m_towerAbilities.AddAbility(m_ability.AbilityScriptableObject);
                 Destroy(gameObject);
             }
         }
@@ -32,10 +32,10 @@ namespace Ui.Ability
     [CreateAssetMenu(fileName = "New Ability Buy Scriptable", menuName = "Abilities/New Buy Scriptable")]
     public class BuyAbilityScriptableObject : ScriptableObject
     {
-        [SerializeField] private AbilityData m_abilityData;
+        [SerializeField] private AbilityScriptableObject m_abilityScriptableObject;
         [SerializeField] private int m_cost = 20;
 
-        public AbilityData AbilityData => m_abilityData;
+        public AbilityScriptableObject AbilityScriptableObject => m_abilityScriptableObject;
         public int Cost => m_cost;
     }
 }

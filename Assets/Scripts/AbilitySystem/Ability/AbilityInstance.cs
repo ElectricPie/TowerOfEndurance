@@ -11,26 +11,27 @@ public class AbilityInitData
     }
 }
 
-public class AbilityInstance
+public sealed class AbilityInstance
 {
     public int Level { get; private set; } = 1;
-    
-    protected readonly AbilityData AbilityData;
-    protected readonly GameObject Owner;
+
+    public AbilityData AbilityData { get; private set; }
+    private readonly GameObject m_owner;
     
     private AbilityInstance() { }
     public AbilityInstance(AbilityData abilityData, AbilityInitData initData)
     {
-        AbilityData = abilityData;
-        Owner = initData.Owner;
+        AbilityData = abilityData.Clone();
+        AbilityData.Init(initData);
+        m_owner = initData.Owner;
     }
     
-    public virtual bool TryActivate(GameObject target = null)
+    public bool TryActivate(GameObject target = null)
     {
-        return AbilityData.Execute(target, Owner, Level);
+        return AbilityData.TryActivate(target, m_owner, Level);
     }
 
-    public virtual void SetLevel(int newLevel)
+    public void SetLevel(int newLevel)
     {
         Level = Mathf.Max(1, newLevel);
     }

@@ -9,42 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b1bae337e0e4af3b63652624f7c4be9, type: 3}
+  m_Script: {fileID: 0}
   m_Name: BasicTowerAttack
-  m_EditorClassIdentifier: 
-  Label: TowerAttack
-  m_baseAttackEffect:
-    rid: 3214090336069746744
-  m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
-  m_poolSize: 10
-  m_fireRateCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 50
-      value: 50
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
+  m_label: Basic Tower Attack
+  m_trigger: 0
+  m_abilityData:
+    rid: 3214090454538649673
   references:
     version: 2
     RefIds:
-    - rid: 3214090336069746744
+    - rid: 3214090454538649673
+      type: {class: BasicAttackAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        m_baseAttackEffect:
+          rid: 3214090454538649674
+        m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
+        m_poolSize: 10
+    - rid: 3214090454538649674
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         m_durationPolicy: 0

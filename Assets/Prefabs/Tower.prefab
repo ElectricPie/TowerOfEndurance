@@ -88,11 +88,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerMoney: {fileID: 0}
-  m_upgradeMultiplier: 1.1
   m_costMultiplier: 1.15
   m_upgradeInitialCost: 5
-  m_damageButton: {fileID: 0}
-  m_speedButton: {fileID: 0}
   m_damageUpgradeChannel: DamageUpgradeChannel
   m_speedUpgradeChannel: SpeedUpgradeChannel
 --- !u!114 &4052425807144529552
@@ -109,8 +106,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_owningPlayer: {fileID: 0}
   m_towerWaves: {fileID: 7971336517557105522}
-  m_basicAttack: {fileID: 11400000, guid: a5b91448dde9ac849bf196351d4d326c, type: 2}
+  m_basicAttackScriptableObject: {fileID: 11400000, guid: 28d7b40ebcfa3f04cab46c89477a57eb, type: 2}
   m_projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
+  m_fireRateCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 50
+      value: 50
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &7155740735048003876
 PrefabInstance:
   m_ObjectHideFlags: 0

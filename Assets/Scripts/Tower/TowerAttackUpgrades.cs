@@ -14,8 +14,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private string m_speedUpgradeChannel = "SpeedUpgradeChannel";
 
     private TowerAbilities m_towerAbilities;
-
-    private TowerBasicAttackAbilityInstance m_basicAttackAbility;
+    private AbilityInstance m_basicAttackAbility;
 
     private void Awake()
     {
@@ -70,10 +69,11 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     private void BroadcastDamageValues(float upgradeCost)
     {
+        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackAbility.AbilityData;
         UpgradeChangeMessage damageUpgradeMessage = new UpgradeChangeMessage(
             upgradeCost,
-            m_basicAttackAbility.GetDamage(m_basicAttackAbility.Level), 
-            m_basicAttackAbility.GetDamage(m_basicAttackAbility.Level + 1) 
+            basicAttackAbilityData.GetDamage(m_basicAttackAbility.Level), 
+            basicAttackAbilityData.GetDamage(m_basicAttackAbility.Level + 1) 
             );
         MessageRouter.Broadcast(m_damageUpgradeChannel, damageUpgradeMessage);
     }

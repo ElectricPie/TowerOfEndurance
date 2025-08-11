@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: PosionTipBuyData
   m_EditorClassIdentifier: Assembly-CSharp:Ui.Ability:BuyAbilityScriptableObject
-  m_abilityData: {fileID: 11400000, guid: d68b5cf385e28f944b4a4dfc7a1eaa7d, type: 2}
+  m_abilityScriptableObject: {fileID: 11400000, guid: 03af9137bd5997541ac0456a9629d2a3, type: 2}
   m_cost: 20

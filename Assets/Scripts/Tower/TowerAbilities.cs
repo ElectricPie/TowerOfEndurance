@@ -8,13 +8,13 @@ public class TowerAbilities : MonoBehaviour
     [SerializeField] private GameObject m_owningPlayer;
     [SerializeField] private TowerWaves m_towerWaves;
     
-    [SerializeField] private TowerBasicAttackAbilityData m_basicAttack;
+    [SerializeField] private AbilityScriptableObject m_basicAttackScriptableObject;
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
     [SerializeField] private AnimationCurve m_fireRateCurve;
 
-    public TowerBasicAttackAbilityInstance BasicAttackInstance { get; private set; }
+    public AbilityInstance BasicAttackInstance { get; private set; }
 
     public float CurrentFireRate => 1 / m_fireRateCurve.Evaluate(FireRateLevel);
     public int FireRateLevel { get; private set; } = 1;
@@ -26,24 +26,25 @@ public class TowerAbilities : MonoBehaviour
     private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
     private readonly HashSet<AbilityInstance> m_timedAbilities = new HashSet<AbilityInstance>();
 
-    public void AddAbility(AbilityData newAbility)
+    public void AddAbility(AbilityScriptableObject newAbility)
     {
-        AbilityInitData newAbilityData = new AbilityInitData(m_owningPlayer);
+        AbilityInitData newInitData = new AbilityInitData(m_owningPlayer);
+        AbilityInstance newAbilityInstance = new AbilityInstance(newAbility.AbilityData, newInitData);
         
-        switch (newAbility.Trigger)
+        switch (newAbility.AbilityData.Trigger)
         {
             case AbilityTrigger.OnBasicAttackFired:
-                m_onBasicAttackAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                m_onBasicAttackAbilities.Add(newAbilityInstance);
                 break;
             case AbilityTrigger.OnBasicAttackHit:
-                m_onBasicHitAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                m_onBasicHitAbilities.Add(newAbilityInstance);
                 break;
             case AbilityTrigger.OnAnyDamage:
-                m_onAnyDamageAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                m_onAnyDamageAbilities.Add(newAbilityInstance);
                 break;
             case AbilityTrigger.Timed:
                 // TODO: Start coroutine for timed abilities
-                m_timedAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                m_timedAbilities.Add(newAbilityInstance);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -62,17 +63,19 @@ public class TowerAbilities : MonoBehaviour
     
     protected void Awake()
     {
-        if (m_basicAttack == null)
+        if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
         
-        TowerBasicAttackInitData initData = new TowerBasicAttackInitData(m_owningPlayer)
+        BasicAttackInitData initData = new BasicAttackInitData(m_owningPlayer)
         {
             SpawnTransform = transform,
             SpawnOffSet = m_projectileSpawnPointOffset,
             TowerWaveComponent = m_towerWaves
         };
-        BasicAttackInstance = (TowerBasicAttackAbilityInstance)m_basicAttack.CreateAbilityInstance(initData);
-        BasicAttackInstance.OnTargetHit += target =>
+        BasicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
+        
+        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)BasicAttackInstance.AbilityData;
+        basicAttackAbilityData.OnTargetHit += target =>
         { 
             foreach (AbilityInstance ability in m_onBasicHitAbilities)
             {

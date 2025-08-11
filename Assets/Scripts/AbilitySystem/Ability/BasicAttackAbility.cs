@@ -5,71 +5,53 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
-[CreateAssetMenu(fileName = "New Basic Attack Ability Data", menuName = "Abilities/New Basic Attack Ability Data")]
-public class TowerBasicAttackAbilityData : AbilityData
+public class BasicAttackAbilityData : AbilityData, ISharedEffects
 {
+    /* Editor Values */
     [SerializeReference, BoxGroup("Base Attack")]
     private DamageEffect m_baseAttackEffect;
 
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
     [SerializeField] private int m_poolSize = 10;
 
-    public DamageEffect BaseAttackEffect => m_baseAttackEffect;
-    public TowerProjectile ProjectilePrefab => m_projectilePrefab;
-    public int PoolSize => m_poolSize;
-
-    public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
+    public override AbilityData Clone()
     {
-        return new TowerBasicAttackAbilityInstance(this, initData);
+        BasicAttackAbilityData clone = (BasicAttackAbilityData)this.MemberwiseClone();
+        clone.m_poolSize = m_poolSize;
+        clone.m_baseAttackEffect = m_baseAttackEffect;
+        clone.m_projectilePrefab = m_projectilePrefab;
+
+        return clone;
     }
-}
-
-public class TowerBasicAttackInitData : AbilityInitData
-{
-    public Transform SpawnTransform = null;
-    public Vector3 SpawnOffSet = Vector3.zero;
-    public TowerWaves TowerWaveComponent = null;
-
-    public TowerBasicAttackInitData(GameObject owner) : base(owner)
-    {
-    }
-}
-
-public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
-{
-    private readonly TowerBasicAttackAbilityData m_basicAttackAbilityData;
-
+    
+    
+    /* Runtime Values */
     public event Action<GameObject> OnTargetHit = delegate { };
 
-    private readonly ObjectPool<TowerProjectile> m_projectilePool;
-    private readonly float m_projectileSpeed;
-    private readonly TowerWaves m_waveComponent;
+    private ObjectPool<TowerProjectile> m_projectilePool;
+    private float m_projectileSpeed;
+    private TowerWaves m_waveComponent;
     private readonly List<GameEffect> m_effects = new List<GameEffect>();
 
     private Unit m_currentTarget;
-
-    public TowerBasicAttackAbilityInstance(AbilityData abilityData, AbilityInitData initData) : base(abilityData,
-        initData)
+    
+    public override void Init(AbilityInitData initData)
     {
-        if (initData is not TowerBasicAttackInitData projectileInitData)
+        if (initData is not BasicAttackInitData projectileInitData)
             throw new Exception("Tried to initialized projectile ability with non TowerBasicAttackInitData");
 
-        if (abilityData is not TowerBasicAttackAbilityData attackAbilityData)
-            throw new Exception("Tried to initialized projectile ability with non TowerBasicAttackAbilityData");
-
-        if (attackAbilityData.ProjectilePrefab == null)
+        if (m_projectilePrefab == null)
             throw new Exception("Projectile Ability Data is missing projectile prefab");
 
-        m_basicAttackAbilityData = attackAbilityData;
-        m_projectileSpeed = m_basicAttackAbilityData.ProjectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
+        m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_waveComponent = projectileInitData.TowerWaveComponent;
 
-        m_effects.Add(m_basicAttackAbilityData.BaseAttackEffect);
+        m_effects.Add(m_baseAttackEffect);
 
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () =>
             {
-                TowerProjectile projectile = Object.Instantiate(m_basicAttackAbilityData.ProjectilePrefab);
+                TowerProjectile projectile = Object.Instantiate(m_projectilePrefab);
                 projectile.Owner = projectileInitData.Owner;
                 projectile.Effects = this;
                 return projectile;
@@ -89,8 +71,6 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
                 Vector3 predictedPos = GetPredictedLocation(m_currentTarget.transform.position, spawnPoint);
                 projectile.SetTarget(m_currentTarget, predictedPos);
 
-                projectile.Level = Level;
-
                 projectile.OnHitEvent += OnProjectileHit;
                 projectile.OnTimeoutEvent += OnProjectileHit;
                 projectile.OnTargetKilledEvent += OnProjectileHit;
@@ -103,11 +83,11 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
                 projectile.OnTimeoutEvent -= OnProjectileHit;
                 projectile.OnTargetKilledEvent -= OnProjectileHit;
             },
-            projectile => { Object.Destroy(projectile.gameObject); }, false, m_basicAttackAbilityData.PoolSize,
-            m_basicAttackAbilityData.PoolSize * 2);
+            projectile => { Object.Destroy(projectile.gameObject); }, false, m_poolSize,
+            m_poolSize * 2);
     }
 
-    public override bool TryActivate(GameObject target = null)
+    public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
     {
         if (target == null)
             return false;
@@ -116,8 +96,9 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
         if (m_currentTarget == null)
             return false;
 
-        m_projectilePool.Get();
-
+        TowerProjectile projectile = m_projectilePool.Get();
+        projectile.Level = level;
+        
         return true;
     }
 
@@ -130,7 +111,7 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
 
     public float GetDamage(int level)
     {
-        return m_basicAttackAbilityData.BaseAttackEffect.DamageCurve.Evaluate(level);
+        return m_baseAttackEffect.DamageCurve.Evaluate(level);
     }
 
     private Vector3 GetPredictedLocation(Vector3 targetCurrentPosition, Vector3 projectileSpawn)
@@ -162,5 +143,16 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
     {
         OnTargetHit?.Invoke(projectile.Target);
         m_projectilePool.Release(projectile);
+    }
+}
+
+public class BasicAttackInitData : AbilityInitData
+{
+    public Transform SpawnTransform = null;
+    public Vector3 SpawnOffSet = Vector3.zero;
+    public TowerWaves TowerWaveComponent = null;
+
+    public BasicAttackInitData(GameObject owner) : base(owner)
+    {
     }
 }
