@@ -30,13 +30,11 @@ namespace Ui.FloatingNumber
                 floatingNumber =>
                 {
                     floatingNumber.gameObject.SetActive(true);
-                    Debug.Log("Activated Number");
                 },
                 floatingNumber =>
                 {
                     floatingNumber.gameObject.SetActive(false);
                     floatingNumber.transform.position = Vector3.zero;
-                    Debug.Log("Deactivated Number");
                 },
                 floatingNumber =>
                 {
@@ -55,7 +53,6 @@ namespace Ui.FloatingNumber
             floatingNumber.SetValue(damage, unit.transform.position + m_offsetFromUnit, 1 / m_showTime);
 
             StartCoroutine(HideNumber(floatingNumber));
-            Debug.Log("Set Number");
         }
 
         private IEnumerator HideNumber(FloatingNumber floatingNumber)

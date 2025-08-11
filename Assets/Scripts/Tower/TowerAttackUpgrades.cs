@@ -54,7 +54,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.FireRateLevel - 1));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_towerAbilities.FireRateLevel - 1));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -62,9 +62,9 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_basicAttackAbility.FireRateLevel++;
+        m_towerAbilities.IncreaseFireRateLevel();
         
-        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.FireRateLevel - 1));
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_towerAbilities.FireRateLevel - 1));
         BroadcastFireRateValues(nextUpgradeCost);
     }
 
@@ -82,8 +82,8 @@ public class TowerAttackUpgrades : MonoBehaviour
     {
         UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
             upgradeCost,
-            m_basicAttackAbility.GetFireRate(m_basicAttackAbility.FireRateLevel), 
-            m_basicAttackAbility.GetFireRate(m_basicAttackAbility.FireRateLevel + 1)
+            m_towerAbilities.CurrentFireRate, 
+            m_towerAbilities.GetFireRateAt(m_towerAbilities.FireRateLevel + 1)
             );
         MessageRouter.Broadcast(m_speedUpgradeChannel, speedUpgradeMessage);
     }

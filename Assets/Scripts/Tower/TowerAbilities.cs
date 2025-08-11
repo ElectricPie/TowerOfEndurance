@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,14 @@ public class TowerAbilities : MonoBehaviour
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
+    [SerializeField] private AnimationCurve m_fireRateCurve;
+
     public TowerBasicAttackAbilityInstance BasicAttackInstance { get; private set; }
+
+    public float CurrentFireRate => 1 / m_fireRateCurve.Evaluate(FireRateLevel);
+    public int FireRateLevel { get; private set; } = 1;
+
+    private IEnumerator m_attackCoroutine;
 
     private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
@@ -41,8 +49,18 @@ public class TowerAbilities : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    public float GetFireRateAt(int level)
+    {
+        return m_fireRateCurve.Evaluate(level);
+    }
+
+    public void IncreaseFireRateLevel()
+    {
+        FireRateLevel++;
+    }
     
-    private void Awake()
+    protected void Awake()
     {
         if (m_basicAttack == null)
             throw new Exception($"{name} is missing Basic Attack ability");
@@ -54,14 +72,6 @@ public class TowerAbilities : MonoBehaviour
             TowerWaveComponent = m_towerWaves
         };
         BasicAttackInstance = (TowerBasicAttackAbilityInstance)m_basicAttack.CreateAbilityInstance(initData);
-
-        BasicAttackInstance.OnFire += () =>
-        {
-            foreach (AbilityInstance ability in m_onBasicAttackAbilities)
-            {
-                ability.TryActivate();
-            }
-        };
         BasicAttackInstance.OnTargetHit += target =>
         { 
             foreach (AbilityInstance ability in m_onBasicHitAbilities)
@@ -74,11 +84,30 @@ public class TowerAbilities : MonoBehaviour
                 ability.TryActivate(target);
             }
         };
+
+        m_attackCoroutine = Fire();
+        StartCoroutine(m_attackCoroutine);
     }
 
-    private void Update()
+    private IEnumerator Fire()
     {
-        BasicAttackInstance.TryActivate();
+        while (true)
+        {
+            Unit target = m_towerWaves.GetOldestUnit();
+            if (target == null)
+            {
+                yield return null;
+                continue;
+            }
+
+            BasicAttackInstance.TryActivate(target.gameObject);
+            foreach (AbilityInstance ability in m_onBasicAttackAbilities)
+            {
+                ability.TryActivate(target.gameObject);
+            }
+
+            yield return new WaitForSeconds(CurrentFireRate);
+        }
     }
 
     private void OnDrawGizmos()
