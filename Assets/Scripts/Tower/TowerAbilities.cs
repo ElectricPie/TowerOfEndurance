@@ -11,8 +11,6 @@ public class TowerAbilities : MonoBehaviour
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
-    [SerializeField] private AbilityData DEBUG_poisonTipAbility;
-
     public TowerBasicAttackAbilityInstance BasicAttackInstance { get; private set; }
 
     private readonly HashSet<AbilityInstance> m_onHitAbilities = new HashSet<AbilityInstance>();
@@ -43,13 +41,6 @@ public class TowerAbilities : MonoBehaviour
                 ability.TryActivate(target);
             }
         };
-        
-        // Invoke(nameof(DEBUG_ADD_POISON), 5.0f);
-    }
-
-    private void DEBUG_ADD_POISON()
-    {
-        AddOnHitAbility(DEBUG_poisonTipAbility);
     }
 
     private void Update()
