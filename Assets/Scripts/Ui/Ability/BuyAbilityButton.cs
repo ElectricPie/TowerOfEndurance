@@ -23,7 +23,7 @@ namespace Ui.Ability
         {
             if (m_playerMoney.RemoveMoney(m_ability.Cost))
             {
-                m_towerAbilities.AddOnHitAbility(m_ability.AbilityData);
+                m_towerAbilities.AddAbility(m_ability.AbilityData);
                 Destroy(gameObject);
             }
         }

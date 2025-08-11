@@ -5,7 +5,11 @@ public abstract class AbilityData : ScriptableObject
     [SerializeField]
     private string m_label;
 
+    [SerializeField] 
+    private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
+
     public string Label => m_label;
+    public AbilityTrigger Trigger => m_trigger;
     
     protected void OnEnable()
     {
@@ -21,4 +25,12 @@ public abstract class AbilityData : ScriptableObject
     {
         return new AbilityInstance(this, initData);
     }
+}
+
+public enum AbilityTrigger
+{
+    OnBasicAttackFired,
+    OnBasicAttackHit,
+    OnAnyDamage,
+    Timed
 }

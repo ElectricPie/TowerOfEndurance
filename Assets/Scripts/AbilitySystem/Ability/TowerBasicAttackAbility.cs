@@ -42,7 +42,8 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
     public int FireRateLevel { get; set; } = 1;
 
     public event Action<GameObject> OnTargetHit = delegate { };
-    
+    public event Action OnFire = delegate { };
+
     private readonly ObjectPool<TowerProjectile> m_projectilePool;
     private readonly float m_projectileSpeed;
     private readonly TowerWaves m_waveComponent;
@@ -124,6 +125,7 @@ public class TowerBasicAttackAbilityInstance : AbilityInstance, ISharedEffects
         {
             m_lastFireTime = Time.time;
             m_projectilePool.Get();
+            OnFire?.Invoke();
         }
 		return true;
     }

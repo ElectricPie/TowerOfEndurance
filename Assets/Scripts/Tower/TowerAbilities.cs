@@ -13,12 +13,33 @@ public class TowerAbilities : MonoBehaviour
 
     public TowerBasicAttackAbilityInstance BasicAttackInstance { get; private set; }
 
-    private readonly HashSet<AbilityInstance> m_onHitAbilities = new HashSet<AbilityInstance>();
+    private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
+    private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
+    private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
+    private readonly HashSet<AbilityInstance> m_timedAbilities = new HashSet<AbilityInstance>();
 
-    public void AddOnHitAbility(AbilityData newAbility)
+    public void AddAbility(AbilityData newAbility)
     {
         AbilityInitData newAbilityData = new AbilityInitData(m_owningPlayer);
-        m_onHitAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+        
+        switch (newAbility.Trigger)
+        {
+            case AbilityTrigger.OnBasicAttackFired:
+                m_onBasicAttackAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                break;
+            case AbilityTrigger.OnBasicAttackHit:
+                m_onBasicHitAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                break;
+            case AbilityTrigger.OnAnyDamage:
+                m_onAnyDamageAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                break;
+            case AbilityTrigger.Timed:
+                // TODO: Start coroutine for timed abilities
+                m_timedAbilities.Add(newAbility.CreateAbilityInstance(newAbilityData));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
     
     private void Awake()
@@ -33,10 +54,22 @@ public class TowerAbilities : MonoBehaviour
             TowerWaveComponent = m_towerWaves
         };
         BasicAttackInstance = (TowerBasicAttackAbilityInstance)m_basicAttack.CreateAbilityInstance(initData);
+
+        BasicAttackInstance.OnFire += () =>
+        {
+            foreach (AbilityInstance ability in m_onBasicAttackAbilities)
+            {
+                ability.TryActivate();
+            }
+        };
         BasicAttackInstance.OnTargetHit += target =>
         { 
-            // Activate any other abilities 
-            foreach (AbilityInstance ability in m_onHitAbilities)
+            foreach (AbilityInstance ability in m_onBasicHitAbilities)
+            {
+                ability.TryActivate(target);
+            }
+            
+            foreach (AbilityInstance ability in m_onAnyDamageAbilities)
             {
                 ability.TryActivate(target);
             }
