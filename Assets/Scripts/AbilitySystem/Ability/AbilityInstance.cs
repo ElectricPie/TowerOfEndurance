@@ -2,12 +2,12 @@
 
 public class AbilityInitData
 {
-    public GameObject Owner { get; } 
+    public GameObject Caster { get; protected set; } 
     
     private AbilityInitData() {}
-    public AbilityInitData(GameObject owner)
+    public AbilityInitData(GameObject caster)
     {
-        Owner = owner;
+        Caster = caster;
     }
 }
 
@@ -16,19 +16,19 @@ public sealed class AbilityInstance
     public int Level { get; private set; } = 1;
 
     public AbilityData AbilityData { get; private set; }
-    private readonly GameObject m_owner;
+    private readonly GameObject m_caster;
     
     private AbilityInstance() { }
     public AbilityInstance(AbilityData abilityData, AbilityInitData initData)
     {
         AbilityData = abilityData.Clone();
         AbilityData.Init(initData);
-        m_owner = initData.Owner;
+        m_caster = initData.Caster;
     }
     
     public bool TryActivate(GameObject target = null)
     {
-        return AbilityData.TryActivate(target, m_owner, Level);
+        return AbilityData.TryActivate(target, m_caster, Level);
     }
 
     public void SetLevel(int newLevel)

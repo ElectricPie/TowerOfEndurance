@@ -17,7 +17,6 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     public override AbilityData Clone()
     {
         BasicAttackAbilityData clone = (BasicAttackAbilityData)this.MemberwiseClone();
-        clone.m_poolSize = m_poolSize;
         clone.m_baseAttackEffect = m_baseAttackEffect;
         clone.m_projectilePrefab = m_projectilePrefab;
 
@@ -44,7 +43,7 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
             throw new Exception("Projectile Ability Data is missing projectile prefab");
 
         m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
-        m_waveComponent = projectileInitData.TowerWaveComponent;
+        m_waveComponent = initData.Caster.GetComponent<TowerWaves>();
 
         m_effects.Add(m_baseAttackEffect);
 
@@ -52,7 +51,7 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
             () =>
             {
                 TowerProjectile projectile = Object.Instantiate(m_projectilePrefab);
-                projectile.Owner = projectileInitData.Owner;
+                projectile.Owner = projectileInitData.Caster;
                 projectile.Effects = this;
                 return projectile;
             },
@@ -148,11 +147,12 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
 
 public class BasicAttackInitData : AbilityInitData
 {
-    public Transform SpawnTransform = null;
-    public Vector3 SpawnOffSet = Vector3.zero;
-    public TowerWaves TowerWaveComponent = null;
+    public Transform SpawnTransform { get; } = null;
+    public Vector3 SpawnOffSet { get; }= Vector3.zero;
 
-    public BasicAttackInitData(GameObject owner) : base(owner)
+    public BasicAttackInitData(GameObject caster, Transform spawnTransform, Vector3 spawnOffset) : base(caster)
     {
+        SpawnTransform = spawnTransform;
+        SpawnOffSet = spawnOffset;
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class TowerAbilities : MonoBehaviour
 {
-    [SerializeField] private GameObject m_owningPlayer;
+    [SerializeField] private PlayerManager m_owningPlayer;
     [SerializeField] private TowerWaves m_towerWaves;
     
     [SerializeField] private AbilityScriptableObject m_basicAttackScriptableObject;
@@ -25,10 +26,15 @@ public class TowerAbilities : MonoBehaviour
     private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
     private readonly HashSet<AbilityInstance> m_timedAbilities = new HashSet<AbilityInstance>();
-
+    
+    public PlayerManager GetOwner()
+    {
+        return m_owningPlayer;
+    }
+    
     public void AddAbility(AbilityScriptableObject newAbility)
     {
-        AbilityInitData newInitData = new AbilityInitData(m_owningPlayer);
+        AbilityInitData newInitData = new AbilityInitData(gameObject);
         AbilityInstance newAbilityInstance = new AbilityInstance(newAbility.AbilityData, newInitData);
         
         switch (newAbility.AbilityData.Trigger)
@@ -65,13 +71,8 @@ public class TowerAbilities : MonoBehaviour
     {
         if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
-        
-        BasicAttackInitData initData = new BasicAttackInitData(m_owningPlayer)
-        {
-            SpawnTransform = transform,
-            SpawnOffSet = m_projectileSpawnPointOffset,
-            TowerWaveComponent = m_towerWaves
-        };
+
+        BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
         BasicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
         
         BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)BasicAttackInstance.AbilityData;

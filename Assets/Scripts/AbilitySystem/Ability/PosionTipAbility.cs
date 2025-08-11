@@ -2,6 +2,7 @@
 
 public class PoisonTipAbilityData : AbilityData
 {
+    /* Editor Values */
     [SerializeField] private DamageEffect m_damageEffect;
 
     public override AbilityData Clone()
@@ -12,6 +13,8 @@ public class PoisonTipAbilityData : AbilityData
         return clone;
     }
 
+    
+    /* Runtime Values */
     public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
     {
         if (target == null || caster == null)

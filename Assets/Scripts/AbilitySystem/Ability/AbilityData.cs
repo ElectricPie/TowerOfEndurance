@@ -30,10 +30,7 @@ public class AbilityData
     
     public virtual AbilityData Clone()
     {
-        return new AbilityData
-        {
-            m_trigger = this.m_trigger,
-        };
+        return (AbilityData)this.MemberwiseClone();
     }
     
     public virtual void Init(AbilityInitData initData) { }

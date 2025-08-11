@@ -1,3 +1,5 @@
+using System;
+using Player;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitHealth))]
@@ -9,7 +11,11 @@ public class UnitMoney : MonoBehaviour
     {
         gameObject.GetComponent<UnitHealth>().OnKilledEvent += (_, killer) =>
         {
-            killer.GetComponent<PlayerMoney>().AddMoney(MoneyWorth);
+            PlayerOwnedObject player = killer.GetComponent<PlayerOwnedObject>();
+            if (player == null)
+                return;
+                    
+            player.Owner.MoneyManager.AddMoney(MoneyWorth);
         };
     }
 }
