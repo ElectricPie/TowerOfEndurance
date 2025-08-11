@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Player;
 using UnityEngine;
 
 public class TowerAbilities : MonoBehaviour
 {
-    [SerializeField] private PlayerManager m_owningPlayer;
     [SerializeField] private TowerWaves m_towerWaves;
     
     [SerializeField] private AbilityScriptableObject m_basicAttackScriptableObject;
@@ -26,11 +24,6 @@ public class TowerAbilities : MonoBehaviour
     private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
     private readonly HashSet<AbilityInstance> m_timedAbilities = new HashSet<AbilityInstance>();
-    
-    public PlayerManager GetOwner()
-    {
-        return m_owningPlayer;
-    }
     
     public void AddAbility(AbilityScriptableObject newAbility)
     {

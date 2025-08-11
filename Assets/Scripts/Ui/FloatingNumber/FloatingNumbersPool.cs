@@ -41,10 +41,10 @@ namespace Ui.FloatingNumber
                     Destroy(floatingNumber);
                 }, true, m_poolSize);
 
-            m_towerWaves.OnUnitSpanwedEvent.AddListener(newUnit =>
+            m_towerWaves.OnUnitSpawnedEvent += newUnit =>
             {
                 newUnit.HealthComponent.OnDamageTakenEvent += OnUnitTakeDamage;
-            });
+            };
         }
 
         private void OnUnitTakeDamage(GameObject unit, float damage)

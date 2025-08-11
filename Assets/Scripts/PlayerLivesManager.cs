@@ -1,10 +1,12 @@
 using CircleTD.Messages;
 using ElectricPie.UnityMessageRouter;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerLivesManager : MonoBehaviour
 {
+    [SerializeField, RequiredIn(PrefabKind.InstanceInScene)] private TowerWaves m_towerWaves;
+    
     [SerializeField] private int m_initialLives = 40;
 
     [Header("Message Router Channels")] [SerializeField]
@@ -17,9 +19,11 @@ public class PlayerLivesManager : MonoBehaviour
     {
         m_maxLives = m_initialLives;
         m_currentLives = m_initialLives;
+
+        m_towerWaves.OnUnitSpawnedEvent += OnUnitsSpawned;
     }
 
-    public void OnUnitsSpawned(Unit spawnedUnit)
+    private void OnUnitsSpawned(Unit spawnedUnit)
     {
         spawnedUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
 
@@ -29,7 +33,7 @@ public class PlayerLivesManager : MonoBehaviour
         MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
     }
 
-    public void OnUnitKilled(GameObject killedUnitGameObject, GameObject killerGameObject)
+    private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killerGameObject)
     {
         UnitLiveCost cost = killedUnitGameObject.GetComponent<UnitLiveCost>();
         m_currentLives += cost.LiveCost;
