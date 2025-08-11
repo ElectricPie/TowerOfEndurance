@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbb83af0e94464ea98934ed11db03f2, type: 3}
   m_Name: PoisonTip
   m_EditorClassIdentifier: 
-  Label: PoisonTip
+  m_label: Poison Tip
   m_damageEffect:
     m_durationPolicy: 1
     m_periodicEffectValues:
       m_duration: 2
-      m_period: 0.1
+      m_period: 0.8
       m_triggerOnApplication: 0
     DamageCurve:
       serializedVersion: 2

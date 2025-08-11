@@ -2,13 +2,16 @@
 
 public abstract class AbilityData : ScriptableObject
 {
-    public string Label;
+    [SerializeField]
+    private string m_label;
+
+    public string Label => m_label;
     
     protected void OnEnable()
     {
-        if (string.IsNullOrEmpty(Label))
+        if (string.IsNullOrEmpty(m_label))
         {
-            Label = name;
+            m_label = name;
         }
     }
 
