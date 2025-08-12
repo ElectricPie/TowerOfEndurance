@@ -1,22 +1,26 @@
 ﻿using System;
+using AbilitySystem.Ability.Attributes;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
 public class DamageEffect : GameEffect
 {
-    [SerializeField] private AnimationCurve m_damageCurve;
+    [SerializeField] private AnimationCurve m_damageModifierCurve;
     [SerializeField] private GameObject m_visualFx;
 
     private GameObject m_visualFxInstance;
     
-    public AnimationCurve DamageCurve => m_damageCurve;
+    public AnimationCurve DamageModifierCurve => m_damageModifierCurve;
     public GameObject VisualFx => m_visualFx;
-
-
+    
     public override void Execute(GameObject caster, GameObject target, int level = 1)
     {
-        float damage = DamageCurve.Evaluate(level);
+        TowerAttributeSet towerAttributeSet = caster.GetComponent<TowerAttributeSet>();
+        if (towerAttributeSet == null)
+            return;
+
+        float damage = towerAttributeSet.Damage * m_damageModifierCurve.Evaluate(level);
         target.GetComponent<UnitHealth>()?.Damage(damage, caster);
     }
 

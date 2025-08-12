@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using AbilitySystem.Ability;
+using AbilitySystem.Ability.Attributes;
 using UnityEngine;
 
+[RequireComponent(typeof(TowerAttributeSet))]
 public class TowerAbilities : MonoBehaviour
 {
     [SerializeField] private TowerWaves m_towerWaves;
@@ -19,8 +21,9 @@ public class TowerAbilities : MonoBehaviour
     public float CurrentFireRate => 1 / m_fireRateCurve.Evaluate(FireRateLevel);
     public int FireRateLevel { get; private set; } = 1;
 
+    private TowerAttributeSet m_attributeSet;
+    
     private IEnumerator m_attackCoroutine;
-
     private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
@@ -63,6 +66,8 @@ public class TowerAbilities : MonoBehaviour
     
     protected void Awake()
     {
+        m_attributeSet = GetComponent<TowerAttributeSet>();
+        
         if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
 

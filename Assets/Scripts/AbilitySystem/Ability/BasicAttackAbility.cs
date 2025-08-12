@@ -30,9 +30,11 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     private ObjectPool<TowerProjectile> m_projectilePool;
     private float m_projectileSpeed;
     private TowerWaves m_waveComponent;
-    private readonly List<GameEffect> m_effects = new List<GameEffect>();
 
     private Unit m_currentTarget;
+    private GameObject m_caster;
+
+    private int m_level;
     
     public override void Init(AbilityInitData initData)
     {
@@ -42,17 +44,15 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
         if (m_projectilePrefab == null)
             throw new Exception("Projectile Ability Data is missing projectile prefab");
 
+        m_caster = initData.Caster;
+
         m_projectileSpeed = m_projectilePrefab.GetComponent<TowerProjectileMovement>().Speed;
         m_waveComponent = initData.Caster.GetComponent<TowerWaves>();
-
-        m_effects.Add(m_baseAttackEffect);
 
         m_projectilePool = new ObjectPool<TowerProjectile>(
             () =>
             {
                 TowerProjectile projectile = Object.Instantiate(m_projectilePrefab);
-                projectile.Owner = projectileInitData.Caster;
-                projectile.Effects = this;
                 return projectile;
             },
             projectile =>
@@ -95,8 +95,8 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
         if (m_currentTarget == null)
             return false;
 
-        TowerProjectile projectile = m_projectilePool.Get();
-        projectile.Level = level;
+        m_projectilePool.Get();
+        m_level = level;
         
         return true;
     }
@@ -104,13 +104,13 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     /* ISharedEffects Interface begin */
     public List<GameEffect> GetEffects()
     {
-        return m_effects;
+        return null;
     }
     /* ISharedEffects Interface end */
 
     public float GetDamage(int level)
     {
-        return m_baseAttackEffect.DamageCurve.Evaluate(level);
+        return m_baseAttackEffect.DamageModifierCurve.Evaluate(level);
     }
 
     private Vector3 GetPredictedLocation(Vector3 targetCurrentPosition, Vector3 projectileSpawn)
@@ -140,15 +140,28 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
 
     private void OnProjectileHit(TowerProjectile projectile)
     {
+        ApplyEffects(projectile.Target);   
         OnTargetHit?.Invoke(projectile.Target);
         m_projectilePool.Release(projectile);
+    }
+    
+    private void ApplyEffects(GameObject target)
+    {
+        if (target == null)
+            return;
+
+        EffectsContainer effectsContainer = target.GetComponent<EffectsContainer>();
+        if (effectsContainer == null)
+            return;
+        
+        effectsContainer.ApplyEffect(m_caster, m_baseAttackEffect, m_level);
     }
 }
 
 public class BasicAttackInitData : AbilityInitData
 {
     public Transform SpawnTransform { get; } = null;
-    public Vector3 SpawnOffSet { get; }= Vector3.zero;
+    public Vector3 SpawnOffSet { get; }
 
     public BasicAttackInitData(GameObject caster, Transform spawnTransform, Vector3 spawnOffset) : base(caster)
     {

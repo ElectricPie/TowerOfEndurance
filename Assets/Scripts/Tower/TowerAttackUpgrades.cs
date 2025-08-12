@@ -1,10 +1,12 @@
 using System;
+using AbilitySystem.Ability.Attributes;
 using ElectricPie.UnityMessageRouter;
 using UnityEngine;
 
 public class TowerAttackUpgrades : MonoBehaviour
 {
     [SerializeField] private PlayerMoney m_playerMoney;
+    [SerializeField] private TowerAttributeSet m_attributeSet;
     
     [SerializeField] private float m_costMultiplier = 1.15f;
     [SerializeField] private float m_upgradeInitialCost = 5.0f;
@@ -14,7 +16,6 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private string m_speedUpgradeChannel = "SpeedUpgradeChannel";
 
     private TowerAbilities m_towerAbilities;
-    private AbilityInstance m_basicAttackAbility;
 
     private void Awake()
     {
@@ -24,7 +25,6 @@ public class TowerAttackUpgrades : MonoBehaviour
         }
 
         m_towerAbilities = GetComponent<TowerAbilities>();
-        m_basicAttackAbility = m_towerAbilities.BasicAttackInstance;
     }
 
     private void Start()
@@ -36,7 +36,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     public void UpgradeDamage()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.Level - 1));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_attributeSet.DamageLevel - 1));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -44,9 +44,9 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_basicAttackAbility.SetLevel(m_basicAttackAbility.Level + 1);
+        m_attributeSet.IncreaseDamageLevel();
         
-        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_basicAttackAbility.Level - 1));
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_attributeSet.DamageLevel - 1));
         BroadcastDamageValues(nextUpgradeCost);
     }
 
@@ -69,11 +69,10 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     private void BroadcastDamageValues(float upgradeCost)
     {
-        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackAbility.AbilityData;
         UpgradeChangeMessage damageUpgradeMessage = new UpgradeChangeMessage(
             upgradeCost,
-            basicAttackAbilityData.GetDamage(m_basicAttackAbility.Level), 
-            basicAttackAbilityData.GetDamage(m_basicAttackAbility.Level + 1) 
+            m_attributeSet.Damage, 
+            m_attributeSet.DamageAt(m_attributeSet.DamageLevel + 1)
             );
         MessageRouter.Broadcast(m_damageUpgradeChannel, damageUpgradeMessage);
     }
