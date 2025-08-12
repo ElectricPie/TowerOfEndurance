@@ -23,6 +23,7 @@ internal class PeriodicEffectContainer
 
         RefreshDuration();
         OnExpiration = expirationCallback;
+        effect.OnApplication(target);
         
         if (Effect.PeriodicEffectValues.TriggerOnApplication)
         {
@@ -41,6 +42,7 @@ internal class PeriodicEffectContainer
             return false;
         
         OnExpiration?.Invoke();
+        Effect.OnRemove();
         return true;
     }
 
@@ -59,7 +61,9 @@ public class EffectsContainer : MonoBehaviour
         switch (effect.DurationPolicy)
         {
             case DurationPolicy.Instant:
+                effect.OnApplication(gameObject);
                 effect.Execute(caster, gameObject, level);
+                effect.OnRemove();
                 break;
             case DurationPolicy.Periodic:
                 SetupPeriodicEffect(caster, effect, level);
@@ -93,7 +97,6 @@ public class EffectsContainer : MonoBehaviour
         {
             if (effectContainer.HasExpired())
             {
-				Debug.Log("Effect Expired");
                 yield break;
             }
             

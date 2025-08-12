@@ -3819,6 +3819,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 719932121}
     - target: {fileID: 7295613335744759021, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
+      propertyPath: m_unitStartingHealth
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295613335744759021, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
       propertyPath: OnWaveStartedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1105416544}

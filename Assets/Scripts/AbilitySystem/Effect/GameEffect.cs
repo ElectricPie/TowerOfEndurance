@@ -7,7 +7,6 @@ public abstract class GameEffect
 {
     [SerializeField] 
     private DurationPolicy m_durationPolicy = DurationPolicy.Instant;
-
     [SerializeField, ShowIf("m_durationPolicy", DurationPolicy.Periodic), InlineProperty, HideLabel] 
     private PeriodicEffectValues m_periodicEffectValues;
 
@@ -15,6 +14,8 @@ public abstract class GameEffect
     public PeriodicEffectValues PeriodicEffectValues => m_periodicEffectValues;
     
     public abstract void Execute(GameObject caster, GameObject target, int level = 1);
+    public virtual void OnApplication(GameObject target) { }
+    public virtual void OnRemove() { }
 }
 
 [Serializable]
@@ -36,12 +37,3 @@ public enum DurationPolicy
     Instant,
     Periodic
 }
-
-// [CreateAssetMenu(fileName = "New Effect", menuName = "Abilities/New Effect")]
-// public class GameEffectScriptableObject : ScriptableObject
-// {
-//     [SerializeReference, InlineProperty, HideLabel] 
-//     private GameEffect m_effect;
-//
-//     public GameEffect Effect => m_effect;
-// }

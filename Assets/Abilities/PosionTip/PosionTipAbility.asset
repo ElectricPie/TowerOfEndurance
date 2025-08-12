@@ -9,31 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 2125d09159e545b99dc8ca33e76a69ba, type: 3}
   m_Name: PosionTipAbility
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
-  m_label: Posion Tip Ability
+  m_label: Posion Tip
   m_abilityData:
-    rid: 3214090454538649668
+    rid: 3214090471301185600
   references:
     version: 2
     RefIds:
-    - rid: 3214090454538649668
+    - rid: 3214090471301185600
       type: {class: PoisonTipAbilityData, ns: , asm: Assembly-CSharp}
       data:
         m_trigger: 1
         m_damageEffect:
           m_durationPolicy: 1
           m_periodicEffectValues:
-            m_duration: 2
+            m_duration: 5
             m_period: 0.8
             m_triggerOnApplication: 0
-          DamageCurve:
+          m_damageCurve:
             serializedVersion: 2
             m_Curve:
             - serializedVersion: 3
               time: 1
-              value: 0.3
+              value: 0.2
               inSlope: 0
               outSlope: 0
               tangentMode: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
               outWeight: 0
             - serializedVersion: 3
               time: 5
-              value: 50
+              value: 4
               inSlope: 2
               outSlope: 2
               tangentMode: 0
@@ -52,3 +52,4 @@ MonoBehaviour:
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
+          m_visualFx: {fileID: 8143778695897954027, guid: 616d71dcbec89af44b6dc5c44a1532cf, type: 3}
