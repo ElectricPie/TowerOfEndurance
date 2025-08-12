@@ -96,30 +96,6 @@ MonoBehaviour:
   m_towerWaves: {fileID: 7971336517557105522}
   m_basicAttackScriptableObject: {fileID: 11400000, guid: 28d7b40ebcfa3f04cab46c89477a57eb, type: 2}
   m_projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
-  m_fireRateCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 50
-      value: 50
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &5894388254904635282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +146,31 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_damageLevel: 1
-  FireRate: 1
+  m_fireRateCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 50
+      value: 50
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_fireRateLevel: 1
 --- !u!1001 &7155740735048003876
 PrefabInstance:
   m_ObjectHideFlags: 0

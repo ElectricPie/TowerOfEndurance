@@ -14,13 +14,7 @@ public class TowerAbilities : MonoBehaviour
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
-    [SerializeField] private AnimationCurve m_fireRateCurve;
-
-    public AbilityInstance BasicAttackInstance { get; private set; }
-
-    public float CurrentFireRate => 1 / m_fireRateCurve.Evaluate(FireRateLevel);
-    public int FireRateLevel { get; private set; } = 1;
-
+    private AbilityInstance m_basicAttackInstance;
     private TowerAttributeSet m_attributeSet;
     
     private IEnumerator m_attackCoroutine;
@@ -53,16 +47,6 @@ public class TowerAbilities : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-    public float GetFireRateAt(int level)
-    {
-        return m_fireRateCurve.Evaluate(level);
-    }
-
-    public void IncreaseFireRateLevel()
-    {
-        FireRateLevel++;
-    }
     
     protected void Awake()
     {
@@ -72,9 +56,9 @@ public class TowerAbilities : MonoBehaviour
             throw new Exception($"{name} is missing Basic Attack ability");
 
         BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
-        BasicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
+        m_basicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
         
-        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)BasicAttackInstance.AbilityData;
+        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
         basicAttackAbilityData.OnTargetHit += target =>
         { 
             foreach (AbilityInstance ability in m_onBasicHitAbilities)
@@ -103,13 +87,13 @@ public class TowerAbilities : MonoBehaviour
                 continue;
             }
 
-            BasicAttackInstance.TryActivate(target.gameObject);
+            m_basicAttackInstance.TryActivate(target.gameObject);
             foreach (AbilityInstance ability in m_onBasicAttackAbilities)
             {
                 ability.TryActivate(target.gameObject);
             }
 
-            yield return new WaitForSeconds(CurrentFireRate);
+            yield return new WaitForSeconds(m_attributeSet.FireRate);
         }
     }
 

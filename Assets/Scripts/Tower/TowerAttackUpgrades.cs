@@ -15,16 +15,10 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private string m_damageUpgradeChannel = "DamageUpgradeChannel";
     [SerializeField] private string m_speedUpgradeChannel = "SpeedUpgradeChannel";
 
-    private TowerAbilities m_towerAbilities;
-
     private void Awake()
     {
         if (m_playerMoney == null)
-        {
             throw new Exception($"TowerAttackUpgrade on {name} is missing reference to PlayerMoney script");
-        }
-
-        m_towerAbilities = GetComponent<TowerAbilities>();
     }
 
     private void Start()
@@ -53,7 +47,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_towerAbilities.FireRateLevel - 1));
+        float upgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_attributeSet.FireRateLevel - 1));
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -61,9 +55,9 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_towerAbilities.IncreaseFireRateLevel();
+        m_attributeSet.IncreaseFireRateLevel();
         
-        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_towerAbilities.FireRateLevel - 1));
+        float nextUpgradeCost = Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, m_attributeSet.FireRateLevel - 1));
         BroadcastFireRateValues(nextUpgradeCost);
     }
 
@@ -81,8 +75,8 @@ public class TowerAttackUpgrades : MonoBehaviour
     {
         UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
             upgradeCost,
-            m_towerAbilities.CurrentFireRate, 
-            m_towerAbilities.GetFireRateAt(m_towerAbilities.FireRateLevel + 1)
+            m_attributeSet.FireRate, 
+            m_attributeSet.FireRateAt(m_attributeSet.FireRateLevel + 1)
             );
         MessageRouter.Broadcast(m_speedUpgradeChannel, speedUpgradeMessage);
     }
