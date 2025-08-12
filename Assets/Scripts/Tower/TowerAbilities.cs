@@ -40,7 +40,7 @@ public class TowerAbilities : MonoBehaviour
                 m_onAnyDamageAbilities.Add(newAbilityInstance);
                 break;
             case AbilityTrigger.Timed:
-                // TODO: Start coroutine for timed abilities
+                StartCoroutine(TimedAbilityCoroutine(newAbilityInstance));
                 m_timedAbilities.Add(newAbilityInstance);
                 break;
             default:
@@ -94,6 +94,16 @@ public class TowerAbilities : MonoBehaviour
             }
 
             yield return new WaitForSeconds(m_attributeSet.FireRate);
+        }
+    }
+
+    private IEnumerator TimedAbilityCoroutine(AbilityInstance ability)
+    {
+        yield return new WaitForSeconds(ability.AbilityData.TriggerTime(ability.Level));
+        while (true)
+        {
+            ability.TryActivate();
+            yield return new WaitForSeconds(ability.AbilityData.TriggerTime(ability.Level));
         }
     }
 
