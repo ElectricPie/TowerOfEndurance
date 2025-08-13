@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace Ui.Ability
@@ -6,7 +7,7 @@ namespace Ui.Ability
     public class BuyAbilityButton : MonoBehaviour
     {
         [SerializeField] private BuyAbilityScriptableObject m_ability;
-        [SerializeField] private TMP_Text m_abilityNameText;
+        [SerializeField, RequiredIn(PrefabKind.PrefabInstance)] private TMP_Text m_abilityNameText;
         
         private TowerAbilities m_towerAbilities;
         private PlayerMoney m_playerMoney;
@@ -26,6 +27,17 @@ namespace Ui.Ability
                 m_towerAbilities.AddAbility(m_ability.AbilityScriptableObject);
                 Destroy(gameObject);
             }
+        }
+
+        protected void OnValidate()
+        {
+            if (m_ability == null)
+            {
+                m_abilityNameText.text = "Unassigned Ability";
+                return;
+            }
+
+            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
         }
     }
 }
