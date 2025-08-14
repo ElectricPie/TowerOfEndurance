@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f4219e7c10d94b4da72ff13f773fc932, type: 3}
   m_Name: ArtilleryBuyData
   m_EditorClassIdentifier: Assembly-CSharp:Ui.Ability:BuyAbilityScriptableObject
   m_abilityScriptableObject: {fileID: 11400000, guid: d7368fc6243c59f47a4f8b7f859c0628, type: 2}
