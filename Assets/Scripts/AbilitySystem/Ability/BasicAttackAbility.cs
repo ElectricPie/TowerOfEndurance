@@ -72,7 +72,6 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
 
                 projectile.OnHitEvent += OnProjectileHit;
                 projectile.OnTimeoutEvent += OnProjectileHit;
-                projectile.OnTargetKilledEvent += OnProjectileHit;
             },
             projectile =>
             {
@@ -80,7 +79,6 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
 
                 projectile.OnHitEvent -= OnProjectileHit;
                 projectile.OnTimeoutEvent -= OnProjectileHit;
-                projectile.OnTargetKilledEvent -= OnProjectileHit;
             },
             projectile => { Object.Destroy(projectile.gameObject); }, false, m_poolSize,
             m_poolSize * 2);
