@@ -4040,6 +4040,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 719932121}
     - target: {fileID: 7295613335744759021, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
+      propertyPath: m_waveSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: ef37c7df7024b584e9a7fb9e4803e374, type: 2}
+    - target: {fileID: 7295613335744759021, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
       propertyPath: m_unitStartingHealth
       value: 5000
       objectReference: {fileID: 0}

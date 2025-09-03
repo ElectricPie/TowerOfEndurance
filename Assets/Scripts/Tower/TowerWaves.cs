@@ -12,7 +12,7 @@ public class TowerWaves : MonoBehaviour
     [SerializeField, Tooltip("If set to a value will move a new spawned unit left/right the amount of the value")]
     private float m_unitSpawnPointVariation = 2.0f;
 
-    public Action<Unit> OnUnitSpawnedEvent;
+    public event Action<Unit> OnUnitSpawnedEvent = delegate { };
 
     public float CurrentWaveRpm => m_waves[0].RotationsPerMinute;
 
@@ -65,7 +65,7 @@ public class TowerWaves : MonoBehaviour
         
         latestWave.AddUnit(newUnit);
 
-        OnUnitSpawnedEvent.Invoke(newUnit);
+        OnUnitSpawnedEvent?.Invoke(newUnit);
     }
     
     /// <summary>

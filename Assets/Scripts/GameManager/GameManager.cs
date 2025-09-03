@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Waves;
 
 [RequireComponent(typeof(GeneratedWaveSpawner))]
 public class GameManager : MonoBehaviour
