@@ -12,12 +12,24 @@ public abstract class WaveSpawner : MonoBehaviour
 
     // Parameter is the new wave number
     public UnityEvent<int> OnWaveStartedEvent;
-    public int CurrentWave { get; private set; } = 0;
+
+    public bool IsSpawningWave { get; private set; } = false;
     
-    // private readonly List<IEnumerator> m_waveSpawningCoroutines = new List<IEnumerator>();
+    private int m_currentWave = 0;
+    private float m_currentWaveStartTime = 0.0f;
+    
     private readonly Dictionary<int, IEnumerator> m_waveSpawningCoroutines = new Dictionary<int, IEnumerator>();
 
     protected abstract IEnumerator SpawnWave(int waveNumber);
+    
+    /// <summary>
+    ///  A value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
+    /// </summary>
+    public float CurrentWaveProgress()
+    {
+        float currentWaveTime = Time.time - m_currentWaveStartTime;
+        return Mathf.Clamp01(currentWaveTime / m_maxTimeBetweenWaves);
+    }
     
     protected void WaveFinished(Wave completedWave)
     {
@@ -35,25 +47,29 @@ public abstract class WaveSpawner : MonoBehaviour
         StartWave();
     }
 
+    // This must be called by inheriting classes in the SpawnWave method when a wave is finished spawning all its units
     protected void WaveSpawningFinished(int waveNumber)
     {
+        m_currentWaveStartTime = Time.time;
+        IsSpawningWave = false;
         m_waveSpawningCoroutines.Remove(waveNumber);
         Invoke(nameof(StartNextWave), m_maxTimeBetweenWaves);
     }
     
     protected void StartNextWave()
     {
-        CurrentWave++;
+        m_currentWave++;
         
         StartWave();
     }
 
     private void StartWave()
     {
-        IEnumerator newWaveCoroutine = SpawnWave(CurrentWave);
-        m_waveSpawningCoroutines.Add(CurrentWave, newWaveCoroutine);
+        IsSpawningWave = true;
+        IEnumerator newWaveCoroutine = SpawnWave(m_currentWave);
+        m_waveSpawningCoroutines.Add(m_currentWave, newWaveCoroutine);
         StartCoroutine(newWaveCoroutine);
         
-        OnWaveStartedEvent.Invoke(CurrentWave);
+        OnWaveStartedEvent.Invoke(m_currentWave);
     }
 }
