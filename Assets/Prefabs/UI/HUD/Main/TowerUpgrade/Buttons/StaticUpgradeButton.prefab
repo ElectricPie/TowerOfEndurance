@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 1901088976408788970}
   - component: {fileID: 1630409963411427860}
   - component: {fileID: 4125247729939612886}
+  - component: {fileID: 829224509971357790}
   m_Layer: 5
   m_Name: StaticUpgradeButton
   m_TagString: Untagged
@@ -395,7 +396,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1901088976408788970}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 829224509971357790}
+        m_TargetAssemblyTypeName: Ui.TowerUpgrade.TowerUpgradeButton, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4125247729939612886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,6 +435,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &829224509971357790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770885702329694405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.TowerUpgrade.TowerUpgradeButton
+  m_upgradeCostText: {fileID: 4456204050530049025}
 --- !u!1 &8956554738987658329
 GameObject:
   m_ObjectHideFlags: 0

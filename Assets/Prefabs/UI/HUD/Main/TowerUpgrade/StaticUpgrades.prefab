@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6875875322449729198}
   - component: {fileID: 8385100033765239208}
   - component: {fileID: 1997937936252305779}
+  - component: {fileID: 7755340802608359657}
   m_Layer: 5
   m_Name: StaticUpgrades
   m_TagString: Untagged
@@ -104,6 +105,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7755340802608359657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809575091617897385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdba5afd40b94b5296c5fd9690380232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.TowerUpgrade.TowerStaticUpgradeWidget
+  m_damageUpgradeButton: {fileID: 3250417863618438187}
+  m_speedUpgradeButton: {fileID: 2698577485591884688}
 --- !u!1001 &2781591379265733749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -261,6 +276,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d72254e39f09e484cb7f0dd4185a6c95, type: 3}
+--- !u!114 &3250417863618438187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 829224509971357790, guid: d72254e39f09e484cb7f0dd4185a6c95, type: 3}
+  m_PrefabInstance: {fileID: 2781591379265733749}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.TowerUpgrade.TowerUpgradeButton
 --- !u!224 &3752087906532135439 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1335364076297999994, guid: d72254e39f09e484cb7f0dd4185a6c95, type: 3}
@@ -423,6 +449,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d72254e39f09e484cb7f0dd4185a6c95, type: 3}
+--- !u!114 &2698577485591884688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 829224509971357790, guid: d72254e39f09e484cb7f0dd4185a6c95, type: 3}
+  m_PrefabInstance: {fileID: 3382971468755358670}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.TowerUpgrade.TowerUpgradeButton
 --- !u!224 &4357954116375184820 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1335364076297999994, guid: d72254e39f09e484cb7f0dd4185a6c95, type: 3}

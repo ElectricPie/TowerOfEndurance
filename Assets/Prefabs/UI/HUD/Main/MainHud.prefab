@@ -374,11 +374,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 340861163408154726, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpgradeDamage
+      value: OnClicked
       objectReference: {fileID: 0}
     - target: {fileID: 340861163408154726, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TowerAttackUpgrades, Assembly-CSharp
+      value: Ui.TowerUpgrade.TowerUpgradeButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 340861163408154726, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -446,11 +446,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 923927676798302173, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpgradeSpeed
+      value: OnClicked
       objectReference: {fileID: 0}
     - target: {fileID: 923927676798302173, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TowerAttackUpgrades, Assembly-CSharp
+      value: Ui.TowerUpgrade.TowerUpgradeButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 923927676798302173, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -832,86 +832,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6867733664041927902, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3606493848302451012}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8776707579746962103, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6253126747181211021}
-    - targetCorrespondingSourceObject: {fileID: 8189137543805426956, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4589139749928363666}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
 --- !u!224 &1858380060990943430 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2271144699421938425, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
   m_PrefabInstance: {fileID: 454565336805990975}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2444187205356575735 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2856847403520342472, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
-  m_PrefabInstance: {fileID: 454565336805990975}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2991506635845323852 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3444417727325679219, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
-  m_PrefabInstance: {fileID: 454565336805990975}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6413662029515646689 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6867733664041927902, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
   m_PrefabInstance: {fileID: 454565336805990975}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8641099226237943603 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8189137543805426956, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
-  m_PrefabInstance: {fileID: 454565336805990975}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4589139749928363666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8641099226237943603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_upgradeAmountText: {fileID: 0}
-  m_upgradeCostText: {fileID: 2444187205356575735}
-  m_upgradeChangeChannel: SpeedUpgradeChannel
---- !u!1 &9188418326115461256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8776707579746962103, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
-  m_PrefabInstance: {fileID: 454565336805990975}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6253126747181211021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9188418326115461256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f46fd04b44a49298dabc27b1cb9ac0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_upgradeAmountText: {fileID: 0}
-  m_upgradeCostText: {fileID: 2991506635845323852}
-  m_upgradeChangeChannel: DamageUpgradeChannel
 --- !u!1001 &966370974561694338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1312,7 +1244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_livesText: {fileID: 5628225338199424202}
-  m_livesChangedChannel: LivesChanged
 --- !u!224 &557337550982536605 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3794306709853315546, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
@@ -1734,7 +1665,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_moneyNumberText: {fileID: 5431496269411313813}
-  m_moneyChangedChannel: PlayerMoneyChanged
 --- !u!114 &5431496269411313813 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9011530737257955469, guid: 33715b98cc2c9219aae92747c07af282, type: 3}

@@ -16,6 +16,7 @@ namespace Ui.Hud
         private WaveWidgetController m_waveWidgetControllerInstance;
         private MoneyWidgetController m_moneyWidgetControllerInstance;
         private LivesWidgetController m_livesWidgetControllerInstance;
+        private TowerUpgradeWidgetController m_towerUpgradeWidgetControllerInstance;
 
         public WaveWidgetController WaveWidgetController
         {
@@ -29,7 +30,6 @@ namespace Ui.Hud
                 return m_waveWidgetControllerInstance;
             }
         }
-        
         public MoneyWidgetController MoneyWidgetController
         {
             get {
@@ -42,7 +42,6 @@ namespace Ui.Hud
                 return m_moneyWidgetControllerInstance;
             }
         }
-        
         public LivesWidgetController LivesWidgetController
         {
             get {
@@ -53,6 +52,18 @@ namespace Ui.Hud
                 }
 
                 return m_livesWidgetControllerInstance;
+            }
+        }
+        public TowerUpgradeWidgetController TowerUpgradeWidgetController
+        {
+            get {
+                if (m_towerUpgradeWidgetControllerInstance == null)
+                {
+                    m_towerUpgradeWidgetControllerInstance = new TowerUpgradeWidgetController();
+                    m_towerUpgradeWidgetControllerInstance.BindCallbacksToDependencies();
+                }
+
+                return m_towerUpgradeWidgetControllerInstance;
             }
         }
         
