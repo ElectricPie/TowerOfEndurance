@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Ui.Hud;
+using Ui.WidgetControllers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,17 @@ namespace Ui.Wave
     public class WaveTimeWidget : MonoBehaviour
     {
         [SerializeField] private Slider m_waveTimeSlider;
-
-        [SerializeField, RequiredIn(PrefabKind.InstanceInScene)]
-        private WaveSpawner m_waveSpawner;
-
-        public void Update()
+        
+        private void Awake()
         {
-            m_waveTimeSlider.value = m_waveSpawner.IsSpawningWave ? 0 : m_waveSpawner.CurrentWaveProgress();
+            StatWidgetController widgetController = HudController.Instance.StatWidgetController;
+            widgetController.OnWaveProgressChanged += OnTimerChanged;
+        }
+
+
+        private void OnTimerChanged(float newValue)
+        {
+            m_waveTimeSlider.value = newValue;
         }
     }
 }

@@ -12,8 +12,10 @@ public abstract class WaveSpawner : MonoBehaviour
 
     // Parameter is the new wave number
     public UnityEvent<int> OnWaveStartedEvent;
+    
+    public event Action<float> OnWaveProgressChangedEvent = delegate { };
 
-    public bool IsSpawningWave { get; private set; } = false;
+    private bool m_isSpawningWave = false;
     
     private int m_currentWave = 0;
     private float m_currentWaveStartTime = 0.0f;
@@ -27,6 +29,9 @@ public abstract class WaveSpawner : MonoBehaviour
     /// </summary>
     public float CurrentWaveProgress()
     {
+        if (m_isSpawningWave) 
+            return 0.0f;
+        
         float currentWaveTime = Time.time - m_currentWaveStartTime;
         return Mathf.Clamp01(currentWaveTime / m_maxTimeBetweenWaves);
     }
@@ -47,11 +52,16 @@ public abstract class WaveSpawner : MonoBehaviour
         StartWave();
     }
 
+    private void Update()
+    {
+        OnWaveProgressChangedEvent.Invoke(CurrentWaveProgress());
+    }
+
     // This must be called by inheriting classes in the SpawnWave method when a wave is finished spawning all its units
     protected void WaveSpawningFinished(int waveNumber)
     {
         m_currentWaveStartTime = Time.time;
-        IsSpawningWave = false;
+        m_isSpawningWave = false;
         m_waveSpawningCoroutines.Remove(waveNumber);
         Invoke(nameof(StartNextWave), m_maxTimeBetweenWaves);
     }
@@ -65,7 +75,7 @@ public abstract class WaveSpawner : MonoBehaviour
 
     private void StartWave()
     {
-        IsSpawningWave = true;
+        m_isSpawningWave = true;
         IEnumerator newWaveCoroutine = SpawnWave(m_currentWave);
         m_waveSpawningCoroutines.Add(m_currentWave, newWaveCoroutine);
         StartCoroutine(newWaveCoroutine);
