@@ -263,7 +263,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3375455203836694428}
         m_TargetAssemblyTypeName: Ui.Ability.BuyAbilityButton, Assembly-CSharp
-        m_MethodName: TryBuyAbility
+        m_MethodName: OnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

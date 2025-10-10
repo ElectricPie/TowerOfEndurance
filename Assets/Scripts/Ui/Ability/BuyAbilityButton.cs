@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using TMPro;
+using Ui.WidgetControllers;
 using UnityEngine;
 
 namespace Ui.Ability
@@ -9,24 +10,18 @@ namespace Ui.Ability
         [SerializeField] private BuyAbilityScriptableObject m_ability;
         [SerializeField, RequiredIn(PrefabKind.PrefabInstance)] private TMP_Text m_abilityNameText;
         
-        private TowerAbilities m_towerAbilities;
-        private PlayerMoney m_playerMoney;
-
+        private AbilityWidgetController m_abilityWidgetController;
+        
         protected void Awake()
         {
-            m_towerAbilities = FindFirstObjectByType<TowerAbilities>();
-            m_playerMoney = FindFirstObjectByType<PlayerMoney>();
-
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
+            
+            m_abilityWidgetController = Hud.HudController.Instance.AbilityWidgetController;
         }
 
-        public void TryBuyAbility()
+        public void OnClicked()
         {
-            if (m_playerMoney.RemoveMoney(m_ability.Cost))
-            {
-                m_towerAbilities.AddAbility(m_ability.AbilityScriptableObject);
-                Destroy(gameObject);
-            }
+            m_abilityWidgetController.TryBuyAbility(m_ability, gameObject);
         }
 
         protected void OnValidate()
