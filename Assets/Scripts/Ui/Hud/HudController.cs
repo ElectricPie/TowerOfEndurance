@@ -15,6 +15,7 @@ namespace Ui.Hud
         
         private WaveWidgetController m_waveWidgetControllerInstance;
         private MoneyWidgetController m_moneyWidgetControllerInstance;
+        private LivesWidgetController m_livesWidgetControllerInstance;
 
         public WaveWidgetController WaveWidgetController
         {
@@ -39,6 +40,19 @@ namespace Ui.Hud
                 }
 
                 return m_moneyWidgetControllerInstance;
+            }
+        }
+        
+        public LivesWidgetController LivesWidgetController
+        {
+            get {
+                if (m_livesWidgetControllerInstance == null)
+                {
+                    m_livesWidgetControllerInstance = new LivesWidgetController();
+                    m_livesWidgetControllerInstance.BindCallbacksToDependencies();
+                }
+
+                return m_livesWidgetControllerInstance;
             }
         }
         

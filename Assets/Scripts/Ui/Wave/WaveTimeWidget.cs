@@ -15,7 +15,6 @@ namespace Ui.Wave
             widgetController.OnWaveProgressChanged += OnTimerChanged;
         }
 
-
         private void OnTimerChanged(float newValue)
         {
             m_waveTimeSlider.value = newValue;

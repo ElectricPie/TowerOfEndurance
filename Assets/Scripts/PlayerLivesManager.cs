@@ -1,24 +1,25 @@
-using CircleTD.Messages;
-using ElectricPie.UnityMessageRouter;
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PlayerLivesManager : MonoBehaviour
 {
+    public event Action<int> OnCurrentLivesChangedEvent = delegate { };
+    public event Action<int> OnMaxLivesChangedEvent = delegate { };
+    
     [SerializeField, RequiredIn(PrefabKind.InstanceInScene)] private TowerWaves m_towerWaves;
     
     [SerializeField] private int m_initialLives = 40;
-
-    [Header("Message Router Channels")] [SerializeField]
-    private string m_livesChangedChannel = "LivesChanged";
-
-    private int m_maxLives;
-    private int m_currentLives;
+    
+    public int MaxLives { get; private set; }
+    public int CurrentLives { get; private set; }
 
     private void Awake()
     {
-        m_maxLives = m_initialLives;
-        m_currentLives = m_initialLives;
+        MaxLives = m_initialLives;
+        OnMaxLivesChangedEvent.Invoke(MaxLives);
+        CurrentLives = m_initialLives;
+        OnCurrentLivesChangedEvent.Invoke(CurrentLives);
 
         m_towerWaves.OnUnitSpawnedEvent += OnUnitsSpawned;
     }
@@ -28,16 +29,16 @@ public class PlayerLivesManager : MonoBehaviour
         spawnedUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
 
         UnitLiveCost cost = spawnedUnit.LivesCostComponent;
-        m_currentLives -= cost.LiveCost;
+        CurrentLives -= cost.LiveCost;
 
-        MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
+        OnCurrentLivesChangedEvent.Invoke(CurrentLives);
     }
 
     private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killerGameObject)
     {
         UnitLiveCost cost = killedUnitGameObject.GetComponent<UnitLiveCost>();
-        m_currentLives += cost.LiveCost;
+        CurrentLives += cost.LiveCost;
 
-        MessageRouter.Broadcast(m_livesChangedChannel, new LiveChangedMessage(m_currentLives, m_maxLives));
+        OnCurrentLivesChangedEvent.Invoke(CurrentLives);
     }
 }
