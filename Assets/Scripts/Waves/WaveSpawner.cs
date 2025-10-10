@@ -11,18 +11,18 @@ public abstract class WaveSpawner : MonoBehaviour
     [SerializeField] private float m_maxTimeBetweenWaves = 30.0f;
 
     // Parameter is the new wave number
-    public UnityEvent<int> OnWaveStartedEvent;
-    
+    public event Action<int> OnWaveStartedEvent;
+    // Parameter is a value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
     public event Action<float> OnWaveProgressChangedEvent = delegate { };
 
     private bool m_isSpawningWave = false;
-    
-    private int m_currentWave = 0;
     private float m_currentWaveStartTime = 0.0f;
-    
     private readonly Dictionary<int, IEnumerator> m_waveSpawningCoroutines = new Dictionary<int, IEnumerator>();
 
     protected abstract IEnumerator SpawnWave(int waveNumber);
+    
+    
+    public int CurrentWave { get; private set; } = 0;
     
     /// <summary>
     ///  A value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
@@ -68,7 +68,7 @@ public abstract class WaveSpawner : MonoBehaviour
     
     protected void StartNextWave()
     {
-        m_currentWave++;
+        CurrentWave++;
         
         StartWave();
     }
@@ -76,10 +76,10 @@ public abstract class WaveSpawner : MonoBehaviour
     private void StartWave()
     {
         m_isSpawningWave = true;
-        IEnumerator newWaveCoroutine = SpawnWave(m_currentWave);
-        m_waveSpawningCoroutines.Add(m_currentWave, newWaveCoroutine);
+        IEnumerator newWaveCoroutine = SpawnWave(CurrentWave);
+        m_waveSpawningCoroutines.Add(CurrentWave, newWaveCoroutine);
         StartCoroutine(newWaveCoroutine);
         
-        OnWaveStartedEvent.Invoke(m_currentWave);
+        OnWaveStartedEvent.Invoke(CurrentWave);
     }
 }

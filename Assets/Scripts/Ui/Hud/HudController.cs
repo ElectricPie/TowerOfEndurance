@@ -13,18 +13,18 @@ namespace Ui.Hud
         
         private static HudController m_instance;
         
-        private StatWidgetController m_statWidgetControllerInstance;
+        private WaveWidgetController m_waveWidgetControllerInstance;
 
-        public StatWidgetController StatWidgetController
+        public WaveWidgetController WaveWidgetController
         {
             get {
-                if (m_statWidgetControllerInstance == null)
+                if (m_waveWidgetControllerInstance == null)
                 {
-                    m_statWidgetControllerInstance = new StatWidgetController();
-                    m_statWidgetControllerInstance.BindCallbacksToDependencies();
+                    m_waveWidgetControllerInstance = new WaveWidgetController();
+                    m_waveWidgetControllerInstance.BindCallbacksToDependencies();
                 }
 
-                return m_statWidgetControllerInstance;
+                return m_waveWidgetControllerInstance;
             }
         }
         
