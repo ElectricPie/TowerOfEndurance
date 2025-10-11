@@ -8,7 +8,7 @@ public class TowerProjectile : MonoBehaviour
     public event Action<TowerProjectile> OnTimeoutEvent = delegate { };
     public event Action<TowerProjectile> OnTargetKilledEvent = delegate { };
 
-    public GameObject Target { get; private set; } = null;
+    public Unit Target { get; private set; } = null;
 
     [SerializeField, Min(0), Tooltip("Time after creation before projectile the projectile triggers its on hit event")] 
     private float m_timeoutTime = 2.0f;
@@ -20,19 +20,41 @@ public class TowerProjectile : MonoBehaviour
         m_movementComponent = GetComponent<TowerProjectileMovement>();
     }
 
+    private void Update()
+    {
+        if (Target == null)
+        {
+            OnTimeoutEvent.Invoke(this);
+            return;
+        }
+    
+        float distanceToTarget = Vector3.Distance(transform.position, m_movementComponent.TargetPos);
+        if (distanceToTarget < 0.1f)
+        {
+            CancelInvoke(nameof(Timeout));
+            OnHitEvent?.Invoke(this);
+        }
+    }
+
     public void SetTarget(Unit target, Vector3 targetPos)
     {
         if (target == null)
         {
-            OnTimeoutEvent?.Invoke(this);
+            OnTimeoutEvent.Invoke(this);
             return;
         }
 
         target.HealthComponent.OnKilledEvent += OnTargetKilled;
         
         m_movementComponent.TargetPos = targetPos;
-        Target = target.gameObject;
+        Target = target;
         StartTimeout();
+    }
+
+    private void HitTarget()
+    {
+        CancelInvoke(nameof(Timeout));
+        OnHitEvent?.Invoke(this);
     }
 
     private void StartTimeout()
@@ -43,26 +65,23 @@ public class TowerProjectile : MonoBehaviour
 
     private void Timeout()
     {
-        Target = null;
-        OnTimeoutEvent?.Invoke(this);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision == null)
-            return;
-        
-        if (collision.gameObject != Target.gameObject) 
-            return;
-        
         CancelInvoke(nameof(Timeout));
-        OnHitEvent?.Invoke(this);
+        
+        // Hit the target if it's still valid as this means we missed
+        if (Target != null)
+        {
+            HitTarget();
+            return;
+        }
+        
+        Target = null;
+        OnTimeoutEvent.Invoke(this);
     }
 
     private void OnTargetKilled(GameObject target, GameObject killer)
     {
         CancelInvoke(nameof(Timeout));
-        OnTargetKilledEvent?.Invoke(this);
+        OnTargetKilledEvent.Invoke(this);
         
         Target = null;
     }

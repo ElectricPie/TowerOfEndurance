@@ -25,7 +25,7 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     
     
     /* Runtime Values */
-    public event Action<GameObject> OnTargetHit = delegate { };
+    public event Action<Unit> OnTargetHit = delegate { };
 
     private ObjectPool<TowerProjectile> m_projectilePool;
     private float m_projectileSpeed;
@@ -139,20 +139,16 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     private void OnProjectileHit(TowerProjectile projectile)
     {
         ApplyEffects(projectile.Target);   
-        OnTargetHit?.Invoke(projectile.Target);
+        OnTargetHit.Invoke(projectile.Target);
         m_projectilePool.Release(projectile);
     }
     
-    private void ApplyEffects(GameObject target)
+    private void ApplyEffects(Unit target)
     {
         if (target == null)
             return;
-
-        EffectsContainer effectsContainer = target.GetComponent<EffectsContainer>();
-        if (effectsContainer == null)
-            return;
         
-        effectsContainer.ApplyEffect(m_caster, m_baseAttackEffect, m_level);
+        target.EffectsContainer.ApplyEffect(m_caster, m_baseAttackEffect, m_level);
     }
 }
 

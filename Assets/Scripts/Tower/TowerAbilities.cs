@@ -63,12 +63,12 @@ public class TowerAbilities : MonoBehaviour
         { 
             foreach (AbilityInstance ability in m_onBasicHitAbilities)
             {
-                ability.TryActivate(target);
+                ability.TryActivate(target.gameObject);
             }
             
             foreach (AbilityInstance ability in m_onAnyDamageAbilities)
             {
-                ability.TryActivate(target);
+                ability.TryActivate(target.gameObject);
             }
         };
 
