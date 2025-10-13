@@ -1,22 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Waves.WaveSpawnPattern;
 using Random = UnityEngine.Random;
 
 public class TowerWaves : MonoBehaviour
 {
-    [SerializeField, Tooltip("The angle from the tower the spawn point will be in degrees")] 
-    private float m_spawnPointAngle = 0.0f;
-    [SerializeField] private float m_spawnPointDistance = 4.5f;
-    [SerializeField] private Vector3 m_spawnPointOffset = new Vector3(0.0f, -0.8f, 0.0f);
-    [SerializeField, Tooltip("If set to a value will move a new spawned unit left/right the amount of the value")]
-    private float m_unitSpawnPointVariation = 2.0f;
-
     public event Action<Unit> OnUnitSpawnedEvent = delegate { };
 
     public float CurrentWaveRpm => m_waves[0].RotationsPerMinute;
 
     private List<Wave> m_waves;
+    
+    [SerializeReference] private SpawnPattern m_spawnPattern;
 
     public Wave NewWave(float waveRotationSpeed, int waveUnitCount, int waveNumber)
     {
@@ -47,16 +43,10 @@ public class TowerWaves : MonoBehaviour
         if (unitPrefab is null)
             throw new Exception($"{name} is missing unitPrefab");
         
-        Wave latestWave = m_waves[m_waves.Count - 1];
+        Wave latestWave = m_waves[^1];
+        Vector3 spawnPosition = m_spawnPattern.GetRandomSpawnPoint();
         
-        Vector3 insideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance - m_unitSpawnPointVariation);
-        insideOfSpawn += m_spawnPointOffset;
-        Vector3 outsideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance + m_unitSpawnPointVariation);
-        outsideOfSpawn += m_spawnPointOffset;
-        float randomLerpValue = Random.Range(0.0f, 1.0f);
-        Vector3 spawnPosition = Vector3.Lerp(insideOfSpawn, outsideOfSpawn, randomLerpValue);
-        
-        Unit newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform).GetComponent<Unit>();
+        Unit newUnit = Instantiate<Unit>(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform);
         if (modifyUnit)
         {
             newUnit.HealthComponent.UpdateMaxHealth(unitHealth, false);
@@ -119,30 +109,10 @@ public class TowerWaves : MonoBehaviour
         }
     }
 
-    private Vector3 CalculatePositionAroundTower(float angleInDegrees, float distanceFromTower)
-    {
-        float angleInRadians = angleInDegrees * (Mathf.PI / 180);
-        
-        float x = distanceFromTower * Mathf.Cos(angleInRadians);
-        float z = distanceFromTower * Mathf.Sin(angleInRadians);
-
-        return transform.position + new Vector3(x, 0, z);
-    }
-
     protected void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        
-        // Draw spawn point
-        Vector3 spawnPoint = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance) + m_spawnPointOffset;
-        Gizmos.DrawSphere(spawnPoint, 0.5f);
-        
-        // Draw spawn variation
-        Vector3 insideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance - m_unitSpawnPointVariation);
-        insideOfSpawn += m_spawnPointOffset;
-        Vector3 outsideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance + m_unitSpawnPointVariation);
-        outsideOfSpawn += m_spawnPointOffset;
-        Gizmos.DrawLine(insideOfSpawn, outsideOfSpawn);
+        m_spawnPattern.DrawnArea();
     }
 }
 

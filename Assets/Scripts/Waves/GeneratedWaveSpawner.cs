@@ -10,7 +10,7 @@ namespace Waves
 
         protected override IEnumerator SpawnWave(int waveNumber)
         {
-            Wave newWave = m_towerWaves.NewWave(m_waveSettings.WaveRotationalSpeed, m_waveSettings.UnitsPerWave, waveNumber);
+            Wave newWave = TowerWaves.NewWave(m_waveSettings.WaveRotationalSpeed, m_waveSettings.UnitsPerWave, waveNumber);
             newWave.OnAllUnitsKilled += WaveFinished;
 
             float unitHealth = m_waveSettings.UnitHealthAtWave(waveNumber);
@@ -18,7 +18,7 @@ namespace Waves
 
             for (int i = 0; i < m_waveSettings.UnitsPerWave; i++)
             {
-                m_towerWaves.SpawnUnitToLatestWave(m_waveSettings.UnitBase, true, unitHealth, unitWorth);
+                TowerWaves.SpawnUnitToLatestWave(m_waveSettings.UnitBase, true, unitHealth, unitWorth);
                 // Adding a small random delay to make the spawning less organised
                 yield return new WaitForSeconds(m_waveSettings.TimeBetweenUnits + Random.Range(0, m_maxRandomDelayBetweenSpawns));
             }

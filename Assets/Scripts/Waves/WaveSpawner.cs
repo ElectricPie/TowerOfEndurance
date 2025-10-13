@@ -2,11 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public abstract class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] protected TowerWaves m_towerWaves;
+    [SerializeField] protected TowerWaves TowerWaves;
     [SerializeField, Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawned")] 
     private float m_maxTimeBetweenWaves = 30.0f;
     
@@ -20,7 +19,6 @@ public abstract class WaveSpawner : MonoBehaviour
     private readonly Dictionary<int, IEnumerator> m_waveSpawningCoroutines = new Dictionary<int, IEnumerator>();
 
     protected abstract IEnumerator SpawnWave(int waveNumber);
-    
     
     public int CurrentWave { get; private set; } = 0;
     
@@ -46,7 +44,7 @@ public abstract class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
-        if (m_towerWaves == null)
+        if (TowerWaves == null)
             throw new Exception($"Wave Manager on {name} is missing reference to a Tower Waves script");
 
         StartWave();

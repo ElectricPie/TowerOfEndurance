@@ -650,6 +650,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7295613335744759021, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
+      propertyPath: TowerWaves
+      value: 
+      objectReference: {fileID: 719932121}
+    - target: {fileID: 7295613335744759021, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
       propertyPath: m_towerWaves
       value: 
       objectReference: {fileID: 719932121}
@@ -980,6 +984,46 @@ PrefabInstance:
       propertyPath: m_playerMoney
       value: 
       objectReference: {fileID: 6725663958928044032}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_spawnPattern
+      value: 2200126377926328408
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: 'managedReferences[2200126377926328408]'
+      value: Assembly-CSharp Waves.WaveSpawnPattern.LineSpawnPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_transform
+      value: 
+      objectReference: {fileID: 7371096466507088165}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_towerTransform
+      value: 
+      objectReference: {fileID: 7371096466507088165}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_spawnPointAngle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_spawnPointDistance
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_spawnPointOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_spawnPointOffset.y
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_spawnPointOffset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328408].m_unitSpawnPointVariation
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: OnUnitSpanwedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
