@@ -5,7 +5,7 @@ namespace Waves.WaveSpawnPattern
     public class LineSpawnPattern : SpawnPattern
     {
         [SerializeField]
-        private Transform m_transform;
+        private Transform m_towerTransform;
         [SerializeField]
         private float m_spawnPointAngle;
         [SerializeField]
@@ -17,12 +17,8 @@ namespace Waves.WaveSpawnPattern
         
         public override Vector3 GetRandomSpawnPoint()
         {
-            Vector3 insideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance - m_unitSpawnPointVariation);
-            insideOfSpawn += m_spawnPointOffset;
-            Vector3 outsideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance + m_unitSpawnPointVariation);
-            outsideOfSpawn += m_spawnPointOffset;
-            float randomLerpValue = Random.Range(0.0f, 1.0f);
-            return Vector3.Lerp(insideOfSpawn, outsideOfSpawn, randomLerpValue);
+            float randomDistance = Random.Range(m_spawnPointDistance - m_unitSpawnPointVariation, m_spawnPointDistance + m_unitSpawnPointVariation);
+            return CalculatePositionAroundTower(m_spawnPointAngle, randomDistance) + m_spawnPointOffset;
         }
 
         public override void DrawnArea()
@@ -32,10 +28,8 @@ namespace Waves.WaveSpawnPattern
             Gizmos.DrawSphere(spawnPoint, 0.5f);
         
             // Draw spawn variation
-            Vector3 insideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance - m_unitSpawnPointVariation);
-            insideOfSpawn += m_spawnPointOffset;
-            Vector3 outsideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance + m_unitSpawnPointVariation);
-            outsideOfSpawn += m_spawnPointOffset;
+            Vector3 insideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance - m_unitSpawnPointVariation) + m_spawnPointOffset;
+            Vector3 outsideOfSpawn = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance + m_unitSpawnPointVariation) + m_spawnPointOffset;
             Gizmos.DrawLine(insideOfSpawn, outsideOfSpawn);
         }
         
@@ -46,7 +40,7 @@ namespace Waves.WaveSpawnPattern
             float x = distanceFromTower * Mathf.Cos(angleInRadians);
             float z = distanceFromTower * Mathf.Sin(angleInRadians);
         
-            return m_transform.position + new Vector3(x, 0, z);
+            return m_towerTransform.position + new Vector3(x, 0, z);
         }
     }
 }
