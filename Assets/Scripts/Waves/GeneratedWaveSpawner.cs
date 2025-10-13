@@ -6,6 +6,7 @@ namespace Waves
     public class GeneratedWaveSpawner : WaveSpawner
     {
         [SerializeField] private WaveSettingsScriptableObject m_waveSettings;
+        [SerializeField] private float m_maxRandomDelayBetweenSpawns = 0.5f;
 
         protected override IEnumerator SpawnWave(int waveNumber)
         {
@@ -18,7 +19,8 @@ namespace Waves
             for (int i = 0; i < m_waveSettings.UnitsPerWave; i++)
             {
                 m_towerWaves.SpawnUnitToLatestWave(m_waveSettings.UnitBase, true, unitHealth, unitWorth);
-                yield return new WaitForSeconds(m_waveSettings.TimeBetweenUnits);
+                // Adding a small random delay to make the spawning less organised
+                yield return new WaitForSeconds(m_waveSettings.TimeBetweenUnits + Random.Range(0, m_maxRandomDelayBetweenSpawns));
             }
 
             WaveSpawningFinished(waveNumber);

@@ -7,11 +7,11 @@ using UnityEngine.Events;
 public abstract class WaveSpawner : MonoBehaviour
 {
     [SerializeField] protected TowerWaves m_towerWaves;
-    [Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawned")] 
-    [SerializeField] private float m_maxTimeBetweenWaves = 30.0f;
-
+    [SerializeField, Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawned")] 
+    private float m_maxTimeBetweenWaves = 30.0f;
+    
     // Parameter is the new wave number
-    public event Action<int> OnWaveStartedEvent;
+    public event Action<int> OnWaveStartedEvent = delegate { };
     // Parameter is a value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
     public event Action<float> OnWaveProgressChangedEvent = delegate { };
 
