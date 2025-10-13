@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Waves.WaveSpawnPattern
 {
+    [Serializable]
     public class LineSpawnPattern : SpawnPattern
     {
         [SerializeField]
