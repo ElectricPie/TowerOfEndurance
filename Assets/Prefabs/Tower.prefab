@@ -59,10 +59,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826c1638b89b605caa1be0757835fa54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spawnPointAngle: 0
-  m_spawnPointDistance: 4.5
-  m_spawnPointOffset: {x: 0, y: -0.8, z: 0}
-  m_unitSpawnPointVariation: 2
+  m_spawnPattern:
+    rid: 2200126377926328458
+  references:
+    version: 2
+    RefIds:
+    - rid: 2200126377926328458
+      type: {class: ConeSpawnPattern, ns: Waves.WaveSpawnPattern, asm: Assembly-CSharp}
+      data:
+        m_towerTransform: {fileID: 8063762793612358293}
+        m_spawnPointAngle: 35
+        m_spawnPointDistance: 4.5
+        m_spawnPointOffset: {x: 0, y: -0.8, z: 0}
+        m_unitSpawnWidth: 2.5
+        m_coneAngle: 40
+        m_biasWeighting: 2
 --- !u!114 &3314149860893733602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,8 +90,6 @@ MonoBehaviour:
   m_attributeSet: {fileID: 1223471215192358387}
   m_costMultiplier: 1.15
   m_upgradeInitialCost: 5
-  m_damageUpgradeChannel: DamageUpgradeChannel
-  m_speedUpgradeChannel: SpeedUpgradeChannel
 --- !u!114 &4052425807144529552
 MonoBehaviour:
   m_ObjectHideFlags: 0
