@@ -12,11 +12,11 @@ namespace Waves.WaveSpawnPattern
         [SerializeField]
         private float m_spawnPointAngle = 35.0f;
         [SerializeField]
-        private float m_spawnPointWidth = 4.5f;
+        private float m_spawnPointDistance = 4.5f;
         [SerializeField]
         private Vector3 m_spawnPointOffset = new Vector3(0.0f, -0.8f, 0.0f);
         [SerializeField]
-        private float m_unitSpawnDistance = 2.5f;
+        private float m_unitSpawnWidth = 2.5f;
         [SerializeField]
         private float m_coneAngle = 40.0f;
         [SerializeField, Tooltip("Higher values make it more likely to spawn closer to the outside of the cone")] 
@@ -28,7 +28,7 @@ namespace Waves.WaveSpawnPattern
             float randomAngle = Random.Range(m_spawnPointAngle - halfConeAngle, m_spawnPointAngle + halfConeAngle);
             
             float weighting = Mathf.Pow(Random.value, 1.0f / m_biasWeighting);
-            float randomDistance = Mathf.Lerp(m_spawnPointWidth - m_unitSpawnDistance, m_spawnPointWidth + m_unitSpawnDistance, weighting);
+            float randomDistance = Mathf.Lerp(m_spawnPointDistance - m_unitSpawnWidth, m_spawnPointDistance + m_unitSpawnWidth, weighting);
             
             return CalculatePositionAroundTower(randomAngle, randomDistance) + m_spawnPointOffset;
         }
@@ -36,18 +36,18 @@ namespace Waves.WaveSpawnPattern
         public override void DrawnArea()
         {
             // Draw spawn point
-            Vector3 spawnPoint = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointWidth) + m_spawnPointOffset;
+            Vector3 spawnPoint = CalculatePositionAroundTower(m_spawnPointAngle, m_spawnPointDistance) + m_spawnPointOffset;
             Gizmos.DrawSphere(spawnPoint, 0.5f);
             
             float halfConeAngle = m_coneAngle / 2;
             
             Vector3[] insideSpawn = {
-                CalculatePositionAroundTower(m_spawnPointAngle - halfConeAngle, m_spawnPointWidth - m_unitSpawnDistance) + m_spawnPointOffset,
-                CalculatePositionAroundTower(m_spawnPointAngle + halfConeAngle, m_spawnPointWidth - m_unitSpawnDistance) + m_spawnPointOffset
+                CalculatePositionAroundTower(m_spawnPointAngle - halfConeAngle, m_spawnPointDistance - m_unitSpawnWidth) + m_spawnPointOffset,
+                CalculatePositionAroundTower(m_spawnPointAngle + halfConeAngle, m_spawnPointDistance - m_unitSpawnWidth) + m_spawnPointOffset
             };
             Vector3[] outsideSpawn = {
-                CalculatePositionAroundTower(m_spawnPointAngle - halfConeAngle, m_spawnPointWidth + m_unitSpawnDistance) + m_spawnPointOffset,
-                CalculatePositionAroundTower(m_spawnPointAngle + halfConeAngle, m_spawnPointWidth + m_unitSpawnDistance) + m_spawnPointOffset
+                CalculatePositionAroundTower(m_spawnPointAngle - halfConeAngle, m_spawnPointDistance + m_unitSpawnWidth) + m_spawnPointOffset,
+                CalculatePositionAroundTower(m_spawnPointAngle + halfConeAngle, m_spawnPointDistance + m_unitSpawnWidth) + m_spawnPointOffset
             };
             
             // Draw cone boundaries

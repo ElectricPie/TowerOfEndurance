@@ -1017,6 +1017,10 @@ PrefabInstance:
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328458].m_biasWeighting
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: managedReferences[2200126377926328408].m_towerTransform
       value: 
       objectReference: {fileID: 7371096466507088165}
@@ -1032,6 +1036,10 @@ PrefabInstance:
       propertyPath: managedReferences[2200126377926328458].m_towerTransform
       value: 
       objectReference: {fileID: 7371096466507088165}
+    - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: managedReferences[2200126377926328458].m_unitSpawnWidth
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: managedReferences[2200126377926328408].m_spawnPointAngle
       value: 0
