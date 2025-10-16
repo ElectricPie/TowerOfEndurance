@@ -73,11 +73,14 @@ public abstract class WaveSpawner : MonoBehaviour
 
     private void StartWave()
     {
+        OnWaveStartedEvent.Invoke(CurrentWave);
+        
         m_isSpawningWave = true;
         IEnumerator newWaveCoroutine = SpawnWave(CurrentWave);
         m_waveSpawningCoroutines.Add(CurrentWave, newWaveCoroutine);
         StartCoroutine(newWaveCoroutine);
-        
-        OnWaveStartedEvent.Invoke(CurrentWave);
     }
+
+    public abstract Unit GetCurrentWaveUnit();
+    public abstract Unit GetNextWaveUnit();
 }

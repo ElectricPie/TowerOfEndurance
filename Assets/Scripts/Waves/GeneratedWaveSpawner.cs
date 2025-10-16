@@ -7,6 +7,8 @@ namespace Waves
     {
         [SerializeField] private WaveSettingsScriptableObject m_waveSettings;
         [SerializeField] private float m_maxRandomDelayBetweenSpawns = 0.5f;
+        
+        public WaveSettingsScriptableObject WaveSettings => m_waveSettings;
 
         protected override IEnumerator SpawnWave(int waveNumber)
         {
@@ -24,6 +26,16 @@ namespace Waves
             }
 
             WaveSpawningFinished(waveNumber);
+        }
+
+        public override Unit GetCurrentWaveUnit()
+        {
+            return m_waveSettings.UnitBase;
+        }
+
+        public override Unit GetNextWaveUnit()
+        {
+            return m_waveSettings.UnitBase;
         }
     }
 }

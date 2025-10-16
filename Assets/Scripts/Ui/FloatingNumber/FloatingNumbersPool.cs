@@ -41,7 +41,7 @@ namespace Ui.FloatingNumber
                     Destroy(floatingNumber);
                 }, true, m_poolSize);
 
-            m_towerWaves.OnUnitSpawnedEvent += newUnit =>
+            m_towerWaves.OnUnitSpawnedEvent += (newUnit, _) =>
             {
                 newUnit.HealthComponent.OnDamageTakenEvent += OnUnitTakeDamage;
             };

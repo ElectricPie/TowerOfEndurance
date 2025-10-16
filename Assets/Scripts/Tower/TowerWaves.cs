@@ -6,7 +6,10 @@ using Random = UnityEngine.Random;
 
 public class TowerWaves : MonoBehaviour
 {
-    public event Action<Unit> OnUnitSpawnedEvent = delegate { };
+    /// <summary>
+    /// Event invoked when a new <c>Unit</c> is spawned. The parameters are the spawned <c>Unit</c> and the wave number it belongs to.
+    /// </summary>
+    public event Action<Unit, int> OnUnitSpawnedEvent = delegate { };
 
     public float CurrentWaveRpm => m_waves[0].RotationsPerMinute;
 
@@ -55,7 +58,7 @@ public class TowerWaves : MonoBehaviour
         
         latestWave.AddUnit(newUnit);
 
-        OnUnitSpawnedEvent?.Invoke(newUnit);
+        OnUnitSpawnedEvent.Invoke(newUnit, latestWave.WaveNumber);
     }
     
     /// <summary>

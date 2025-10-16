@@ -17,5 +17,22 @@ public class SetWaveSpawner : WaveSpawner
         }
         
         WaveSpawningFinished(waveNumber);
-    } 
+    }
+
+    public override Unit GetCurrentWaveUnit()
+    {
+        if (CurrentWave < m_waves.Length - 1)
+            return null;
+        
+        
+        return m_waves[CurrentWave].UnitPrefab;
+    }
+
+    public override Unit GetNextWaveUnit()
+    {
+        if (CurrentWave < m_waves.Length - 1)
+            return null;
+        
+        return m_waves[CurrentWave + 1].UnitPrefab;
+    }
 }

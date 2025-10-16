@@ -24,7 +24,7 @@ public class PlayerLivesManager : MonoBehaviour
         m_towerWaves.OnUnitSpawnedEvent += OnUnitsSpawned;
     }
 
-    private void OnUnitsSpawned(Unit spawnedUnit)
+    private void OnUnitsSpawned(Unit spawnedUnit, int waveNumber)
     {
         spawnedUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
 
