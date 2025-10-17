@@ -9,9 +9,17 @@ public abstract class WaveSpawner : MonoBehaviour
     [SerializeField, Tooltip("The time in seconds before the next wave spawns if the current one is not complete. Starts after the last unit is spawned")] 
     private float m_maxTimeBetweenWaves = 30.0f;
     
-    // Parameter is the new wave number
+    /// <summary>
+    /// Called when a wave has started. Parameter is the wave number that just started.
+    /// </summary>
     public event Action<int> OnWaveStartedEvent = delegate { };
-    // Parameter is a value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
+    /// <summary>
+    /// Called when a wave has ended. Parameter is the wave number that just ended.
+    /// </summary>
+    public event Action<int> OnWaveEndedEvent = delegate { };
+    /// <summary>
+    /// Called every frame with a value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
+    /// </summary>
     public event Action<float> OnWaveProgressChangedEvent = delegate { };
 
     private bool m_isSpawningWave = false;
@@ -23,7 +31,7 @@ public abstract class WaveSpawner : MonoBehaviour
     public int CurrentWave { get; private set; } = 0;
     
     /// <summary>
-    ///  A value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
+    /// A value between 0 and 1 indicating the progress of the current wave. 1 means the wave is complete.
     /// </summary>
     public float CurrentWaveProgress()
     {
@@ -58,6 +66,8 @@ public abstract class WaveSpawner : MonoBehaviour
     // This must be called by inheriting classes in the SpawnWave method when a wave is finished spawning all its units
     protected void WaveSpawningFinished(int waveNumber)
     {
+        OnWaveEndedEvent.Invoke(waveNumber);
+        
         m_currentWaveStartTime = Time.time;
         m_isSpawningWave = false;
         m_waveSpawningCoroutines.Remove(waveNumber);

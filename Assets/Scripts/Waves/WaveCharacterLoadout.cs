@@ -19,7 +19,7 @@ namespace Waves
 
             m_waveSpawner = FindFirstObjectByType<WaveSpawner>();
             m_waveSpawner.OnWaveStartedEvent += OnWaveSpawningStarted;
-            // m_waveSpawner.OnWaveEndedEvent;
+            m_waveSpawner.OnWaveEndedEvent += OnWaveEnded;
         }
 
         private void OnUnitSpawned(Unit newUnit, int waveNumber)
@@ -37,6 +37,11 @@ namespace Waves
 
             CharacterPackLoadout characterPackLoadout = characterPackAppearance.GetRandomPackLoadout();
             m_waveCharacterLoadouts.TryAdd(newWaveNumber, characterPackLoadout);
+        }
+
+        private void OnWaveEnded(int waveNumber)
+        {
+            m_waveCharacterLoadouts.Remove(waveNumber);
         }
     }
 }
