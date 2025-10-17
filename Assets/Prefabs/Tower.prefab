@@ -70,7 +70,7 @@ MonoBehaviour:
         m_towerTransform: {fileID: 8063762793612358293}
         m_spawnPointAngle: 35
         m_spawnPointDistance: 4.5
-        m_spawnPointOffset: {x: 0, y: -0.8, z: 0}
+        m_spawnPointOffset: {x: 0, y: 0.5, z: 0}
         m_unitSpawnWidth: 2.5
         m_coneAngle: 40
         m_biasWeighting: 2
