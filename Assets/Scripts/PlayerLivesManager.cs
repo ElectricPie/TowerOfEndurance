@@ -6,9 +6,9 @@ public class PlayerLivesManager : MonoBehaviour
 {
     public event Action<int> OnCurrentLivesChangedEvent = delegate { };
     public event Action<int> OnMaxLivesChangedEvent = delegate { };
-    
+    public event Action OnZeroLivesLeftEvent = delegate { };
+
     [SerializeField, RequiredIn(PrefabKind.InstanceInScene)] private TowerWaves m_towerWaves;
-    
     [SerializeField] private int m_initialLives = 40;
     
     public int MaxLives { get; private set; }
@@ -32,6 +32,11 @@ public class PlayerLivesManager : MonoBehaviour
         CurrentLives -= cost.LiveCost;
 
         OnCurrentLivesChangedEvent.Invoke(CurrentLives);
+        
+        if (CurrentLives <= 0)
+        {
+            OnZeroLivesLeftEvent.Invoke();
+        }
     }
 
     private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killerGameObject)

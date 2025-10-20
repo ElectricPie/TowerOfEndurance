@@ -21,7 +21,9 @@ public class TowerAbilities : MonoBehaviour
     private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
-    private readonly HashSet<AbilityInstance> m_timedAbilities = new HashSet<AbilityInstance>();
+    private readonly HashSet<TimedAbilityInstance> m_timedAbilities = new HashSet<TimedAbilityInstance>();
+
+    private bool m_isActive = true;
     
     public void AddAbility(AbilityScriptableObject newAbility)
     {
@@ -40,11 +42,30 @@ public class TowerAbilities : MonoBehaviour
                 m_onAnyDamageAbilities.Add(newAbilityInstance);
                 break;
             case AbilityTrigger.Timed:
-                StartCoroutine(TimedAbilityCoroutine(newAbilityInstance));
-                m_timedAbilities.Add(newAbilityInstance);
+                IEnumerator newTimedAbilityCoroutine = TimedAbilityCoroutine(newAbilityInstance);
+                if (m_isActive){
+                    StartCoroutine(newTimedAbilityCoroutine);
+                }
+                m_timedAbilities.Add(new TimedAbilityInstance(newAbilityInstance, newTimedAbilityCoroutine));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    public void StopAllAbilities()
+    {
+        m_isActive = false;
+        
+        if (m_attackCoroutine != null)
+        {
+            StopCoroutine(m_attackCoroutine);
+            m_attackCoroutine = null;
+        }
+        
+        foreach (TimedAbilityInstance timedAbilityInstance in m_timedAbilities)
+        {
+            StopCoroutine(timedAbilityInstance.Coroutine);
         }
     }
     
@@ -60,7 +81,12 @@ public class TowerAbilities : MonoBehaviour
         
         BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
         basicAttackAbilityData.OnTargetHit += target =>
-        { 
+        {
+            if (!m_isActive)
+            {
+                return;
+            }
+            
             foreach (AbilityInstance ability in m_onBasicHitAbilities)
             {
                 ability.TryActivate(target.gameObject);
@@ -78,7 +104,7 @@ public class TowerAbilities : MonoBehaviour
 
     private IEnumerator Fire()
     {
-        while (true)
+        while (m_isActive)
         {
             Unit target = m_towerWaves.GetOldestUnit();
             if (target == null)
@@ -100,7 +126,7 @@ public class TowerAbilities : MonoBehaviour
     private IEnumerator TimedAbilityCoroutine(AbilityInstance ability)
     {
         yield return new WaitForSeconds(ability.AbilityData.TriggerTime(ability.Level));
-        while (true)
+        while (m_isActive)
         {
             ability.TryActivate();
             yield return new WaitForSeconds(ability.AbilityData.TriggerTime(ability.Level));
@@ -111,5 +137,34 @@ public class TowerAbilities : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position + m_projectileSpawnPointOffset, 0.5f);
+    }
+    
+    
+    
+    private readonly struct TimedAbilityInstance : IEquatable<TimedAbilityInstance>
+    {
+        public readonly AbilityInstance Ability;
+        public readonly IEnumerator Coroutine;
+        
+        public TimedAbilityInstance(AbilityInstance ability, IEnumerator coroutine)
+        {
+            Ability = ability;
+            Coroutine = coroutine;
+        }
+
+        public bool Equals(TimedAbilityInstance other)
+        {
+            return Equals(Ability, other.Ability) && Equals(Coroutine, other.Coroutine);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is TimedAbilityInstance other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Ability, Coroutine);
+        }
     }
 }

@@ -42,6 +42,17 @@ public abstract class WaveSpawner : MonoBehaviour
         return Mathf.Clamp01(currentWaveTime / m_maxTimeBetweenWaves);
     }
     
+    public void StopSpawning()
+    {
+        foreach (IEnumerator coroutine in m_waveSpawningCoroutines.Values)
+        {
+            StopCoroutine(coroutine);
+        }
+        m_waveSpawningCoroutines.Clear();
+        m_isSpawningWave = false;
+        CancelInvoke(nameof(StartNextWave));
+    }
+    
     protected void WaveFinished(Wave completedWave)
     {
         // Stop any waiting time

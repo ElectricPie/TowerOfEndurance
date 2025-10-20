@@ -6,10 +6,12 @@ using Waves;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    public PlayerManager[] Players { get; private set; } = Array.Empty<PlayerManager>();
     
+    public event Action OnGameOverEvent = delegate { };
+
+    private PlayerManager m_player;
     private GeneratedWaveSpawner m_waveSpawner = null;
+    private TowerAbilities m_towerAbilities = null;
 
     private void Awake()
     {
@@ -24,9 +26,20 @@ public class GameManager : MonoBehaviour
         
         // Get components
         m_waveSpawner = GetComponent<GeneratedWaveSpawner>();
+        m_towerAbilities = FindFirstObjectByType<TowerAbilities>();
         
-        // Keep track of all players
-        Players = FindObjectsByType<PlayerManager>(FindObjectsSortMode.None);
+        // Get the player
+        m_player = FindFirstObjectByType<PlayerManager>();
+
+        m_player.GetComponent<PlayerLivesManager>().OnZeroLivesLeftEvent += GameOver;
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over! Player has no lives left.");
+        
+        m_waveSpawner.StopSpawning();
+        m_towerAbilities.StopAllAbilities();
     }
 
     private void OnDestroy()
