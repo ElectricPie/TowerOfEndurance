@@ -16,7 +16,7 @@ namespace Ui.Ability
         {
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
             
-            m_abilityWidgetController = Hud.HudController.Instance.AbilityWidgetController;
+            m_abilityWidgetController = Hud.GameHudController.Instance.AbilityWidgetController;
         }
 
         public void OnClicked()

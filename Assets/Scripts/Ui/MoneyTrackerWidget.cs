@@ -9,7 +9,7 @@ public class MoneyTrackerWidget : MonoBehaviour
     
     private void Awake()
     {
-        MoneyWidgetController widgetController = HudController.Instance.MoneyWidgetController;
+        MoneyWidgetController widgetController = GameHudController.Instance.MoneyWidgetController;
         widgetController.OnMoneyChanged += OnMoneyChanged;
     }
     

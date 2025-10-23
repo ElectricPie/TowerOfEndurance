@@ -3,22 +3,19 @@ using UnityEngine;
 
 namespace Ui.Hud
 {
-    public class HudController : MonoBehaviour
+    public class GameHudController : MonoBehaviour
     {
-        public static HudController Instance => m_instance;
-
-
         [SerializeField] private GameObject m_hudPrefab;
         private GameObject m_hudInstance;
-        
-        private static HudController m_instance;
-        
+
         private WaveWidgetController m_waveWidgetControllerInstance;
         private MoneyWidgetController m_moneyWidgetControllerInstance;
         private LivesWidgetController m_livesWidgetControllerInstance;
         private TowerUpgradeWidgetController m_towerUpgradeWidgetControllerInstance;
         private AbilityWidgetController m_abilityWidgetControllerInstance;
 
+        public static GameHudController Instance { get; private set; }
+        
         public WaveWidgetController WaveWidgetController
         {
             get {
@@ -83,13 +80,13 @@ namespace Ui.Hud
         
         private void Awake()
         {
-            if (m_instance != null)
+            if (Instance != null)
             {
                 Destroy(this);
                 return;
             }
             
-            m_instance = this;
+            Instance = this;
 
             Instantiate(m_hudPrefab);
         }

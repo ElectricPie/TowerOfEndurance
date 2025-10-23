@@ -21,7 +21,7 @@ namespace Ui.TowerUpgrade
                 m_towerUpgradeWidgetController.UpgradeSpeed();
             };
             
-            m_towerUpgradeWidgetController = Hud.HudController.Instance.TowerUpgradeWidgetController;
+            m_towerUpgradeWidgetController = Hud.GameHudController.Instance.TowerUpgradeWidgetController;
             m_towerUpgradeWidgetController.OnDamageUpgradeCostChanged += newCost =>
             {
                 m_damageUpgradeButton.UpdateCost(newCost);

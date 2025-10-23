@@ -11,7 +11,7 @@ namespace Ui.Wave
 
         private void Awake()
         {
-            WaveWidgetController widgetController = HudController.Instance.WaveWidgetController;
+            WaveWidgetController widgetController = GameHudController.Instance.WaveWidgetController;
             widgetController.OnWaveNumberChanged += OnWaveStarted;
         }
 

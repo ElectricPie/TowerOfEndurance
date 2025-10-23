@@ -12,7 +12,7 @@ public class LivesTrackerWidget : MonoBehaviour
     
     private void Awake()
     {
-        LivesWidgetController widgetController = HudController.Instance.LivesWidgetController;
+        LivesWidgetController widgetController = GameHudController.Instance.LivesWidgetController;
         widgetController.OnCurrentLivesChanged += OnCurrentLivesChanged;
         widgetController.OnMaxLivesChanged += OnMaxLivesChanged;
         widgetController.BroadcastInitialValues();
