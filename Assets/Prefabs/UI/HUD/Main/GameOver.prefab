@@ -152,6 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8119568274115707128}
   - component: {fileID: 6174419499591941640}
+  - component: {fileID: 8862510644823800097}
   m_Layer: 5
   m_Name: Stats
   m_TagString: Untagged
@@ -207,6 +208,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8862510644823800097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6436838270845895572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bd4c7c4e3349b1a74f5ef787adb159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.GameOver.GameOverStatsWidget
+  m_wavesText: {fileID: 491253518518831120}
 --- !u!1 &8069091724708768747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,6 +1354,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+--- !u!114 &491253518518831120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9011530737257955469, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+  m_PrefabInstance: {fileID: 8925618847222827165}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5725833057786636615 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3794306709853315546, guid: 33715b98cc2c9219aae92747c07af282, type: 3}

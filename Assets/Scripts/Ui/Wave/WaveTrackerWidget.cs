@@ -17,7 +17,7 @@ namespace Ui.Wave
 
         public void OnWaveStarted(int waveNumber)
         {
-            m_waveNumberText.text = (waveNumber + 1).ToString("000");
+            m_waveNumberText.text = waveNumber.ToString("000");
         }
     }
 }

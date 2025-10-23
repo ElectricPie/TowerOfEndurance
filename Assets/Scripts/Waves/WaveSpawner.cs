@@ -66,7 +66,7 @@ public abstract class WaveSpawner : MonoBehaviour
         if (TowerWaves == null)
             throw new Exception($"Wave Manager on {name} is missing reference to a Tower Waves script");
 
-        StartWave();
+        StartNextWave();
     }
 
     private void Update()
@@ -88,7 +88,6 @@ public abstract class WaveSpawner : MonoBehaviour
     protected void StartNextWave()
     {
         CurrentWave++;
-        
         StartWave();
     }
 

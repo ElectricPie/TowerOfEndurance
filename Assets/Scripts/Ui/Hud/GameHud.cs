@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Ui.Hud
 {
@@ -6,6 +7,8 @@ namespace Ui.Hud
     {
         [SerializeField] private GameObject m_gameHudGameObject;
         [SerializeField] private GameObject m_gameOverGameObject;
+        
+        [SerializeField] private UnityEvent m_onGameOverEvent = new UnityEvent();
 
         private void Awake()
         {
@@ -14,7 +17,10 @@ namespace Ui.Hud
 
         private void Start()
         {
-            GameManager.Instance.OnGameOverEvent += ShowGameOverScreen;
+            GameManager.Instance.OnGameOverEvent += () => {
+                m_onGameOverEvent.Invoke();
+                ShowGameOverScreen();
+            };
         }
 
         private void ShowGameHud()
