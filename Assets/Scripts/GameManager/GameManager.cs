@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
         
         m_waveSpawner.StopSpawning();
         m_towerAbilities.StopAllAbilities();
+        
+        OnGameOverEvent.Invoke();
     }
 
     private void OnDestroy()
