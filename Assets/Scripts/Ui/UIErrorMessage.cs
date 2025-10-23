@@ -38,4 +38,12 @@ public class UIErrorMessage : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
 }
