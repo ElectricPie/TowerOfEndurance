@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8663394533811548912}
   - component: {fileID: 2970918529044804260}
+  - component: {fileID: 446814216689202977}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -64,6 +65,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &446814216689202977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293790372215842881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3536ef43b29f428396271e0632353d36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.GameOver.GameOverButtons
+  m_mainMenuSceneName: MainMenu
 --- !u!1 &1368265829012251843
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +537,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: RestartButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 446814216689202977}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Ui.GameOver.GameOverButtons, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7077128084456732403, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -914,6 +956,34 @@ PrefabInstance:
     - target: {fileID: 4134781974278981107, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
       propertyPath: m_Name
       value: MenuButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 446814216689202977}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Ui.GameOver.GameOverButtons, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510782072608590112, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7077128084456732403, guid: 00e3df3065d871241b5937d1707233c9, type: 3}
       propertyPath: m_Pivot.x
