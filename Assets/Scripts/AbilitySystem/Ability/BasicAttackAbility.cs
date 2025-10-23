@@ -138,8 +138,12 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
 
     private void OnProjectileHit(TowerProjectile projectile)
     {
-        ApplyEffects(projectile.Target);   
-        OnTargetHit.Invoke(projectile.Target);
+        if (projectile.Target != null)
+        {
+            ApplyEffects(projectile.Target);   
+            OnTargetHit.Invoke(projectile.Target);
+        }
+        
         m_projectilePool.Release(projectile);
     }
     
