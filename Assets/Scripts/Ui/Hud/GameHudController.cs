@@ -88,7 +88,7 @@ namespace Ui.Hud
             
             Instance = this;
 
-            Instantiate(m_hudPrefab);
+            m_hudInstance = Instantiate(m_hudPrefab);
         }
     }
 }
