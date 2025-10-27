@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Ui.Tooltip;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Ui.Hud

@@ -309,6 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4568314975005543366}
   - component: {fileID: 3375455203836694428}
+  - component: {fileID: 4535361496092107842}
   m_Layer: 5
   m_Name: AbilityElementButton
   m_TagString: Untagged
@@ -350,6 +351,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ability: {fileID: 0}
   m_abilityNameText: {fileID: 6448556225820924359}
+--- !u!114 &4535361496092107842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2995047720089992164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72921e0ca66481b9890d811e2388207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.TooltipButton
+  m_tooltipTextField: 
+  m_tooltipOffset: {x: -350, y: 0}
 --- !u!1 &5176046049775233366
 GameObject:
   m_ObjectHideFlags: 0

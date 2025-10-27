@@ -7,7 +7,7 @@ namespace Ui.Hud
         [SerializeField] private GameObject m_hudPrefab;
         private GameObject m_hudInstance;
 
-        public MainMenuHudController Instance { get; private set; }
+        public static MainMenuHudController Instance { get; private set; }
         
         private void Awake()
         {
