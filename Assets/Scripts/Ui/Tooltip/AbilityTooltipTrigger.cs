@@ -1,33 +1,35 @@
-﻿using System;
+﻿using Ui.Ability;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Ui.Tooltip
 {
-    public class TooltipButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    [RequireComponent(typeof(BuyAbilityButton))]
+    public class AbilityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField, TextArea] private string m_tooltipTextField;
         [SerializeField] private Vector2 m_tooltipOffset;
-
+        [SerializeField] private AbilityData m_ability;
+        
         private TooltipManager m_tooltipManager;
+        private BuyAbilityButton m_buyAbilityButton;
 
         private void Awake()
         {
             m_tooltipManager = FindFirstObjectByType<TooltipManager>();
+            m_buyAbilityButton = GetComponent<BuyAbilityButton>();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("Pointer entered tooltip button area.");
-            
             Vector3 tooltipPosition = (Vector2)transform.position + m_tooltipOffset;
-            m_tooltipManager.ShowTooltip(m_tooltipTextField, tooltipPosition);
+            AbilityTooltipData tooltipData = new AbilityTooltipData(m_buyAbilityButton.Ability, m_tooltipTextField);
+            
+            m_tooltipManager.ShowTooltip(tooltipData, tooltipPosition);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("Pointer exited tooltip button area.");
-            
             m_tooltipManager.HideTooltip();
         }
 

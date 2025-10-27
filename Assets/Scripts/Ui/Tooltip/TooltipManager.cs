@@ -4,26 +4,28 @@ namespace Ui.Tooltip
 {
     public class TooltipManager : MonoBehaviour
     {
-        [SerializeField] private TooltipWidget m_tooltipPrefab;
-        private TooltipWidget m_tooltipInstance;
+        [SerializeField] private AbilityTooltipWidget m_abilityTooltipPrefab;
+        private AbilityTooltipWidget m_abilityTooltipInstance;
 
-        public void ShowTooltip(string tooltipText, Vector3 position)
+        public void ShowTooltip(AbilityTooltipData tooltipData, Vector3 position)
         {
-            if (m_tooltipInstance == null)
+            if (m_abilityTooltipInstance == null)
             {
-                m_tooltipInstance = Instantiate(m_tooltipPrefab, transform);
+                m_abilityTooltipInstance = Instantiate(m_abilityTooltipPrefab, transform);
             }
             
-            m_tooltipInstance.gameObject.SetActive(true);
-            m_tooltipInstance.transform.position = position;
+            m_abilityTooltipInstance.SetData(tooltipData);
+            m_abilityTooltipInstance.gameObject.SetActive(true);
+            m_abilityTooltipInstance.transform.position = position;
         }
 
         public void HideTooltip()
         {
-            if (m_tooltipInstance == null)
+            // TODO: Not hiding when ability is bought
+            if (m_abilityTooltipInstance == null)
                 return;
 
-            m_tooltipInstance.gameObject.SetActive(false);
+            m_abilityTooltipInstance.gameObject.SetActive(false);
         }
     }
 }

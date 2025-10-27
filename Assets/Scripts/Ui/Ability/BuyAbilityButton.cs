@@ -12,6 +12,8 @@ namespace Ui.Ability
         
         private AbilityWidgetController m_abilityWidgetController;
         
+        public BuyAbilityScriptableObject Ability => m_ability;
+        
         protected void Awake()
         {
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
