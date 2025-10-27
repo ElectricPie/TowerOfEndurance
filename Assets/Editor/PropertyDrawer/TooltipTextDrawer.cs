@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Ui.Ability;
+using EditorAttributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +11,7 @@ namespace Editor.PropertyDrawer
         private static readonly Regex s_placeholderRegex = new Regex(@"\{([^}]*)\}", RegexOptions.Compiled);
         private static readonly string s_invalidTypeMessage = L10n.Tr("<color=red>Error: Use TooltipTextDrawer with string.</color>");
         private const string TEXT_CONTROL_NAME = "TooltipTextArea";
+        private const string PLACEHOLDER_COLOR = "cyan";
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -33,7 +34,7 @@ namespace Editor.PropertyDrawer
 
                 // Replace placeholders with colored versions for display
                 string rawText = property.stringValue;
-                string coloredText = s_placeholderRegex.Replace(rawText, "<color=cyan>{$1}</color>");
+                string coloredText = s_placeholderRegex.Replace(rawText, $"<color="+PLACEHOLDER_COLOR+">{$1}</color>");
 
                 GUIStyle style = new GUIStyle(EditorStyles.textArea)
                 {

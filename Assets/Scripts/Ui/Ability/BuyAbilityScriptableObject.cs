@@ -1,22 +1,9 @@
 ﻿using AbilitySystem.Ability;
+using EditorAttributes;
 using UnityEngine;
 
 namespace Ui.Ability
 {
-    public class TooltipTextAreaAttribute : PropertyAttribute
-    {
-        public int Height { get; private set; }
-
-        public TooltipTextAreaAttribute()
-        {
-            Height = 6;
-        }
-        public TooltipTextAreaAttribute(int height)
-        {
-            Height = height;
-        }
-    }
-
     [CreateAssetMenu(fileName = "New Ability Buy Scriptable", menuName = "Abilities/New Buy Scriptable")]
     public class BuyAbilityScriptableObject : ScriptableObject
     {
