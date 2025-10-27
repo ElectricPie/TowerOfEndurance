@@ -1,4 +1,4 @@
-﻿using AbilitySystem.Ability;
+using AbilitySystem.Ability;
 using TMPro;
 using Ui.Ability;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace Ui.Tooltip
         public AbilityData AbilityData => AbilityScriptableObject.AbilityData;
 
         private AbilityTooltipData() { }
-        public AbilityTooltipData(BuyAbilityScriptableObject buyAbilityScriptableObject, string description)
+        public AbilityTooltipData(BuyAbilityScriptableObject buyAbilityScriptableObject)
         {
             BuyAbilityScriptableObject = buyAbilityScriptableObject;
         }
