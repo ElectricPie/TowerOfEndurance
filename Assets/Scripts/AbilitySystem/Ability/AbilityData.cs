@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -30,8 +31,12 @@ public class AbilityData
 
 public enum AbilityTrigger
 {
+    [Description("Triggers when towers the basic attack is fired")]
     OnBasicAttackFired,
+    [Description("Triggers when towers the basic attack hits an enemy")]
     OnBasicAttackHit,
+    [Description("Triggers when any damage is dealt to a target")]
     OnAnyDamage,
+    [Description("Triggers at set time intervals")]
     Timed
 }

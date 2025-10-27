@@ -35,42 +35,71 @@ namespace Ui.Tooltip
         protected static string FormatTooltipDescription(TooltipData data, string stringToFormat)
         {
             string resultDescription = stringToFormat;
-            // Replace placeholders in the format {ClassName:PropertyName}
-            resultDescription = Regex.Replace(resultDescription, @"\{(?:(\w+):)(\w+)\}", match =>
+            // Replace placeholders in the format {PropertyName.PropertyName...}
+            resultDescription = Regex.Replace(resultDescription, @"\{((?:\w+(?:\.\w+)*))\}", match =>
             {
-                string className = match.Groups[1].Value; // Class to look into
-                string propertyName = match.Groups[2].Value; // Property to fetch
-
-                if (className.IsNullOrWhitespace() || propertyName.IsNullOrWhitespace())
+                string propertyPath = match.Groups[1].Value; // Full property path to look into
+                if (propertyPath.IsNullOrWhitespace())
                 {
                     Debug.LogWarning("Invalid placeholder format");
                     return match.Value;
                 }
                 
-                // Get class to look into
-                PropertyInfo containerProp = data.GetType().GetProperty(className);
-                if (containerProp == null)
+                string[] pathParts = propertyPath.Split('.');
+                object containerValue = data;
+                
+                PropertyInfo propertyInfo = null;
+                foreach (string part in pathParts)
                 {
-                    Debug.LogWarning($"Container '{className}' not found in AbilityTooltipData");
-                    return match.Value;
-                } 
-                object containerValue = containerProp.GetValue(data);
-                if (containerValue == null)
-                {
-                    Debug.LogWarning($"Container '{className}' is null");
-                    return match.Value;
+                    propertyInfo = containerValue.GetType().GetProperty(part);
+                    if (propertyInfo == null)
+                    {
+                        Debug.LogWarning($"Property '{part}' not found in '{containerValue.GetType().Name}'");
+                        return match.Value;
+                    }
+                    containerValue = propertyInfo.GetValue(containerValue);
+                    if (containerValue == null)
+                    {
+                        Debug.LogWarning($"Property '{part}' is null in '{containerValue.GetType().Name}'");
+                        return match.Value;
+                    }
                 }
                 
-                // Get property value from the class
-                PropertyInfo propertyInfo = containerValue.GetType().GetProperty(propertyName);
-                if (propertyInfo == null)
-                {
-                    Debug.LogWarning($"Property '{propertyName}' not found in container '{className}'");
-                    return match.Value;
-                }
-                
-                object value = propertyInfo.GetValue(containerValue);
-                return value != null ? value.ToString() : "null";
+                return containerValue != null ? containerValue.ToString() : "null";
+
+                // string className = match.Groups[1].Value; // Classes to look into
+                // string propertyName = match.Groups[2].Value; // Property to fetch
+                //
+                // if (className.IsNullOrWhitespace() || propertyName.IsNullOrWhitespace())
+                // {
+                //     Debug.LogWarning("Invalid placeholder format");
+                //     return match.Value;
+                // }
+                //
+                // // Get class to look into
+                // PropertyInfo containerProp = data.GetType().GetProperty(className);
+                // if (containerProp == null)
+                // {
+                //     Debug.LogWarning($"Container '{className}' not found in AbilityTooltipData");
+                //     return match.Value;
+                // } 
+                // object containerValue = containerProp.GetValue(data);
+                // if (containerValue == null)
+                // {
+                //     Debug.LogWarning($"Container '{className}' is null");
+                //     return match.Value;
+                // }
+                //
+                // // Get property value from the class
+                // PropertyInfo propertyInfo = containerValue.GetType().GetProperty(propertyName);
+                // if (propertyInfo == null)
+                // {
+                //     Debug.LogWarning($"Property '{propertyName}' not found in container '{className}'");
+                //     return match.Value;
+                // }
+                //
+                // object value = propertyInfo.GetValue(containerValue);
+                // return value != null ? value.ToString() : "null";]
             });
             
             return resultDescription;
