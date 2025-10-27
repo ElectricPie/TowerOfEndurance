@@ -83,9 +83,10 @@ public class TowerAbilities : MonoBehaviour
         basicAttackAbilityData.OnTargetHit += target =>
         {
             if (!m_isActive)
-            {
                 return;
-            }
+            
+            if (target == null)
+                return;
             
             foreach (AbilityInstance ability in m_onBasicHitAbilities)
             {
