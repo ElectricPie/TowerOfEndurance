@@ -363,12 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c72921e0ca66481b9890d811e2388207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ui.TooltipButton
-  m_tooltipTextField: 'Name: {AbilityScriptableObject:Label}
-
-    Cost: {BuyAbilityScriptableObject:Cost}
-
-    Trigger:
-    {AbilityData:Trigger}'
+  m_tooltipTextField: 
   m_tooltipOffset: {x: -350, y: 0}
   m_ability:
     m_trigger: 0

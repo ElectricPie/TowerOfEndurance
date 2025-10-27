@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using System.Text.RegularExpressions;
-using AbilitySystem.Ability;
-using Sirenix.Utilities;
+﻿using AbilitySystem.Ability;
+using TMPro;
 using Ui.Ability;
 using UnityEngine;
 
@@ -17,12 +15,14 @@ namespace Ui.Tooltip
         public AbilityTooltipData(BuyAbilityScriptableObject buyAbilityScriptableObject, string description)
         {
             BuyAbilityScriptableObject = buyAbilityScriptableObject;
-            Description = description;
         }
     }
 
     public class AbilityTooltipWidget : TooltipWidget
     {
+        [SerializeField] private TMP_Text m_titleText;
+        [SerializeField] private TMP_Text m_descriptionText;
+        
         public override void SetData(TooltipData data)
         {
             if (data is not AbilityTooltipData abilityTooltipData)
@@ -31,9 +31,11 @@ namespace Ui.Tooltip
                 return;
             }
 
-            string resultDescription = GetProcessedString(abilityTooltipData);
-
-            Debug.Log(resultDescription);
+            string resultTitle = abilityTooltipData.AbilityScriptableObject.Label;
+            m_titleText.text = resultTitle;
+            
+            string resultDescription = FormatTooltipDescription(abilityTooltipData, abilityTooltipData.BuyAbilityScriptableObject.Description);
+            m_descriptionText.text = resultDescription;
         }
     }
 }

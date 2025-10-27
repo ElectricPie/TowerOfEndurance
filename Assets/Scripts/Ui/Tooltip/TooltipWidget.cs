@@ -6,15 +6,9 @@ using UnityEngine;
 namespace Ui.Tooltip
 {
     /// <summary>
-    /// Represents the base class for tooltip data, containing a description string.
+    /// Represents the base class for tooltip data
     /// </summary>
-    public class TooltipData
-    { 
-        /// <summary>
-        /// The description string containing placeholders to be processed.
-        /// </summary>
-        public string Description { get; protected set; }
-    }
+    public class TooltipData { }
     
     public abstract class TooltipWidget : MonoBehaviour
     { 
@@ -25,20 +19,22 @@ namespace Ui.Tooltip
         public abstract void SetData(TooltipData data);
 
         /// <summary>
-        /// Processes the description string by replacing placeholders with actual property values.
+        /// Formats a string by replacing placeholders with actual property values.
         /// Placeholders are in the format `{ClassName:PropertyName}`.
         /// </summary>
         /// <param name="data">
-        /// A class inheriting from the `TooltipData` class containing the data to be processed.
-        /// This parameter is expected to include a `Description` string with placeholders in the format `{ClassName:PropertyName}`.
-        /// Any additional classes referenced in the placeholders must be accessible as properties of the `TooltipData`-derived class.
+        /// An instance of a class inheriting from `TooltipData` that contains the data to be processed.
+        /// The class should expose properties that match the placeholders in the description string.
+        /// </param>
+        /// <param name="stringToFormat">
+        /// The string containing placeholders to be replaced with actual values.
         /// </param>
         /// <returns>
-        /// The processed description string with placeholders replaced by their corresponding property values.
+        /// A string where placeholders in the stringToFormat have been replaced with their corresponding property values.
         /// </returns>
-        protected static string GetProcessedString(TooltipData data)
+        protected static string FormatTooltipDescription(TooltipData data, string stringToFormat)
         {
-            string resultDescription = data.Description;
+            string resultDescription = stringToFormat;
             // Replace placeholders in the format {ClassName:PropertyName}
             resultDescription = Regex.Replace(resultDescription, @"\{(?:(\w+):)(\w+)\}", match =>
             {

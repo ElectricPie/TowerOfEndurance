@@ -14,3 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:Ui.Ability:BuyAbilityScriptableObject
   m_abilityScriptableObject: {fileID: 11400000, guid: d7368fc6243c59f47a4f8b7f859c0628, type: 2}
   m_cost: 20
+  m_description: 'Has a chance when a basic attack hits to deal damage to 5 times
+    base tower damage to 2 random targets
+
+    Cost: {BuyAbilityScriptableObject:Cost}
+
+    Trigger:
+    {AbilityData:Trigger}'
