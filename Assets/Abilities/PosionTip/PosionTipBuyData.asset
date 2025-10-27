@@ -22,4 +22,4 @@ MonoBehaviour:
     Trigger: {AbilityData.Trigger}
 
     Damage:
-    {AbilityData.DamageEffect.Test}'
+    {AbilityData.m_damageEffect.Test}'

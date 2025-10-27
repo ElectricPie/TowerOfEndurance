@@ -9,9 +9,6 @@ namespace AbilitySystem.Ability
         [SerializeField] private AnimationCurve m_triggerChanceCurve;
         [SerializeField, Min(0)] private int m_targetCount;
         [SerializeField] private DamageEffect m_damageEffect = new DamageEffect();
-        
-        public int TargetCount => m_targetCount;
-        public DamageEffect DamageEffect => m_damageEffect;
 
         public override AbilityData Clone()
         {

@@ -4,8 +4,6 @@ public class PoisonTipAbilityData : AbilityData
 {
     /* Editor Values */
     [SerializeField] private DamageEffect m_damageEffect;
-    
-    public DamageEffect DamageEffect => m_damageEffect;
 
     public override AbilityData Clone()
     {

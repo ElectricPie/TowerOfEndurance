@@ -8,10 +8,12 @@ namespace Ui.Tooltip
     /// <summary>
     /// Represents the base class for tooltip data
     /// </summary>
-    public class TooltipData { }
-    
+    public class TooltipData
+    {
+    }
+
     public abstract class TooltipWidget : MonoBehaviour
-    { 
+    {
         /// <summary>
         /// Abstract method to set the text of the tooltip widget.
         /// </summary>
@@ -44,64 +46,38 @@ namespace Ui.Tooltip
                     Debug.LogWarning("Invalid placeholder format");
                     return match.Value;
                 }
-                
+
                 string[] pathParts = propertyPath.Split('.');
                 object containerValue = data;
-                
-                PropertyInfo propertyInfo = null;
+
                 foreach (string part in pathParts)
                 {
-                    propertyInfo = containerValue.GetType().GetProperty(part);
-                    if (propertyInfo == null)
+                    FieldInfo fieldInfo = containerValue.GetType().GetField(part, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (fieldInfo != null)
                     {
-                        Debug.LogWarning($"Property '{part}' not found in '{containerValue.GetType().Name}'");
-                        return match.Value;
+                        containerValue = fieldInfo.GetValue(containerValue);
                     }
-                    containerValue = propertyInfo.GetValue(containerValue);
-                    if (containerValue == null)
+                    else
                     {
-                        Debug.LogWarning($"Property '{part}' is null in '{containerValue.GetType().Name}'");
-                        return match.Value;
+                        PropertyInfo propertyInfo = containerValue.GetType().GetProperty(part);
+                        if (propertyInfo == null)
+                        {
+                            Debug.LogWarning($"Member '{part}' not found in '{containerValue.GetType().Name}'");
+                            return match.Value;
+                        }
+
+                        containerValue = propertyInfo.GetValue(containerValue);
+                        if (containerValue == null)
+                        {
+                            Debug.LogWarning($"Member '{part}' is null in '{propertyInfo.GetType().Name}'");
+                            return match.Value;
+                        }
                     }
                 }
-                
-                return containerValue != null ? containerValue.ToString() : "null";
 
-                // string className = match.Groups[1].Value; // Classes to look into
-                // string propertyName = match.Groups[2].Value; // Property to fetch
-                //
-                // if (className.IsNullOrWhitespace() || propertyName.IsNullOrWhitespace())
-                // {
-                //     Debug.LogWarning("Invalid placeholder format");
-                //     return match.Value;
-                // }
-                //
-                // // Get class to look into
-                // PropertyInfo containerProp = data.GetType().GetProperty(className);
-                // if (containerProp == null)
-                // {
-                //     Debug.LogWarning($"Container '{className}' not found in AbilityTooltipData");
-                //     return match.Value;
-                // } 
-                // object containerValue = containerProp.GetValue(data);
-                // if (containerValue == null)
-                // {
-                //     Debug.LogWarning($"Container '{className}' is null");
-                //     return match.Value;
-                // }
-                //
-                // // Get property value from the class
-                // PropertyInfo propertyInfo = containerValue.GetType().GetProperty(propertyName);
-                // if (propertyInfo == null)
-                // {
-                //     Debug.LogWarning($"Property '{propertyName}' not found in container '{className}'");
-                //     return match.Value;
-                // }
-                //
-                // object value = propertyInfo.GetValue(containerValue);
-                // return value != null ? value.ToString() : "null";]
+                return containerValue != null ? containerValue.ToString() : "null";
             });
-            
+
             return resultDescription;
         }
     }
