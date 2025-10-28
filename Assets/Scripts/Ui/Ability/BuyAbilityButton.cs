@@ -13,12 +13,21 @@ namespace Ui.Ability
         private AbilityWidgetController m_abilityWidgetController;
         
         public BuyAbilityScriptableObject Ability => m_ability;
-        
-        protected void Awake()
+
+        protected void Start()
         {
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
-            
+        }
+
+        protected void Awake()
+        {
             m_abilityWidgetController = Hud.GameHudController.Instance.AbilityWidgetController;
+        }
+        
+        public void Initialize(BuyAbilityScriptableObject ability)
+        {
+            m_ability = ability;
+            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
         }
 
         public void OnClicked()
