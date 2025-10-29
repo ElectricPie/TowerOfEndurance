@@ -1,5 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using TMPro;
+﻿using TMPro;
 using Ui.WidgetControllers;
 using UnityEngine;
 
@@ -8,8 +7,8 @@ namespace Ui.Ability
     public class BuyAbilityButton : MonoBehaviour
     {
         [SerializeField] private BuyAbilityScriptableObject m_ability;
-        [SerializeField, RequiredIn(PrefabKind.PrefabInstance)] private TMP_Text m_abilityNameText;
-        
+        [SerializeField] private TMP_Text m_abilityNameText;
+
         private AbilityWidgetController m_abilityWidgetController;
         
         public BuyAbilityScriptableObject Ability => m_ability;
@@ -28,6 +27,7 @@ namespace Ui.Ability
         {
             m_ability = ability;
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
+            m_abilityWidgetController.RegisterBuyButton(m_ability.AbilityScriptableObject.AbilityData, gameObject);
         }
 
         public void OnClicked()

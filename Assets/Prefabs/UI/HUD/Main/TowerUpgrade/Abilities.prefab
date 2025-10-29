@@ -172,6 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5912022951543561151}
   - component: {fileID: 6752783905371271335}
+  - component: {fileID: 6803319201939578940}
   m_Layer: 5
   m_Name: Abilities
   m_TagString: Untagged
@@ -227,6 +228,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6803319201939578940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054150892473100897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010b374b019449a18677e40aa24121c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.Ability.BuyableAbilitiesList
+  m_buyAbilityButtonPrefab: {fileID: 3375455203836694428, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
+  m_contentTransform: {fileID: 2325847475906461235}
+  m_buyableAbilities:
+  - {fileID: 11400000, guid: 69a1e71357ea69c43b63a33d3a6d09e7, type: 2}
+  - {fileID: 11400000, guid: 6fe55d73a73dca743bff55719b9290be, type: 2}
+  - {fileID: 11400000, guid: ef477c7776d9fb946843f9bba4f6d6ff, type: 2}
 --- !u!1 &3884771628278005082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,7 +1089,6 @@ GameObject:
   - component: {fileID: 8816765511939655518}
   - component: {fileID: 5279395514248932078}
   - component: {fileID: 216835962114566498}
-  - component: {fileID: 3944264084740355208}
   m_Layer: 5
   m_Name: Buyable Abilities Scroll View
   m_TagString: Untagged
@@ -1188,24 +1206,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 78
   m_LayoutPriority: 1
---- !u!114 &3944264084740355208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7684863501096989519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 010b374b019449a18677e40aa24121c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Ui.Ability.BuyableAbilitiesList
-  m_buyAbilityButtonPrefab: {fileID: 3375455203836694428, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
-  m_contentTransform: {fileID: 2325847475906461235}
-  m_buyableAbilities:
-  - {fileID: 11400000, guid: 69a1e71357ea69c43b63a33d3a6d09e7, type: 2}
-  - {fileID: 11400000, guid: 6fe55d73a73dca743bff55719b9290be, type: 2}
-  - {fileID: 11400000, guid: ef477c7776d9fb946843f9bba4f6d6ff, type: 2}
 --- !u!1 &8448741866106789385
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Ui.Ability
 {
@@ -11,7 +10,6 @@ namespace Ui.Ability
         [SerializeField] private BuyAbilityScriptableObject[] m_buyableAbilities;
         
         private TowerAbilities m_towerAbilities;
-        private List<BuyAbilityButton> m_buttons = new List<BuyAbilityButton>();
 
         private void Awake()
         {
@@ -31,7 +29,6 @@ namespace Ui.Ability
                 
                 BuyAbilityButton button = Instantiate(m_buyAbilityButtonPrefab, m_contentTransform);
                 button.Initialize(ability);
-                m_buttons.Add(button);
             }
         }
     }

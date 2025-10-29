@@ -1,4 +1,5 @@
-﻿using Ui.Ability;
+﻿using System.Collections.Generic;
+using Ui.Ability;
 using UnityEngine;
 
 namespace Ui.WidgetControllers
@@ -8,24 +9,38 @@ namespace Ui.WidgetControllers
         private TowerAbilities m_towerAbilities;
         private PlayerMoney m_playerMoney;
         
+        private Dictionary<GameObject, AbilityData> m_purchaseButtons = new Dictionary<GameObject, AbilityData>();
+        
         public override void BindCallbacksToDependencies()
         {
             m_towerAbilities = Object.FindFirstObjectByType<TowerAbilities>();
             m_playerMoney = Object.FindFirstObjectByType<PlayerMoney>();
         }
 
-        public override void BroadcastInitialValues()
-        {
-            throw new System.NotImplementedException();
-        }
+        public override void BroadcastInitialValues() { }
         
         public void TryBuyAbility(BuyAbilityScriptableObject abilityToBuy, GameObject buttonGameObject)
         {
-            if (m_playerMoney.RemoveMoney(abilityToBuy.Cost))
+            // Prevent buying multiple of the same ability
+            if (m_towerAbilities.HasAbilityOfType(abilityToBuy.AbilityScriptableObject.AbilityData))
             {
-                m_towerAbilities.AddAbility(abilityToBuy.AbilityScriptableObject);
+                Debug.LogWarning($"Tower already has ability {abilityToBuy.AbilityScriptableObject.Label}, cannot buy again.");
                 Object.Destroy(buttonGameObject);
+                return;
             }
+
+            // Check for sufficient money
+            if (!m_playerMoney.RemoveMoney(abilityToBuy.Cost)) 
+                return;
+            
+            m_towerAbilities.AddAbility(abilityToBuy.AbilityScriptableObject);
+            m_purchaseButtons.Remove(buttonGameObject);
+            Object.Destroy(buttonGameObject);
+        }
+        
+        public void RegisterBuyButton(AbilityData abilityData, GameObject buttonGameObject)
+        {
+            m_purchaseButtons.TryAdd(buttonGameObject, abilityData);
         }
     }
 }
