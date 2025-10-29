@@ -27,7 +27,7 @@ namespace Ui.Ability
         {
             m_ability = ability;
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
-            m_abilityWidgetController.RegisterBuyButton(m_ability.AbilityScriptableObject.AbilityData, gameObject);
+            m_abilityWidgetController.RegisterBuyButton(m_ability, gameObject);
         }
 
         public void OnClicked()

@@ -9,7 +9,7 @@ namespace Ui.WidgetControllers
         private TowerAbilities m_towerAbilities;
         private PlayerMoney m_playerMoney;
         
-        private Dictionary<GameObject, AbilityData> m_purchaseButtons = new Dictionary<GameObject, AbilityData>();
+        private Dictionary<GameObject, BuyAbilityScriptableObject> m_purchaseButtons = new Dictionary<GameObject, BuyAbilityScriptableObject>();
         
         public override void BindCallbacksToDependencies()
         {
@@ -37,10 +37,33 @@ namespace Ui.WidgetControllers
             m_purchaseButtons.Remove(buttonGameObject);
             Object.Destroy(buttonGameObject);
         }
-        
-        public void RegisterBuyButton(AbilityData abilityData, GameObject buttonGameObject)
+
+        public void TryBuyRandomAbility(float cost)
         {
-            m_purchaseButtons.TryAdd(buttonGameObject, abilityData);
+            // Get a random ability
+            int randomAbilityIndex = Random.Range(0, m_purchaseButtons.Count - 1);
+            KeyValuePair<GameObject, BuyAbilityScriptableObject> randomAbilityEntry = new List<KeyValuePair<GameObject, BuyAbilityScriptableObject>>(m_purchaseButtons)[randomAbilityIndex];
+            
+            // Check it's not already owned and destroy the corresponding button if so
+            if (m_towerAbilities.HasAbilityOfType(randomAbilityEntry.Value.AbilityScriptableObject.AbilityData))
+            {
+                Debug.LogWarning($"Tower already has ability {randomAbilityEntry}, cannot buy again.");
+                m_purchaseButtons.Remove(randomAbilityEntry.Key);
+                Object.Destroy(randomAbilityEntry.Key);
+                return;
+            }
+            
+            if (!m_playerMoney.RemoveMoney(cost)) 
+                return;
+            
+            m_towerAbilities.AddAbility(randomAbilityEntry.Value.AbilityScriptableObject);
+            m_purchaseButtons.Remove(randomAbilityEntry.Key);
+            Object.Destroy(randomAbilityEntry.Key);
+        }
+        
+        public void RegisterBuyButton(BuyAbilityScriptableObject ability, GameObject buttonGameObject)
+        {
+            m_purchaseButtons.TryAdd(buttonGameObject, ability);
         }
     }
 }
