@@ -24,12 +24,11 @@ MonoBehaviour:
         m_description: 'Posions the enemy dealing 20% of the towers base damage
 
           Cost:
-          {AbilityData.Cost()}
+          {Cost()}
 
-          Trigger: {AbilityData.Trigger}
+          Trigger: {Trigger}
 
-          Damage:
-          {AbilityData.m_damageEffect.Test}'
+          Damage: {m_damageEffect.Test}'
         m_cost:
           serializedVersion: 2
           m_Curve:

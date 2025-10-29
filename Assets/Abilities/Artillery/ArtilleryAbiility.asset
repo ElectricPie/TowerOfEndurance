@@ -22,12 +22,12 @@ MonoBehaviour:
       data:
         m_label: Artillery
         m_description: 'Has a chance when a basic attack hits to deal 5 damage to 
-          times base tower damage to {AbilityData.m_targetCount} random targets
+          times base tower damage to {m_targetCount} random targets
 
           Cost:
-          {BuyAbilityScriptableObject.Cost}
+          {Cost}
 
-          Trigger: {AbilityData.Trigger}'
+          Trigger: {Trigger}'
         m_cost:
           serializedVersion: 2
           m_Curve:

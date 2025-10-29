@@ -1,13 +1,11 @@
-﻿using AbilitySystem.Ability;
-using TMPro;
-using Ui.Ability;
+﻿using TMPro;
 using UnityEngine;
 
 namespace Ui.Tooltip.Ability
 {
     public class AbilityTooltipData : TooltipData
     {
-        public AbilityData Ability { get; private set; }
+        public AbilityData Ability { get; }
 
         private AbilityTooltipData() { }
         public AbilityTooltipData(AbilityData ability)
@@ -33,7 +31,7 @@ namespace Ui.Tooltip.Ability
             string resultTitle = abilityData.Label;
             m_titleText.text = resultTitle;
             
-            string resultDescription = FormatTooltipDescription(abilityTooltipData, abilityData.Description);
+            string resultDescription = FormatTooltipDescription(abilityTooltipData.Ability, abilityData.Description);
             m_descriptionText.text = resultDescription;
         }
     }

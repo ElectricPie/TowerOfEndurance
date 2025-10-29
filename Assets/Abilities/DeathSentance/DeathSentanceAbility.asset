@@ -24,12 +24,12 @@ MonoBehaviour:
         m_description: 'Attacks a random enemy 10 times every 10s dealing 10% of
           the towers base damage
 
-          Cost: {BuyAbilityScriptableObject.Cost}
+          Cost: {Cost}
 
-          Trigger:
-          {AbilityData.Trigger}
+          Trigger: {Trigger}
 
-          Damage: {AbilityData.m_damageEffect.Test}'
+          Damage:
+          {m_damageEffect.Test}'
         m_cost:
           serializedVersion: 2
           m_Curve:
