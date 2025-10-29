@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
 using UnityEngine;
@@ -22,6 +23,8 @@ public class TowerAbilities : MonoBehaviour
     private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
     private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
     private readonly HashSet<TimedAbilityInstance> m_timedAbilities = new HashSet<TimedAbilityInstance>();
+    
+    private readonly HashSet<AbilityInstance> m_allAbilities = new HashSet<AbilityInstance>();
 
     private bool m_isActive = true;
     
@@ -51,6 +54,12 @@ public class TowerAbilities : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        m_allAbilities.Add(newAbilityInstance);
+    }
+
+    public bool HasAbilityOfType(AbilityData ability)
+    {
+        return m_allAbilities.Any(abilityInstance => abilityInstance.AbilityData.GetType() == ability.GetType());
     }
 
     public void StopAllAbilities()
