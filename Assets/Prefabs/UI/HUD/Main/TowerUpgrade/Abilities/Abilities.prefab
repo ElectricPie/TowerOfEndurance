@@ -1664,9 +1664,9 @@ MonoBehaviour:
   m_buyAbilityButtonPrefab: {fileID: 6233043933845601609, guid: 54de832d29e5a4f458a864310fc0a79b, type: 3}
   m_contentTransform: {fileID: 2325847475906461235}
   m_buyableAbilities:
-  - {fileID: 11400000, guid: 69a1e71357ea69c43b63a33d3a6d09e7, type: 2}
-  - {fileID: 11400000, guid: 6fe55d73a73dca743bff55719b9290be, type: 2}
-  - {fileID: 11400000, guid: ef477c7776d9fb946843f9bba4f6d6ff, type: 2}
+  - {fileID: 11400000, guid: d7368fc6243c59f47a4f8b7f859c0628, type: 2}
+  - {fileID: 11400000, guid: caa1b67ec0846cc49b2ccb89cbdc4ec1, type: 2}
+  - {fileID: 11400000, guid: 03af9137bd5997541ac0456a9629d2a3, type: 2}
 --- !u!114 &2699890543444404201
 MonoBehaviour:
   m_ObjectHideFlags: 0

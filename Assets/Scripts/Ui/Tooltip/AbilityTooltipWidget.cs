@@ -7,14 +7,13 @@ namespace Ui.Tooltip
 {
     public class AbilityTooltipData : TooltipData
     {
-        public BuyAbilityScriptableObject BuyAbilityScriptableObject { get; private set; }
-        public AbilityScriptableObject AbilityScriptableObject => BuyAbilityScriptableObject.AbilityScriptableObject;
+        public AbilityScriptableObject AbilityScriptableObject { get; private set; }
         public AbilityData AbilityData => AbilityScriptableObject.AbilityData;
 
         private AbilityTooltipData() { }
-        public AbilityTooltipData(BuyAbilityScriptableObject buyAbilityScriptableObject)
+        public AbilityTooltipData(AbilityScriptableObject buyAbilityScriptableObject)
         {
-            BuyAbilityScriptableObject = buyAbilityScriptableObject;
+            AbilityScriptableObject = buyAbilityScriptableObject;
         }
     }
 

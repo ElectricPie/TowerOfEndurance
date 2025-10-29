@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AbilitySystem.Ability;
+using UnityEngine;
 
 namespace Ui.Ability
 {
@@ -7,7 +8,7 @@ namespace Ui.Ability
         [SerializeField] private BuyAbilityButton m_buyAbilityButtonPrefab;
         [SerializeField] private Transform m_contentTransform;
         
-        [SerializeField] private BuyAbilityScriptableObject[] m_buyableAbilities;
+        [SerializeField] private AbilityScriptableObject[] m_buyableAbilities;
         
         private TowerAbilities m_towerAbilities;
 
@@ -18,12 +19,12 @@ namespace Ui.Ability
 
         public void Start()
         {
-            foreach (BuyAbilityScriptableObject ability in m_buyableAbilities)
+            foreach (AbilityScriptableObject ability in m_buyableAbilities)
             {
                 // Don't add abilities the tower already has the ability
-                if (m_towerAbilities.HasAbilityOfType(ability.AbilityScriptableObject.AbilityData))
+                if (m_towerAbilities.HasAbilityOfType(ability.AbilityData))
                 {
-                    Debug.LogWarning($"Tower already has ability {ability.AbilityScriptableObject.Label}, not adding to buyable list.");
+                    Debug.LogWarning($"Tower already has ability {ability.Label}, not adding to buyable list.");
                     continue;
                 }
                 

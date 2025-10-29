@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 
 namespace Ui.Tooltip
 {
-    [RequireComponent(typeof(BuyAbilityButton))]
     public class AbilityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Vector2 m_tooltipOffset;

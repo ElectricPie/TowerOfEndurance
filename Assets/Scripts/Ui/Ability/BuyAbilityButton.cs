@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using AbilitySystem.Ability;
+using TMPro;
 using Ui.WidgetControllers;
 using UnityEngine;
 
@@ -6,22 +7,22 @@ namespace Ui.Ability
 {
     public class BuyAbilityButton : MonoBehaviour
     {
-        [SerializeField] private BuyAbilityScriptableObject m_ability;
+        [SerializeField] private AbilityScriptableObject m_ability;
         [SerializeField] private TMP_Text m_abilityNameText;
 
         private AbilityWidgetController m_abilityWidgetController;
         
-        public BuyAbilityScriptableObject Ability => m_ability;
+        public AbilityScriptableObject Ability => m_ability;
 
         protected void Awake()
         {
             m_abilityWidgetController = Hud.GameHudController.Instance.AbilityWidgetController;
         }
         
-        public void Initialize(BuyAbilityScriptableObject ability)
+        public void Initialize(AbilityScriptableObject ability)
         {
             m_ability = ability;
-            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
+            m_abilityNameText.text = m_ability.Label;
             m_abilityWidgetController.RegisterBuyButton(m_ability, gameObject);
         }
 
@@ -38,7 +39,7 @@ namespace Ui.Ability
                 return;
             }
 
-            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
+            m_abilityNameText.text = m_ability.Label;
         }
     }
 }
