@@ -21,6 +21,7 @@ MonoBehaviour:
     - rid: 3214090476972933228
       type: {class: DeathSentenceAbility, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
+        m_label: Death Sentance
         m_trigger: 3
         m_triggerTime:
           serializedVersion: 2

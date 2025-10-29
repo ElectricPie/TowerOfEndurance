@@ -21,7 +21,14 @@ MonoBehaviour:
     - rid: 3214090471301185598
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
+        m_label: Artillery
         m_trigger: 0
+        m_triggerTime:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
         m_triggerChanceCurve:
           serializedVersion: 2
           m_Curve:
@@ -48,37 +55,15 @@ MonoBehaviour:
           m_RotationOrder: 4
         m_targetCount: 2
         m_damageEffect:
-          rid: 3214090471301185599
-    - rid: 3214090471301185599
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        m_durationPolicy: 0
-        m_periodicEffectValues:
-          m_duration: 1
-          m_period: 1
-          m_triggerOnApplication: 0
-        m_damageModifierCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 1
-            value: 5
-            inSlope: 11.25
-            outSlope: 11.25
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 5
-            value: 50
-            inSlope: 11.25
-            outSlope: 11.25
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_visualFx: {fileID: 0}
+          m_durationPolicy: 0
+          m_periodicEffectValues:
+            m_duration: 1
+            m_period: 1
+            m_triggerOnApplication: 0
+          m_damageModifierCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_visualFx: {fileID: 0}

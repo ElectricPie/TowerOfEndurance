@@ -6,18 +6,21 @@ using UnityEngine;
 [Serializable]
 public class AbilityData
 {
+    [SerializeField]
+    private string m_label = "New Ability";
     [SerializeField] 
     private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
     [SerializeField, ShowIf("m_trigger", AbilityTrigger.Timed)]
     private AnimationCurve m_triggerTime;
     
+    public string Label => m_label;
     public AbilityTrigger Trigger => m_trigger;
     public float TriggerTime(int level) => m_triggerTime.Evaluate(level);
     
     public virtual AbilityData Clone()
     {
-        AbilityData clone = (AbilityData)this.MemberwiseClone();
-        clone.m_triggerTime = this.m_triggerTime;
+        AbilityData clone = (AbilityData)MemberwiseClone();
+        clone.m_triggerTime = m_triggerTime;
         return clone;
     }
     

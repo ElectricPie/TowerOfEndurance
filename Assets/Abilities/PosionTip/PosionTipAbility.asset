@@ -21,7 +21,14 @@ MonoBehaviour:
     - rid: 3214090471301185600
       type: {class: PoisonTipAbilityData, ns: , asm: Assembly-CSharp}
       data:
+        m_label: Posion Tip
         m_trigger: 1
+        m_triggerTime:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
         m_damageEffect:
           m_durationPolicy: 1
           m_periodicEffectValues:

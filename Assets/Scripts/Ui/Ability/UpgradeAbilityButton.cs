@@ -16,12 +16,10 @@ namespace Ui.Ability
             m_abilityWidgetController = Hud.GameHudController.Instance.AbilityWidgetController;
         }
         
-        
         public void Initialize(AbilityInstance abilityInstance)
         {
             m_ability = abilityInstance;
-            // TODO: Need to store name in ability
-            m_abilityNameText.text = "TODO";
+            m_abilityNameText.text = m_ability.AbilityData.Label;
         }
     }
 }
