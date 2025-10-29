@@ -1,11 +1,12 @@
 ﻿using AbilitySystem.Ability;
 using TMPro;
+using Ui.Tooltip.Ability;
 using Ui.WidgetControllers;
 using UnityEngine;
 
 namespace Ui.Ability
 {
-    public class BuyAbilityButton : MonoBehaviour
+    public class BuyAbilityButton : MonoBehaviour, IAbilityTooltipInterface
     {
         [SerializeField] private AbilityScriptableObject m_ability;
         [SerializeField] private TMP_Text m_abilityNameText;
@@ -40,6 +41,11 @@ namespace Ui.Ability
             }
 
             m_abilityNameText.text = m_ability.Label;
+        }
+
+        public AbilityData GetAbilityData()
+        {
+            return m_ability.AbilityData;
         }
     }
 }

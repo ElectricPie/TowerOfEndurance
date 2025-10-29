@@ -2,25 +2,28 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Ui.Tooltip
+namespace Ui.Tooltip.Ability
 {
     public class AbilityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private MonoBehaviour m_abilityTooltipComponent;
         [SerializeField] private Vector2 m_tooltipOffset;
         
         private TooltipManager m_tooltipManager;
-        private BuyAbilityButton m_buyAbilityButton;
+        
+        private IAbilityTooltipInterface m_abilityTooltipInterface;
 
         private void Awake()
         {
             m_tooltipManager = FindFirstObjectByType<TooltipManager>();
-            m_buyAbilityButton = GetComponent<BuyAbilityButton>();
+            
+            m_abilityTooltipInterface = (IAbilityTooltipInterface)m_abilityTooltipComponent;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             Vector3 tooltipPosition = (Vector2)transform.position + m_tooltipOffset;
-            AbilityTooltipData tooltipData = new AbilityTooltipData(m_buyAbilityButton.Ability);
+            AbilityTooltipData tooltipData = new AbilityTooltipData(m_abilityTooltipInterface.GetAbilityData());
             
             m_tooltipManager.ShowTooltip(tooltipData, tooltipPosition);
         }

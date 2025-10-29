@@ -1,10 +1,11 @@
 ﻿using TMPro;
+using Ui.Tooltip.Ability;
 using Ui.WidgetControllers;
 using UnityEngine;
 
 namespace Ui.Ability
 {
-    public class UpgradeAbilityButton : MonoBehaviour
+    public class UpgradeAbilityButton : MonoBehaviour, IAbilityTooltipInterface
     {
         [SerializeField] private TMP_Text m_abilityNameText;
         
@@ -20,6 +21,11 @@ namespace Ui.Ability
         {
             m_ability = abilityInstance;
             m_abilityNameText.text = m_ability.AbilityData.Label;
+        }
+
+        public AbilityData GetAbilityData()
+        {
+            return m_ability.AbilityData;
         }
     }
 }

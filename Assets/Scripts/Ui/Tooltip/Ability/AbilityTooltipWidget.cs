@@ -3,17 +3,16 @@ using TMPro;
 using Ui.Ability;
 using UnityEngine;
 
-namespace Ui.Tooltip
+namespace Ui.Tooltip.Ability
 {
     public class AbilityTooltipData : TooltipData
     {
-        public AbilityScriptableObject AbilityScriptableObject { get; private set; }
-        public AbilityData AbilityData => AbilityScriptableObject.AbilityData;
+        public AbilityData Ability { get; private set; }
 
         private AbilityTooltipData() { }
-        public AbilityTooltipData(AbilityScriptableObject buyAbilityScriptableObject)
+        public AbilityTooltipData(AbilityData ability)
         {
-            AbilityScriptableObject = buyAbilityScriptableObject;
+            Ability = ability;
         }
     }
 
@@ -30,11 +29,11 @@ namespace Ui.Tooltip
                 return;
             }
 
-            AbilityScriptableObject abilityScriptableObject = abilityTooltipData.AbilityScriptableObject;
-            string resultTitle = abilityScriptableObject.Label;
+            AbilityData abilityData = abilityTooltipData.Ability;
+            string resultTitle = abilityData.Label;
             m_titleText.text = resultTitle;
             
-            string resultDescription = FormatTooltipDescription(abilityTooltipData, abilityScriptableObject.AbilityData.Description);
+            string resultDescription = FormatTooltipDescription(abilityTooltipData, abilityData.Description);
             m_descriptionText.text = resultDescription;
         }
     }

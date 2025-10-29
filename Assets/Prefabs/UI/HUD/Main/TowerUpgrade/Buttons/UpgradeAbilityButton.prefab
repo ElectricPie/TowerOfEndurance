@@ -70,23 +70,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4568314975005543366, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4568314975005543366, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4568314975005543366, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4568314975005543366, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4568314975005543366, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 430
       objectReference: {fileID: 0}
     - target: {fileID: 4568314975005543366, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       propertyPath: m_SizeDelta.y
@@ -195,6 +195,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2995047720089992164, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1707594661890886240}
+    - targetCorrespondingSourceObject: {fileID: 2995047720089992164, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4161510367476593862}
   m_SourcePrefab: {fileID: 100100000, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
 --- !u!1 &2386818075924079985 stripped
 GameObject:
@@ -214,6 +217,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ui.Ability.UpgradeAbilityButton
   m_abilityNameText: {fileID: 5905061149041330002}
+--- !u!114 &4161510367476593862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386818075924079985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72921e0ca66481b9890d811e2388207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.Tooltip.Ability.AbilityTooltipTrigger
+  m_abilityTooltipComponent: {fileID: -1707594661890886240}
+  m_tooltipOffset: {x: -350, y: 0}
 --- !u!114 &5905061149041330002 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6448556225820924359, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}

@@ -24,7 +24,7 @@ MonoBehaviour:
         m_description: 'Posions the enemy dealing 20% of the towers base damage
 
           Cost:
-          {BuyAbilityScriptableObject.Cost}
+          {AbilityData.Cost()}
 
           Trigger: {AbilityData.Trigger}
 
