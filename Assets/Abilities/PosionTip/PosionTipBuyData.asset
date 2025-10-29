@@ -14,12 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:Ui.Ability:BuyAbilityScriptableObject
   m_abilityScriptableObject: {fileID: 11400000, guid: 03af9137bd5997541ac0456a9629d2a3, type: 2}
   m_cost: 20
-  m_description: 'Posions the enemy dealing 20% of the towers base damage
-
-    Cost:
-    {BuyAbilityScriptableObject.Cost}
-
-    Trigger: {AbilityData.Trigger}
-
-    Damage:
-    {AbilityData.m_damageEffect.Test}'

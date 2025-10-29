@@ -1,19 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
+using EditorAttributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
 public class AbilityData
 {
-    [SerializeField]
-    private string m_label = "New Ability";
-    [SerializeField] 
-    private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
+    [SerializeField] private string m_label = "New Ability";
+    [SerializeField, TooltipTextArea] private string m_description = "No Description";
+    [SerializeField] private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
     [SerializeField, ShowIf("m_trigger", AbilityTrigger.Timed)]
     private AnimationCurve m_triggerTime;
     
     public string Label => m_label;
+    public string Description => m_description;
     public AbilityTrigger Trigger => m_trigger;
     public float TriggerTime(int level) => m_triggerTime.Evaluate(level);
     

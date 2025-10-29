@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2125d09159e545b99dc8ca33e76a69ba, type: 3}
   m_Name: DeathSentanceAbility
   m_EditorClassIdentifier: 
-  m_label: Death Sentance
   m_abilityData:
     rid: 3214090476972933228
   references:
@@ -22,6 +21,15 @@ MonoBehaviour:
       type: {class: DeathSentenceAbility, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_label: Death Sentance
+        m_description: 'Attacks a random enemy 10 times every 10s dealing 10% of
+          the towers base damage
+
+          Cost: {BuyAbilityScriptableObject.Cost}
+
+          Trigger:
+          {AbilityData.Trigger}
+
+          Damage: {AbilityData.m_damageEffect.Test}'
         m_trigger: 3
         m_triggerTime:
           serializedVersion: 2

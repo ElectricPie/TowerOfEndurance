@@ -31,10 +31,11 @@ namespace Ui.Tooltip
                 return;
             }
 
-            string resultTitle = abilityTooltipData.AbilityScriptableObject.Label;
+            AbilityScriptableObject abilityScriptableObject = abilityTooltipData.AbilityScriptableObject;
+            string resultTitle = abilityScriptableObject.Label;
             m_titleText.text = resultTitle;
             
-            string resultDescription = FormatTooltipDescription(abilityTooltipData, abilityTooltipData.BuyAbilityScriptableObject.Description);
+            string resultDescription = FormatTooltipDescription(abilityTooltipData, abilityScriptableObject.AbilityData.Description);
             m_descriptionText.text = resultDescription;
         }
     }

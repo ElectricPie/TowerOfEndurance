@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2125d09159e545b99dc8ca33e76a69ba, type: 3}
   m_Name: ArtilleryAbiility
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
-  m_label: Artillery
   m_abilityData:
     rid: 3214090471301185598
   references:
@@ -22,6 +21,13 @@ MonoBehaviour:
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_label: Artillery
+        m_description: 'Has a chance when a basic attack hits to deal 5 damage to 
+          times base tower damage to {AbilityData.m_targetCount} random targets
+
+          Cost:
+          {BuyAbilityScriptableObject.Cost}
+
+          Trigger: {AbilityData.Trigger}'
         m_trigger: 0
         m_triggerTime:
           serializedVersion: 2
