@@ -1,5 +1,4 @@
-﻿using System;
-using Ui.WidgetControllers;
+﻿using Ui.WidgetControllers;
 using UnityEngine;
 
 namespace Ui.Ability
