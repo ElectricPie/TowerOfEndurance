@@ -8,7 +8,6 @@ namespace Ui.Tooltip
     public class AbilityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Vector2 m_tooltipOffset;
-        [SerializeField] private AbilityData m_ability;
         
         private TooltipManager m_tooltipManager;
         private BuyAbilityButton m_buyAbilityButton;

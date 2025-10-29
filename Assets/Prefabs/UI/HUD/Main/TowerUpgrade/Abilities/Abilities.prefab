@@ -360,7 +360,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5912022951543561151}
   - component: {fileID: 6752783905371271335}
-  - component: {fileID: 6803319201939578940}
   m_Layer: 5
   m_Name: Abilities
   m_TagString: Untagged
@@ -416,24 +415,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6803319201939578940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3054150892473100897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 010b374b019449a18677e40aa24121c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Ui.Ability.BuyableAbilitiesList
-  m_buyAbilityButtonPrefab: {fileID: 3375455203836694428, guid: 704cf289e7c2b8142abcfc4216d06a63, type: 3}
-  m_contentTransform: {fileID: 2325847475906461235}
-  m_buyableAbilities:
-  - {fileID: 11400000, guid: 69a1e71357ea69c43b63a33d3a6d09e7, type: 2}
-  - {fileID: 11400000, guid: 6fe55d73a73dca743bff55719b9290be, type: 2}
-  - {fileID: 11400000, guid: ef477c7776d9fb946843f9bba4f6d6ff, type: 2}
 --- !u!1 &3064562150452973174
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +780,7 @@ GameObject:
   - component: {fileID: 3952759305096333448}
   - component: {fileID: 378407172419670384}
   - component: {fileID: 7678666404083136763}
+  - component: {fileID: 9215205210144340966}
   m_Layer: 5
   m_Name: Upgrade Abilities Scroll View
   m_TagString: Untagged
@@ -896,6 +878,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9215205210144340966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168342325162023877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c5a0717715a41f09ecc597165f64f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.Ability.UpgradeAbilitiesList
+  m_upgradeAbilitiesListContent: {fileID: 3648172241265774320}
+  m_abilityUpgradeButtonPrefab: {fileID: 2386818075924079985, guid: 8958bd7bd44a5ca44898de401d606a94, type: 3}
 --- !u!1 &5208194883333731627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,6 +1965,7 @@ GameObject:
   - component: {fileID: 24371154944237767}
   - component: {fileID: 8816765511939655518}
   - component: {fileID: 5279395514248932078}
+  - component: {fileID: 1342155653523852859}
   m_Layer: 5
   m_Name: Buy Abilities Scroll View
   m_TagString: Untagged
@@ -2066,6 +2063,24 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1342155653523852859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684863501096989519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010b374b019449a18677e40aa24121c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ui.Ability.BuyableAbilitiesList
+  m_buyAbilityButtonPrefab: {fileID: 6233043933845601609, guid: 54de832d29e5a4f458a864310fc0a79b, type: 3}
+  m_contentTransform: {fileID: 2325847475906461235}
+  m_buyableAbilities:
+  - {fileID: 11400000, guid: 69a1e71357ea69c43b63a33d3a6d09e7, type: 2}
+  - {fileID: 11400000, guid: 6fe55d73a73dca743bff55719b9290be, type: 2}
+  - {fileID: 11400000, guid: ef477c7776d9fb946843f9bba4f6d6ff, type: 2}
 --- !u!1 &7919365589649496442
 GameObject:
   m_ObjectHideFlags: 0

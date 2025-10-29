@@ -28,7 +28,7 @@ public class TowerAbilities : MonoBehaviour
 
     private bool m_isActive = true;
     
-    public void AddAbility(AbilityScriptableObject newAbility)
+    public AbilityInstance AddAbility(AbilityScriptableObject newAbility)
     {
         AbilityInitData newInitData = new AbilityInitData(gameObject);
         AbilityInstance newAbilityInstance = new AbilityInstance(newAbility.AbilityData, newInitData);
@@ -54,7 +54,9 @@ public class TowerAbilities : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
         m_allAbilities.Add(newAbilityInstance);
+        return newAbilityInstance;
     }
 
     public bool HasAbilityOfType(AbilityData ability)

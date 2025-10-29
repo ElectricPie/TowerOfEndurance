@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Ui.Ability;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Ui.WidgetControllers
 {
     public class AbilityWidgetController : WidgetController
     {
+        public event Action<AbilityInstance> OnAbilityPurchasedEvent = delegate { };
+        
         private TowerAbilities m_towerAbilities;
         private PlayerMoney m_playerMoney;
         
@@ -33,7 +38,8 @@ namespace Ui.WidgetControllers
             if (!m_playerMoney.RemoveMoney(abilityToBuy.Cost)) 
                 return;
             
-            m_towerAbilities.AddAbility(abilityToBuy.AbilityScriptableObject);
+            AbilityInstance newAbility = m_towerAbilities.AddAbility(abilityToBuy.AbilityScriptableObject);
+            OnAbilityPurchasedEvent.Invoke(newAbility);
             m_purchaseButtons.Remove(buttonGameObject);
             Object.Destroy(buttonGameObject);
         }
@@ -56,7 +62,8 @@ namespace Ui.WidgetControllers
             if (!m_playerMoney.RemoveMoney(cost)) 
                 return;
             
-            m_towerAbilities.AddAbility(randomAbilityEntry.Value.AbilityScriptableObject);
+            AbilityInstance newAbility = m_towerAbilities.AddAbility(randomAbilityEntry.Value.AbilityScriptableObject);
+            OnAbilityPurchasedEvent.Invoke(newAbility);
             m_purchaseButtons.Remove(randomAbilityEntry.Key);
             Object.Destroy(randomAbilityEntry.Key);
         }

@@ -13,11 +13,6 @@ namespace Ui.Ability
         
         public BuyAbilityScriptableObject Ability => m_ability;
 
-        protected void Start()
-        {
-            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
-        }
-
         protected void Awake()
         {
             m_abilityWidgetController = Hud.GameHudController.Instance.AbilityWidgetController;
