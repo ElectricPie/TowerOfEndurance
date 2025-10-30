@@ -14,9 +14,17 @@ public class AbilityInitData
 public sealed class AbilityInstance
 {
     public int Level { get; private set; } = 1;
-
     public AbilityData AbilityData { get; private set; }
+    
     private readonly GameObject m_caster;
+    
+    public float GetCostForNextLevel()
+    {
+        if (Level >= AbilityData.MaxLevel)
+            return -1.0f;
+        
+        return AbilityData.GetCostAt(Level + 1);
+    }
     
     private AbilityInstance() { }
     public AbilityInstance(AbilityData abilityData, AbilityInitData initData)
@@ -24,6 +32,11 @@ public sealed class AbilityInstance
         AbilityData = abilityData.Clone();
         AbilityData.Init(initData);
         m_caster = initData.Caster;
+    }
+
+    public void Upgrade()
+    {
+        Level++;
     }
     
     public bool TryActivate(GameObject target = null)

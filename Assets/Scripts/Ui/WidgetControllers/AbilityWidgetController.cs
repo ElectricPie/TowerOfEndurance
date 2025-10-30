@@ -67,6 +67,16 @@ namespace Ui.WidgetControllers
             m_purchaseButtons.Remove(randomAbilityEntry.Key);
             Object.Destroy(randomAbilityEntry.Key);
         }
+
+        public bool TryUpgradeAbility(AbilityInstance abilityToUpgrade)
+        {
+            // Check for sufficient money
+            if (!m_playerMoney.RemoveMoney(abilityToUpgrade.GetCostForNextLevel())) 
+                return false;
+            
+            abilityToUpgrade.Upgrade();
+            return true;
+        }
         
         public void RegisterBuyButton(AbilityScriptableObject ability, GameObject buttonGameObject)
         {

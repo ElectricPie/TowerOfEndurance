@@ -13,11 +13,12 @@ public class AbilityData
     [SerializeField] private AbilityTrigger m_trigger = AbilityTrigger.OnBasicAttackFired;
     [SerializeField, ShowIf("m_trigger", AbilityTrigger.Timed)]
     private AnimationCurve m_triggerTime;
+    [SerializeField] private int m_maxLevel = 5;
     
     public string Label => m_label;
     public string Description => m_description;
     public AbilityTrigger Trigger => m_trigger;
-    
+    public int MaxLevel => m_maxLevel;
     
     public float GetCostAt(int level) => m_cost.Evaluate(level);
     public float GetTriggerTimeAt(int level) => m_triggerTime.Evaluate(level);
