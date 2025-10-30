@@ -23,7 +23,9 @@ namespace Ui.Tooltip.Ability
         public void OnPointerEnter(PointerEventData eventData)
         {
             Vector3 tooltipPosition = (Vector2)transform.position + m_tooltipOffset;
-            AbilityTooltipData tooltipData = new AbilityTooltipData(m_abilityTooltipInterface.GetAbilityData());
+            AbilityTooltipData tooltipData = new AbilityTooltipData(
+                m_abilityTooltipInterface.GetAbilityData(), 
+                Mathf.CeilToInt(m_abilityTooltipInterface.GetAbilityCost()));
             
             m_tooltipManager.ShowTooltip(tooltipData, tooltipPosition);
         }

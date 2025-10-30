@@ -24,7 +24,7 @@ MonoBehaviour:
         m_description: 'Posions the enemy dealing 20% of the towers base damage
 
           Cost:
-          {Cost()}
+          [Cost]
 
           Trigger: {Trigger}
 

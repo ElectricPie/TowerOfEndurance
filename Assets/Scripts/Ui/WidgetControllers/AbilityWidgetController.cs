@@ -35,7 +35,7 @@ namespace Ui.WidgetControllers
             }
 
             // Check for sufficient money
-            if (!m_playerMoney.RemoveMoney(abilityToBuy.AbilityData.Cost(1))) 
+            if (!m_playerMoney.RemoveMoney(abilityToBuy.AbilityData.GetCostAt(1))) 
                 return;
             
             AbilityInstance newAbility = m_towerAbilities.AddAbility(abilityToBuy);

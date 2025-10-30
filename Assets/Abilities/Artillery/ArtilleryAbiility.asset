@@ -25,7 +25,7 @@ MonoBehaviour:
           times base tower damage to {m_targetCount} random targets
 
           Cost:
-          {Cost}
+          [Cost]
 
           Trigger: {Trigger}'
         m_cost:

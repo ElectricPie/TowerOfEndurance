@@ -16,9 +16,11 @@ public class AbilityData
     
     public string Label => m_label;
     public string Description => m_description;
-    public float Cost(int level) => m_cost.Evaluate(level);
     public AbilityTrigger Trigger => m_trigger;
-    public float TriggerTime(int level) => m_triggerTime.Evaluate(level);
+    
+    
+    public float GetCostAt(int level) => m_cost.Evaluate(level);
+    public float GetTriggerTimeAt(int level) => m_triggerTime.Evaluate(level);
     
     public virtual AbilityData Clone()
     {

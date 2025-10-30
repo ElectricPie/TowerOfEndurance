@@ -137,11 +137,11 @@ public class TowerAbilities : MonoBehaviour
 
     private IEnumerator TimedAbilityCoroutine(AbilityInstance ability)
     {
-        yield return new WaitForSeconds(ability.AbilityData.TriggerTime(ability.Level));
+        yield return new WaitForSeconds(ability.AbilityData.GetTriggerTimeAt(ability.Level));
         while (m_isActive)
         {
             ability.TryActivate();
-            yield return new WaitForSeconds(ability.AbilityData.TriggerTime(ability.Level));
+            yield return new WaitForSeconds(ability.AbilityData.GetTriggerTimeAt(ability.Level));
         }
     }
 

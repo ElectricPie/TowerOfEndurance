@@ -47,5 +47,10 @@ namespace Ui.Ability
         {
             return m_ability.AbilityData;
         }
+
+        public float GetAbilityCost()
+        {
+            return m_ability.AbilityData.GetCostAt(1);
+        }
     }
 }

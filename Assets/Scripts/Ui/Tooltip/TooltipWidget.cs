@@ -13,6 +13,8 @@ namespace Ui.Tooltip
 
     public abstract class TooltipWidget : MonoBehaviour
     {
+        private static readonly Regex s_placeholderRegex = new Regex(@"\{((?:\w+(?:\.\w+)*))\}");
+        
         /// <summary>
         /// Abstract method to set the text of the tooltip widget.
         /// </summary>
@@ -33,11 +35,11 @@ namespace Ui.Tooltip
         /// <returns>
         /// A string where placeholders in the stringToFormat have been replaced with their corresponding property values.
         /// </returns>
-        protected static string FormatTooltipDescription(System.Object data, string stringToFormat)
+        protected static string FormatTooltipDescriptionWithObject(System.Object data, string stringToFormat)
         {
             string resultDescription = stringToFormat;
             // Replace placeholders in the format {PropertyName.PropertyName...}
-            resultDescription = Regex.Replace(resultDescription, @"\{((?:\w+(?:\.\w+)*))\}", match =>
+            resultDescription = s_placeholderRegex.Replace(resultDescription, match =>
             {
                 string propertyPath = match.Groups[1].Value; // Full property path to look into
                 if (string.IsNullOrWhiteSpace(propertyPath))

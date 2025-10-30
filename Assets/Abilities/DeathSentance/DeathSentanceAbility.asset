@@ -24,7 +24,7 @@ MonoBehaviour:
         m_description: 'Attacks a random enemy 10 times every 10s dealing 10% of
           the towers base damage
 
-          Cost: {Cost}
+          Cost: [Cost]
 
           Trigger: {Trigger}
 
