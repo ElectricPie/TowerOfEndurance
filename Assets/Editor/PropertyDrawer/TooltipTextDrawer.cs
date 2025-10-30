@@ -8,10 +8,12 @@ namespace Editor.PropertyDrawer
     [CustomPropertyDrawer(typeof(TooltipTextAreaAttribute))]
     public class TooltipTextDrawer : UnityEditor.PropertyDrawer
     {
-        private static readonly Regex s_placeholderRegex = new Regex(@"\{([^}]*)\}", RegexOptions.Compiled);
+        private static readonly Regex s_classPlaceholderRegex = new Regex(@"\{([^}]*)\}", RegexOptions.Compiled);
+        private static readonly Regex s_tooltipDataPlaceholderRegex = new Regex(@"\[([^}]*)\]", RegexOptions.Compiled);
         private static readonly string s_invalidTypeMessage = L10n.Tr("<color=red>Error: Use TooltipTextDrawer with string.</color>");
         private const string TEXT_CONTROL_NAME = "TooltipTextArea";
-        private const string PLACEHOLDER_COLOR = "cyan";
+        private const string CLASS_PLACEHOLDER_COLOR = "cyan";
+        private const string TOOLTIP_DATA_PLACEHOLDER_COLOR = "yellow";
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -34,7 +36,8 @@ namespace Editor.PropertyDrawer
 
                 // Replace placeholders with colored versions for display
                 string rawText = property.stringValue;
-                string coloredText = s_placeholderRegex.Replace(rawText, $"<color="+PLACEHOLDER_COLOR+">{$1}</color>");
+                string coloredText = s_classPlaceholderRegex.Replace(rawText, $"<color="+CLASS_PLACEHOLDER_COLOR+">{$1}</color>");
+                coloredText = s_tooltipDataPlaceholderRegex.Replace(coloredText, $"<color="+TOOLTIP_DATA_PLACEHOLDER_COLOR+">[$1]</color>");
 
                 GUIStyle style = new GUIStyle(EditorStyles.textArea)
                 {
