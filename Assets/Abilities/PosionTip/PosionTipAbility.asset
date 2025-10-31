@@ -21,7 +21,7 @@ MonoBehaviour:
       type: {class: PoisonTipAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_label: Posion TIp
-        m_description: 'Posions the enemy dealing [Damage] of the towers base damage
+        m_description: 'Posions the enemy dealing [Damage]% of the towers base damage
           every [Period]s over [Duration]s.
 
           Cost: [Cost]'

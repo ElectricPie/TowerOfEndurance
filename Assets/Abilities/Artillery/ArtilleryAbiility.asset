@@ -73,7 +73,25 @@ MonoBehaviour:
           m_triggerOnApplication: 0
         m_damageModifierCurve:
           serializedVersion: 2
-          m_Curve: []
+          m_Curve:
+          - serializedVersion: 3
+            time: 1
+            value: 3.4
+            inSlope: 0.39999998
+            outSlope: 0.39999998
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 5
+            value: 5
+            inSlope: 0.39999998
+            outSlope: 0.39999998
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
@@ -82,11 +100,10 @@ MonoBehaviour:
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_label: Artillery
-        m_description: 'Has a chance when a basic attack hits to deal 5 damage to 
-          times base tower damage to [TargetCount] random targets
+        m_description: 'Has a chance when a basic attack hits to deal [Damage]% of
+          the towers damage to [TargetCount] random targets
 
-          Cost:
-          [Cost]'
+          Cost: [Cost]'
         m_cost:
           serializedVersion: 2
           m_Curve:
