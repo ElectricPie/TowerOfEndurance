@@ -4,16 +4,20 @@ using UnityEngine;
 
 namespace Ui.Tooltip
 {
+    using TooltipDataMap = System.Collections.Generic.Dictionary<string, object>;
+    
     /// <summary>
     /// Represents the base class for tooltip data
     /// </summary>
     public class TooltipData
     {
+        protected TooltipDataMap PlaceholderValueMap = new TooltipDataMap();
     }
 
     public abstract class TooltipWidget : MonoBehaviour
     {
         private static readonly Regex s_placeholderRegex = new Regex(@"\{((?:\w+(?:\.\w+)*))\}");
+        private static readonly Regex s_dataPlaceholderRegex = new Regex(@"\[(\w+)\]");
         
         /// <summary>
         /// Abstract method to set the text of the tooltip widget.
@@ -35,7 +39,7 @@ namespace Ui.Tooltip
         /// <returns>
         /// A string where placeholders in the stringToFormat have been replaced with their corresponding property values.
         /// </returns>
-        protected static string FormatTooltipDescriptionWithObject(System.Object data, string stringToFormat)
+        protected static string FormatTooltipDescriptionWithObject(object data, string stringToFormat)
         {
             string resultDescription = stringToFormat;
             // Replace placeholders in the format {PropertyName.PropertyName...}
@@ -77,6 +81,28 @@ namespace Ui.Tooltip
                 }
 
                 return containerValue != null ? containerValue.ToString() : "null";
+            });
+
+            return resultDescription;
+        }
+        
+        /// <summary>
+        /// Replaces placeholders in the given string with corresponding values from the provided AbilityTooltipData.
+        /// </summary>
+        /// <param name="map">A dictionary where the key is the placeholder to replace and the value is the value to
+        /// replace the placeholder</param>
+        /// <param name="stringToFormat">The string containing placeholders to be replaced.</param>
+        /// <returns>
+        /// A new string with placeholders replaced by their corresponding values from the AbilityTooltipData.
+        /// If a placeholder key is not recognized, the original placeholder is retained in the string.
+        /// </returns>
+        protected static string FormatTooltipDescriptionWithTooltipDataMap(TooltipDataMap map, string stringToFormat)
+        {
+            string resultDescription = s_dataPlaceholderRegex.Replace(stringToFormat, match => 
+            {
+                string key = match.Groups[1].Value;
+                map.TryGetValue(key, out object value);
+                return value != null ? value.ToString() : match.Value;
             });
 
             return resultDescription;
