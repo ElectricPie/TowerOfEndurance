@@ -39,7 +39,8 @@ namespace AbilitySystem.Ability
             tooltipDataMap.TryAdd("Cost", GetCostAt(level));
             tooltipDataMap.TryAdd("Duration", m_damageEffect.PeriodicEffectValues.GetDurationAt(level));
             tooltipDataMap.TryAdd("Period", m_damageEffect.PeriodicEffectValues.GetPeriodAt(level));
-            tooltipDataMap.TryAdd("Damage", m_damageEffect.DamageModifierAt(level) * 100);
+            tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
+            tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
             return tooltipDataMap;
         }
     }

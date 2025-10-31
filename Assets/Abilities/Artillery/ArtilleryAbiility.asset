@@ -100,10 +100,11 @@ MonoBehaviour:
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_label: Artillery
-        m_description: 'Has a chance when a basic attack hits to deal [Damage]% of
-          the towers damage to [TargetCount] random targets
+        m_description: 'Has a chance when a basic attack hits to deal [DamagePercent]%({[TowerDamage]
+          * [DamageModifier]})  of the towers damage to [TargetCount] random targets
 
-          Cost: [Cost]'
+          Cost:
+          [Cost]'
         m_cost:
           serializedVersion: 2
           m_Curve:

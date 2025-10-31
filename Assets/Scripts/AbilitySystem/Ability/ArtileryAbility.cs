@@ -57,7 +57,8 @@ namespace AbilitySystem.Ability
         {
             Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
             tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            tooltipDataMap.TryAdd("Damage", m_damageEffect.DamageModifierAt(level) * 100);
+            tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
+            tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
             tooltipDataMap.TryAdd("TargetCount", m_targetCount);
             tooltipDataMap.TryAdd("TriggerChance", m_triggerChanceCurve.Evaluate(level));
             return tooltipDataMap;

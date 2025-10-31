@@ -1,3 +1,7 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using AbilitySystem.Ability.Attributes;
 using TMPro;
 using UnityEngine;
 
@@ -21,6 +25,13 @@ namespace Ui.Tooltip.Ability
         [SerializeField] private TMP_Text m_titleText;
         [SerializeField] private TMP_Text m_descriptionText;
 
+        private TowerAttributeSet m_towerAttributeSet;
+
+        protected void Awake()
+        {
+            m_towerAttributeSet = FindFirstObjectByType<TowerAttributeSet>();
+        }
+
         public override void SetData(TooltipData data)
         {
             if (data is not AbilityTooltipData abilityTooltipData)
@@ -33,10 +44,12 @@ namespace Ui.Tooltip.Ability
             string resultTitle = abilityData.Label;
             m_titleText.text = resultTitle;
 
+            Dictionary<string, object> tooltipDataMap = abilityData.GetTooltipDataMap(abilityTooltipData.Level);
+            tooltipDataMap.Add("TowerDamage", m_towerAttributeSet.Damage);
             // Format any [] placeholders in the description
-            string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(abilityData.GetTooltipDataMap(abilityTooltipData.Level), abilityData.Description);
-            // Format any {} placeholders in the description
-            resultDescription = FormatTooltipDescriptionWithObject(abilityTooltipData.Ability, resultDescription);
+            string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(tooltipDataMap, abilityData.Description);
+            // Evaluate any expressions in {}
+            resultDescription = ProcessExpressions(resultDescription);
             m_descriptionText.text = resultDescription;
         }
     }
