@@ -9,7 +9,7 @@ namespace Editor.PropertyDrawer
     public class TooltipTextDrawer : UnityEditor.PropertyDrawer
     {
         private static readonly Regex s_classPlaceholderRegex = new Regex(@"\{([^}]*)\}", RegexOptions.Compiled);
-        private static readonly Regex s_tooltipDataPlaceholderRegex = new Regex(@"\[([^}]*)\]", RegexOptions.Compiled);
+        private static readonly Regex s_tooltipDataPlaceholderRegex = new Regex(@"\[([^\]]*)\]", RegexOptions.Compiled);
         private static readonly string s_invalidTypeMessage = L10n.Tr("<color=red>Error: Use TooltipTextDrawer with string.</color>");
         private const string TEXT_CONTROL_NAME = "TooltipTextArea";
         private const string CLASS_PLACEHOLDER_COLOR = "cyan";
