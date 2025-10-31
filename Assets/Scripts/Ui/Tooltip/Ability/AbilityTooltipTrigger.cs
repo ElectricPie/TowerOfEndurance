@@ -10,7 +10,6 @@ namespace Ui.Tooltip.Ability
         [SerializeField] private Vector2 m_tooltipOffset;
         
         private TooltipManager m_tooltipManager;
-        
         private IAbilityTooltipInterface m_abilityTooltipInterface;
 
         private void Awake()
@@ -25,7 +24,7 @@ namespace Ui.Tooltip.Ability
             Vector3 tooltipPosition = (Vector2)transform.position + m_tooltipOffset;
             AbilityTooltipData tooltipData = new AbilityTooltipData(
                 m_abilityTooltipInterface.GetAbilityData(), 
-                Mathf.CeilToInt(m_abilityTooltipInterface.GetAbilityCost()));
+                Mathf.CeilToInt(m_abilityTooltipInterface.GetAbilityLevel()));
             
             m_tooltipManager.ShowTooltip(tooltipData, tooltipPosition);
         }

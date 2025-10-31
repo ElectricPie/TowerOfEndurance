@@ -41,9 +41,9 @@ namespace Ui.Ability
             return m_ability.AbilityData;
         }
 
-        public float GetAbilityCost()
+        public float GetAbilityLevel()
         {
-            return m_ability.GetCostForNextLevel();
+            return m_ability.Level;
         }
     }
 }

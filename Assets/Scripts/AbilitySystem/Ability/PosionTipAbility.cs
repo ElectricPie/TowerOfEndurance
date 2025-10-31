@@ -1,30 +1,46 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PoisonTipAbilityData : AbilityData
+namespace AbilitySystem.Ability
 {
-    /* Editor Values */
-    [SerializeField] private DamageEffect m_damageEffect;
-
-    public override AbilityData Clone()
+    [Serializable]
+    public class PoisonTipAbilityData : AbilityData
     {
-        PoisonTipAbilityData clone = (PoisonTipAbilityData)this.MemberwiseClone();
-        clone.m_damageEffect = this.m_damageEffect;
+        /* Editor Values */
+        [SerializeReference] private DamageEffect m_damageEffect;
 
-        return clone;
-    }
+        public override AbilityData Clone()
+        {
+            PoisonTipAbilityData clone = (PoisonTipAbilityData)MemberwiseClone();
+            clone.m_damageEffect = m_damageEffect;
 
-    
-    /* Runtime Values */
-    public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
-    {
-        if (target == null || caster == null)
-            return false;
-  
-        EffectsContainer effectsContainer = target.GetComponent<EffectsContainer>();
-        if (effectsContainer == null)
-            return false;
-        
-        effectsContainer.ApplyEffect(caster, m_damageEffect, level);
-        return true;
+            return clone;
+        }
+
+
+        /* Runtime Values */
+        public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
+        {
+            if (target == null || caster == null)
+                return false;
+
+            EffectsContainer effectsContainer = target.GetComponent<EffectsContainer>();
+            if (effectsContainer == null)
+                return false;
+
+            effectsContainer.ApplyEffect(caster, m_damageEffect, level);
+            return true;
+        }
+
+        public override Dictionary<string, object> GetTooltipDataMap(int level)
+        {
+            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
+            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
+            tooltipDataMap.TryAdd("Duration", m_damageEffect.PeriodicEffectValues.GetDurationAt(level));
+            tooltipDataMap.TryAdd("Period", m_damageEffect.PeriodicEffectValues.GetPeriodAt(level));
+            tooltipDataMap.TryAdd("Damage", m_damageEffect.DamageModifierAt(level));
+            return tooltipDataMap;
+        }
     }
 }

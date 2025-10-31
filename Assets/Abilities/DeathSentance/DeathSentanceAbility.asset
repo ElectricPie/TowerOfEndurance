@@ -17,19 +17,93 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2200126782216863807
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        m_durationPolicy: 1
+        m_periodicEffectValues:
+          m_duration:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 5
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_period:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 1
+              value: 0.02
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 5
+              value: 0.001
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_triggerOnApplication: 0
+        m_damageModifierCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 5
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_visualFx: {fileID: 0}
     - rid: 3214090476972933228
       type: {class: DeathSentenceAbility, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_label: Death Sentance
-        m_description: 'Attacks a random enemy 10 times every 10s dealing 10% of
-          the towers base damage
+        m_description: 'Attacks a random enemy [Attacks] times every [TriggerTime]s
+          dealing [Damage] of the towers base damage
 
-          Cost: [Cost]
-
-          Trigger: {Trigger}
-
-          Damage:
-          {m_damageEffect.Test}'
+          Cost: [Cost]'
         m_cost:
           serializedVersion: 2
           m_Curve:
@@ -81,33 +155,4 @@ MonoBehaviour:
           m_RotationOrder: 4
         m_maxLevel: 5
         m_damageEffect:
-          m_durationPolicy: 1
-          m_periodicEffectValues:
-            m_duration: 1.6
-            m_period: 0.02
-            m_triggerOnApplication: 0
-          m_damageModifierCurve:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 34
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 34
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_visualFx: {fileID: 0}
+          rid: 2200126782216863807

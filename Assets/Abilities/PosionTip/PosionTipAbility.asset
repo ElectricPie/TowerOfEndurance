@@ -13,22 +13,18 @@ MonoBehaviour:
   m_Name: PosionTipAbility
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
   m_abilityData:
-    rid: 3214090471301185600
+    rid: 2200126782196154368
   references:
     version: 2
     RefIds:
-    - rid: 3214090471301185600
-      type: {class: PoisonTipAbilityData, ns: , asm: Assembly-CSharp}
+    - rid: 2200126782196154368
+      type: {class: PoisonTipAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
-        m_label: Posion Tip
-        m_description: 'Posions the enemy dealing 20% of the towers base damage
+        m_label: Posion TIp
+        m_description: 'Posions the enemy dealing [Damage] of the towers base damage
+          every [Period]s over [Duration]s.
 
-          Cost:
-          [Cost]
-
-          Trigger: {Trigger}
-
-          Damage: {m_damageEffect.Test}'
+          Cost: [Cost]'
         m_cost:
           serializedVersion: 2
           m_Curve:
@@ -36,16 +32,16 @@ MonoBehaviour:
             time: 1
             value: 10
             inSlope: 0
-            outSlope: 10
+            outSlope: 0
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
-            time: 10
-            value: 100
+            time: 5
+            value: 50
             inSlope: 10
-            outSlope: 0
+            outSlope: 10
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
@@ -53,41 +49,92 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        m_trigger: 1
+        m_trigger: 0
         m_triggerTime:
           serializedVersion: 2
           m_Curve: []
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+        m_maxLevel: 5
         m_damageEffect:
-          m_durationPolicy: 1
-          m_periodicEffectValues:
-            m_duration: 5
-            m_period: 0.8
-            m_triggerOnApplication: 0
-          m_damageModifierCurve:
+          rid: 2200126782216863744
+    - rid: 2200126782216863744
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        m_durationPolicy: 1
+        m_periodicEffectValues:
+          m_duration:
             serializedVersion: 2
             m_Curve:
             - serializedVersion: 3
               time: 1
-              value: 0.2
-              inSlope: 0.2
-              outSlope: 0.2
-              tangentMode: 34
+              value: 5
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
               weightedMode: 0
               inWeight: 0
-              outWeight: 0.33333334
+              outWeight: 0
             - serializedVersion: 3
               time: 5
-              value: 1
-              inSlope: 0.2
-              outSlope: 0.2
-              tangentMode: 34
+              value: 5
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
+              inWeight: 0.13936865
               outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
-          m_visualFx: {fileID: 8143778695897954027, guid: 616d71dcbec89af44b6dc5c44a1532cf, type: 3}
+          m_period:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 1
+              value: 0.8
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 5
+              value: 0.8
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_triggerOnApplication: 0
+        m_damageModifierCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 1
+            value: 0.2
+            inSlope: 0.45
+            outSlope: 0.45
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 5
+            value: 2
+            inSlope: 0.45
+            outSlope: 0.45
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_visualFx: {fileID: 8143778695897954027, guid: 616d71dcbec89af44b6dc5c44a1532cf, type: 3}

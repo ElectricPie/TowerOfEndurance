@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using EditorAttributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class AbilityData
+public abstract class AbilityData
 {
     [SerializeField] private string m_label = "New Ability";
     [SerializeField, TooltipTextArea] private string m_description = "No Description";
@@ -36,6 +37,8 @@ public class AbilityData
     {
         return false;
     }
+
+    public abstract Dictionary<string, object> GetTooltipDataMap(int level);
 }
 
 public enum AbilityTrigger

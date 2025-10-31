@@ -13,7 +13,7 @@ public class DamageEffect : GameEffect
     
     public AnimationCurve DamageModifierCurve => m_damageModifierCurve;
     public GameObject VisualFx => m_visualFx;
-    public float Test => DamageModifierCurve.Evaluate(1);
+    public float DamageModifierAt(int level) => m_damageModifierCurve.Evaluate(level);
     
     public override void Execute(GameObject caster, GameObject target, int level = 1)
     {

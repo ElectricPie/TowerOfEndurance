@@ -99,6 +99,11 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
         return true;
     }
 
+    public override Dictionary<string, object> GetTooltipDataMap(int level)
+    {
+        return new Dictionary<string, object>();
+    }
+
     /* ISharedEffects Interface begin */
     public List<GameEffect> GetEffects()
     {

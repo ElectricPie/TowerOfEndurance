@@ -6,11 +6,11 @@ using UnityEngine;
 internal class PeriodicEffectContainer
 {
     public readonly GameEffect Effect;
+    public readonly int Level;
     public event Action OnExpiration;
     
     private readonly GameObject m_caster;
     private readonly GameObject m_target;
-    private readonly int m_level;
     private float ExpirationTime { get; set; }
     
     private PeriodicEffectContainer() { }
@@ -19,7 +19,7 @@ internal class PeriodicEffectContainer
         m_caster = caster;
         Effect = effect;
         m_target = target;
-        m_level = level;
+        Level = level;
 
         RefreshDuration();
         OnExpiration = expirationCallback;
@@ -33,7 +33,7 @@ internal class PeriodicEffectContainer
 
     public void RefreshDuration()
     {
-        ExpirationTime = Time.time + Effect.PeriodicEffectValues.Duration;
+        ExpirationTime = Time.time + Effect.PeriodicEffectValues.GetDurationAt(Level);
     }
 
     public bool HasExpired()
@@ -48,7 +48,7 @@ internal class PeriodicEffectContainer
 
     public void Execute()
     {
-        Effect.Execute(m_caster, m_target, m_level);
+        Effect.Execute(m_caster, m_target, Level);
     }
 }
 
@@ -100,7 +100,7 @@ public class EffectsContainer : MonoBehaviour
                 yield break;
             }
             
-            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.Period);
+            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.GetPeriodAt(effectContainer.Level));
             effectContainer.Execute();
         }
     }

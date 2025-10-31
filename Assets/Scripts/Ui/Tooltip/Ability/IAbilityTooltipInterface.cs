@@ -3,6 +3,6 @@
     public interface IAbilityTooltipInterface
     {
         public AbilityData GetAbilityData();
-        public float GetAbilityCost();
+        public float GetAbilityLevel();
     }
 }

@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace AbilitySystem.Ability
 {
+    [Serializable]
     public class ArtilleryAbilityData : AbilityData
     {
         /* Editor Values */
         [SerializeField] private AnimationCurve m_triggerChanceCurve;
         [SerializeField, Min(0)] private int m_targetCount;
-        [SerializeField] private DamageEffect m_damageEffect = new DamageEffect();
+        [SerializeReference] private DamageEffect m_damageEffect = new DamageEffect();
 
         public override AbilityData Clone()
         {
-            ArtilleryAbilityData clone = (ArtilleryAbilityData)this.MemberwiseClone();
-            clone.m_triggerChanceCurve = this.m_triggerChanceCurve;
-            clone.m_damageEffect = this.m_damageEffect;
+            ArtilleryAbilityData clone = (ArtilleryAbilityData)MemberwiseClone();
+            clone.m_triggerChanceCurve = m_triggerChanceCurve;
+            clone.m_damageEffect = m_damageEffect;
 
             return clone;
         }
@@ -48,6 +51,16 @@ namespace AbilitySystem.Ability
             }
 
             return true;
+        }
+
+        public override Dictionary<string, object> GetTooltipDataMap(int level)
+        {
+            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
+            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
+            tooltipDataMap.TryAdd("Damage", m_damageEffect.DamageModifierAt(level));
+            tooltipDataMap.TryAdd("TargetCount", m_targetCount);
+            tooltipDataMap.TryAdd("TriggerChance", m_triggerChanceCurve.Evaluate(level));
+            return tooltipDataMap;
         }
     }
 }

@@ -1,15 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace AbilitySystem.Ability
 {
+    [Serializable]
     public class DeathSentenceAbility : AbilityData
     {
         /* Editor Values */
-        [SerializeField] private DamageEffect m_damageEffect;
+        [SerializeReference] private DamageEffect m_damageEffect;
 
         public override AbilityData Clone()
         {
-            DeathSentenceAbility clone = (DeathSentenceAbility)this.MemberwiseClone();
+            DeathSentenceAbility clone = (DeathSentenceAbility)MemberwiseClone();
 
             return clone;
         }
@@ -32,6 +35,17 @@ namespace AbilitySystem.Ability
             randomUnit.EffectsContainer.ApplyEffect(caster, m_damageEffect, level);
             
             return true;
+        }
+
+        public override Dictionary<string, object> GetTooltipDataMap(int level)
+        {
+            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
+            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
+            float attacks = m_damageEffect.PeriodicEffectValues.GetDurationAt(level) / m_damageEffect.PeriodicEffectValues.GetPeriodAt(level);
+            tooltipDataMap.TryAdd("Attacks", attacks);
+            tooltipDataMap.TryAdd("Damage", m_damageEffect.DamageModifierAt(level));
+            tooltipDataMap.TryAdd("TriggerTime", GetTriggerTimeAt(level));
+            return tooltipDataMap;
         }
     }
 }

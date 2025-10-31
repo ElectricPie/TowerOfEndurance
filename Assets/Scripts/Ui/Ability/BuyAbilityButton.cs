@@ -48,9 +48,10 @@ namespace Ui.Ability
             return m_ability.AbilityData;
         }
 
-        public float GetAbilityCost()
+        public float GetAbilityLevel()
         {
-            return m_ability.AbilityData.GetCostAt(1);
+            // Want the first level the ability can be bought at
+            return 1;
         }
     }
 }

@@ -20,15 +20,15 @@ public abstract class GameEffect
 
 [Serializable]
 public class PeriodicEffectValues {
-    [SerializeField, BoxGroup("Periodic"), MinValue(0)] 
-    private float m_duration = 1.0f;
-    [SerializeField, BoxGroup("Periodic"), MinValue(0)] 
-    private float m_period = 1.0f;
+    [SerializeField, BoxGroup("Periodic")] 
+    private AnimationCurve m_duration = AnimationCurve.Linear(1, 1, 5, 5);
+    [SerializeField, BoxGroup("Periodic")] 
+    private AnimationCurve m_period = AnimationCurve.Linear(1, 1, 5, 5);
     [SerializeField, BoxGroup("Periodic")]
     private bool m_triggerOnApplication;
 
-    public float Duration => m_duration;
-    public float Period => m_period;
+    public float GetDurationAt(int level) => m_duration.Evaluate(level);
+    public float GetPeriodAt(int level) => m_period.Evaluate(level);
     public bool TriggerOnApplication => m_triggerOnApplication;
 }
 
