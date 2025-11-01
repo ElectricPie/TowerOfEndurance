@@ -1,5 +1,4 @@
-﻿using Ui.Ability;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Ui.Tooltip.Ability
@@ -11,13 +10,6 @@ namespace Ui.Tooltip.Ability
         
         private TooltipManager m_tooltipManager;
         private IAbilityTooltipInterface m_abilityTooltipInterface;
-
-        private void Awake()
-        {
-            m_tooltipManager = FindFirstObjectByType<TooltipManager>();
-            
-            m_abilityTooltipInterface = (IAbilityTooltipInterface)m_abilityTooltipComponent;
-        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -33,6 +25,19 @@ namespace Ui.Tooltip.Ability
         {
             m_tooltipManager.HideTooltip();
         }
+        
+        protected void Awake()
+        {
+            m_tooltipManager = FindFirstObjectByType<TooltipManager>();
+            
+            m_abilityTooltipInterface = (IAbilityTooltipInterface)m_abilityTooltipComponent;
+        }
+
+        protected void OnDestroy()
+        {
+            m_tooltipManager.HideTooltip();
+        }
+
 
         private void OnDrawGizmos()
         {
