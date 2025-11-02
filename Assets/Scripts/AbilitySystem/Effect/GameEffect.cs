@@ -13,6 +13,9 @@ public abstract class GameEffect
     public DurationPolicy DurationPolicy => m_durationPolicy;
     public PeriodicEffectValues PeriodicEffectValues => m_periodicEffectValues;
     
+    // TODO: Think this should take attribute set for caster as it should only be called on effect container which
+    //   should only be on object with attribute sets
+    // TODO: Consider attribute sets as scriptable object with list for attribute names
     public abstract void Execute(GameObject caster, GameObject target, int level = 1);
     public virtual void OnApplication(GameObject target) { }
     public virtual void OnRemove() { }
