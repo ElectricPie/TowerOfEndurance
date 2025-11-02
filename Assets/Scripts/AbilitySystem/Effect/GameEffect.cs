@@ -38,5 +38,54 @@ public class PeriodicEffectValues {
 public enum DurationPolicy
 {
     Instant,
-    Periodic
+    Periodic,
+    Infinite
+}
+
+
+[Serializable]
+public enum ModifierOperation
+{
+    Add,
+    Override
+}
+
+[Serializable]
+public abstract class ModifierMagnitude
+{
+    public abstract float Value();
+}
+
+[Serializable]
+public class ModFloat : ModifierMagnitude
+{
+    [SerializeField] private float m_value;
+    
+    public override float Value()
+    {
+        return m_value;
+    }
+}
+
+[Serializable]
+public class AttributeBased : ModifierMagnitude
+{
+    [SerializeField] private string m_backingAttribute;
+
+    public override float Value()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+[Serializable]
+public class AttributeModifier
+{
+    [SerializeField] private string m_attribute = "";
+    [SerializeField] private ModifierOperation m_modifierOperation = ModifierOperation.Add;
+    [SerializeReference] private ModifierMagnitude m_modifierMagnitude = new ModFloat();
+
+    public string AttributeName => m_attribute;
+    public ModifierOperation Operation => m_modifierOperation;
+    public ModifierMagnitude Magnitude => m_modifierMagnitude;
 }

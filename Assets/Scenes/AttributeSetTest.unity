@@ -815,6 +815,8 @@ GameObject:
   - component: {fileID: 694496242785088437}
   - component: {fileID: 776658088946980721}
   - component: {fileID: 6557549929655271877}
+  - component: {fileID: 6557549929655271878}
+  - component: {fileID: 6557549929655271879}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -836,6 +838,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSet
   m_attributeLists:
   - {fileID: 11400000, guid: 62226771766050149afd9b9bc82f8a11, type: 2}
+--- !u!114 &6557549929655271878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557549929655271876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb717423bcb4420a7dcfeb36af82bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.TestAttributeApplicator
+  m_effectsContainer: {fileID: 6557549929655271879}
+  m_primaryAttributes: {fileID: 11400000, guid: be666cb1953d4e4499569e61b765f994, type: 2}
+  m_secondaryAttributes: {fileID: 11400000, guid: 226e86afd120d5d4f9bdd8cb96a843d8, type: 2}
+  m_levelTest: {fileID: 11400000, guid: 23cdcf167bba5784fa0cb01a9edcb4f7, type: 2}
+--- !u!114 &6557549929655271879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557549929655271876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1ce8e42a954319821fe1072aaa7090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectsContainer
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AbilitySystem.Ability.Attributes
 {
-    [CreateAssetMenu(fileName = "New Attribute Set", menuName = "AbilitySystem/Attribute Set", order = 0)]
+    [CreateAssetMenu(fileName = "New Attribute Set", menuName = "Ability System/Attribute Set", order = 0)]
     public class AttributeSetScriptableObject : ScriptableObject
     {
         [SerializeField] private List<AttributeConfig> m_attributes;
