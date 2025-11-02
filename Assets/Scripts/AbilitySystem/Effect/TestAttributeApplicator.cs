@@ -9,12 +9,11 @@ namespace AbilitySystem.Effect
         
         [SerializeField] private GameEffectScriptableObject m_primaryAttributes;
         [SerializeField] private GameEffectScriptableObject m_secondaryAttributes;
-        [SerializeField] private GameEffectScriptableObject m_levelTest;
 
         protected void Start()
         {
             m_effectsContainer.ApplyEffect(gameObject, m_primaryAttributes);
-            m_effectsContainer.ApplyEffect(gameObject, m_levelTest);
+            m_effectsContainer.ApplyEffect(gameObject, m_secondaryAttributes);
         }
     }
 }

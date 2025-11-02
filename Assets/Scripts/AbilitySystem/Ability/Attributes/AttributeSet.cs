@@ -25,10 +25,10 @@ namespace AbilitySystem.Ability.Attributes
             switch (mod.Operation)
             {
                 case ModifierOperation.Add:
-                    attribute.CurrentValue += mod.Magnitude.Value();
+                    attribute.CurrentValue += CalculateModMagnitude(mod.Magnitude);
                     break;
                 case ModifierOperation.Override:
-                    attribute.CurrentValue = mod.Magnitude.Value();
+                    attribute.CurrentValue = CalculateModMagnitude(mod.Magnitude);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -45,7 +45,8 @@ namespace AbilitySystem.Ability.Attributes
             RecalculateAttribute(attribute);
         }
 
-        private static void RecalculateAttribute(AttributeData attribute)
+
+        private void RecalculateAttribute(AttributeData attribute)
         {
             float baseValue = attribute.BaseValue;
             float addSum = 0.0f;
@@ -56,10 +57,10 @@ namespace AbilitySystem.Ability.Attributes
                 switch (mod.Operation)
                 {
                     case ModifierOperation.Add:
-                        addSum += mod.Magnitude.Value();
+                        addSum += CalculateModMagnitude(mod.Magnitude);
                         break;
                     case ModifierOperation.Override:
-                        overrideValue = mod.Magnitude.Value();
+                        overrideValue = CalculateModMagnitude(mod.Magnitude);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -68,6 +69,30 @@ namespace AbilitySystem.Ability.Attributes
 
             float newValue = baseValue + addSum;
             attribute.CurrentValue = overrideValue ?? newValue;
+        }
+
+        private float CalculateModMagnitude(ModifierMagnitude modMagnitude)
+        {
+            switch (modMagnitude.CalculationType)
+            {
+                case CalculationType.Float:
+                    return modMagnitude.FlatValue;
+                case CalculationType.AttributeBacked:
+                    AttributeBackedMagnitude backedMagnitude = modMagnitude.AttributeBackedMagnitude;
+                    string backingAttributeName = backedMagnitude.BackingAttribute;
+                    AttributeData backingAttribute = GetAttribute(backingAttributeName);
+                    if (backingAttribute == null)
+                    {
+                        Debug.LogWarning($"Attempted to use backing attribute {backingAttributeName} on {gameObject.name}", this);
+                        return 0;
+                    }
+                    
+                    float value = backingAttribute.CurrentValue * backedMagnitude.Coefficient;
+                    value += backedMagnitude.PostAdditiveValue;
+                    return value;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
         
         protected void Awake()

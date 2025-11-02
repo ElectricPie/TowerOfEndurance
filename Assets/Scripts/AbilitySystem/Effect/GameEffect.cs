@@ -51,31 +51,36 @@ public enum ModifierOperation
 }
 
 [Serializable]
-public abstract class ModifierMagnitude
+public enum CalculationType
 {
-    public abstract float Value();
+    Float,
+    AttributeBacked
 }
 
 [Serializable]
-public class ModFloat : ModifierMagnitude
+public class ModifierMagnitude
 {
-    [SerializeField] private float m_value;
-    
-    public override float Value()
-    {
-        return m_value;
-    }
+    [SerializeField] private CalculationType m_calculationType = CalculationType.Float;
+    [SerializeField, ShowIf("m_calculationType", CalculationType.Float)] private float m_flatValue;
+
+    [SerializeField, ShowIf("m_calculationType", CalculationType.AttributeBacked)]
+    private AttributeBackedMagnitude m_attributeBackedMagnitude;
+
+    public CalculationType CalculationType => m_calculationType;
+    public float FlatValue => m_flatValue;
+    public AttributeBackedMagnitude AttributeBackedMagnitude => m_attributeBackedMagnitude;
 }
 
 [Serializable]
-public class AttributeBased : ModifierMagnitude
+public class AttributeBackedMagnitude
 {
-    [SerializeField] private string m_backingAttribute;
+    [SerializeField] private string m_backingAttribute = "";
+    [SerializeField] private float m_coefficient = 1.0f;
+    [SerializeField] private float m_postAdditiveValue = 0.0f;
 
-    public override float Value()
-    {
-        throw new NotImplementedException();
-    }
+    public string BackingAttribute => m_backingAttribute;
+    public float Coefficient => m_coefficient;
+    public float PostAdditiveValue => m_postAdditiveValue;
 }
 
 [Serializable]
@@ -83,7 +88,7 @@ public class AttributeModifier
 {
     [SerializeField] private string m_attribute = "";
     [SerializeField] private ModifierOperation m_modifierOperation = ModifierOperation.Add;
-    [SerializeReference] private ModifierMagnitude m_modifierMagnitude = new ModFloat();
+    [SerializeField] private ModifierMagnitude m_modifierMagnitude = new ModifierMagnitude();
 
     public string AttributeName => m_attribute;
     public ModifierOperation Operation => m_modifierOperation;

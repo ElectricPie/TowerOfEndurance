@@ -17,19 +17,18 @@ MonoBehaviour:
   - m_attribute: Damage
     m_modifierOperation: 1
     m_modifierMagnitude:
-      rid: 1858585924144201817
+      m_calculationType: 1
+      m_flatValue: 0
+      m_attributeBackedMagnitude:
+        m_backingAttribute: Level
+        m_coefficient: 1
+        m_postAdditiveValue: 10
   - m_attribute: Speed
     m_modifierOperation: 1
     m_modifierMagnitude:
-      rid: 1858585924144201825
-  references:
-    version: 2
-    RefIds:
-    - rid: 1858585924144201817
-      type: {class: AttributeBased, ns: , asm: Assembly-CSharp}
-      data:
+      m_calculationType: 1
+      m_flatValue: 0
+      m_attributeBackedMagnitude:
         m_backingAttribute: Level
-    - rid: 1858585924144201825
-      type: {class: AttributeBased, ns: , asm: Assembly-CSharp}
-      data:
-        m_backingAttribute: 
+        m_coefficient: 4
+        m_postAdditiveValue: 5

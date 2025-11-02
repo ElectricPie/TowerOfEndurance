@@ -17,11 +17,9 @@ MonoBehaviour:
   - m_attribute: Level
     m_modifierOperation: 1
     m_modifierMagnitude:
-      rid: 1858585924144201820
-  references:
-    version: 2
-    RefIds:
-    - rid: 1858585924144201820
-      type: {class: ModFloat, ns: , asm: Assembly-CSharp}
-      data:
-        m_value: 1
+      m_calculationType: 0
+      m_flatValue: 1
+      m_attributeBackedMagnitude:
+        m_backingAttribute: 
+        m_coefficient: 1
+        m_postAdditiveValue: 0
