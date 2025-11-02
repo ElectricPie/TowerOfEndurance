@@ -43,7 +43,7 @@ namespace Ui.Ability
 
         public float GetAbilityLevel()
         {
-            return m_ability.Level;
+            return m_ability.Level < m_ability.AbilityData.MaxLevel ? m_ability.Level + 1 : m_ability.AbilityData.MaxLevel;
         }
     }
 }
