@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,6 +14,7 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     // [SerializeReference, BoxGroup("Base Attack")]
     // private DamageEffect m_baseAttackEffect;
 
+    [SerializeField] private AttributeIdScriptableObject m_damageLevelAttributeId;
     [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
@@ -162,7 +165,8 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
             return;
         
         // target.EffectsContainer.ApplyEffect(m_caster, m_baseAttackEffect, m_level);
-        target.EffectsContainer.ApplyEffect(m_caster, m_damageEffect);
+        
+        target.EffectsContainer.ApplyEffect(m_caster, m_damageEffect, 1);
     }
 }
 
@@ -170,6 +174,7 @@ public class BasicAttackInitData : AbilityInitData
 {
     public Transform SpawnTransform { get; } = null;
     public Vector3 SpawnOffSet { get; }
+    public AttributeSet AttributeSet { get; }
 
     public BasicAttackInitData(GameObject caster, Transform spawnTransform, Vector3 spawnOffset) : base(caster)
     {

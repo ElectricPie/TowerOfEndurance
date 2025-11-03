@@ -24,7 +24,7 @@ MonoBehaviour:
         m_backingAttributeId: {fileID: 11400000, guid: b16c5f7e8b0fd8d448ad557cdd19761b, type: 2}
         m_coefficient:
           m_useCurve: 0
-          m_flatFloat: 1.25
+          m_flatFloat: 1
           m_curve:
             serializedVersion: 2
             m_Curve: []

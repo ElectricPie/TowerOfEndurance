@@ -17,6 +17,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 2200126782196154368
       type: {class: PoisonTipAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
@@ -59,83 +61,4 @@ MonoBehaviour:
           m_RotationOrder: 4
         m_maxLevel: 5
         m_damageEffect:
-          rid: 2200126782216863744
-    - rid: 2200126782216863744
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        m_durationPolicy: 1
-        m_periodicEffectValues:
-          m_duration:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 1
-              value: 5
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 5
-              value: 5
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.13936865
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_period:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 1
-              value: 0.8
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 5
-              value: 0.8
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_triggerOnApplication: 0
-        m_damageModifierCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 1
-            value: 0.2
-            inSlope: 0.45
-            outSlope: 0.45
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 5
-            value: 2
-            inSlope: 0.45
-            outSlope: 0.45
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_visualFx: {fileID: 8143778695897954027, guid: 616d71dcbec89af44b6dc5c44a1532cf, type: 3}
+          rid: -2

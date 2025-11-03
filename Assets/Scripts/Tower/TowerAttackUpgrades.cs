@@ -68,7 +68,7 @@ namespace Tower
                 return;
             }
 
-            m_towerEffectContainer.ApplyEffect(gameObject, m_damageUpgradeEffect);
+            m_towerEffectContainer.ApplyEffect(gameObject, m_damageUpgradeEffect, 1);
         }
 
         public void UpgradeSpeed()
@@ -80,7 +80,7 @@ namespace Tower
                 return;
             }
 
-            m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect);
+            m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect, 1);
         }
     }
 }

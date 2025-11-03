@@ -17,7 +17,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2200126782216863745
+    - rid: 1858585951208472677
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         m_durationPolicy: 0
@@ -163,4 +163,5 @@ MonoBehaviour:
           m_RotationOrder: 4
         m_targetCount: 2
         m_damageEffect:
-          rid: 2200126782216863745
+          rid: 1858585951208472677
+        m_damageEffectNew: {fileID: 11400000, guid: f5fd5bce1d3f17b4cb3194012338d70b, type: 2}

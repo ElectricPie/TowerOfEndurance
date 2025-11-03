@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Effect;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,12 +13,12 @@ namespace AbilitySystem.Ability
         [SerializeField] private AnimationCurve m_triggerChanceCurve;
         [SerializeField, Min(0)] private int m_targetCount;
         [SerializeReference] private DamageEffect m_damageEffect = new DamageEffect();
+        [SerializeField] private GameEffectScriptableObject m_damageEffectNew;
 
         public override AbilityData Clone()
         {
             ArtilleryAbilityData clone = (ArtilleryAbilityData)MemberwiseClone();
             clone.m_triggerChanceCurve = m_triggerChanceCurve;
-            clone.m_damageEffect = m_damageEffect;
 
             return clone;
         }
@@ -47,7 +48,7 @@ namespace AbilitySystem.Ability
             for (int i = 0; i < m_targetCount; i++)
             {
                 Unit randomTarget = m_towerWaves.GetRandomUnit();
-                randomTarget.EffectsContainer.ApplyEffect(caster, m_damageEffect, level);
+                randomTarget.EffectsContainer.ApplyEffect(caster, m_damageEffectNew, level);
             }
 
             return true;
@@ -57,8 +58,8 @@ namespace AbilitySystem.Ability
         {
             Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
             tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
-            tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
+            // tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
+            // tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
             tooltipDataMap.TryAdd("TargetCount", m_targetCount);
             tooltipDataMap.TryAdd("TriggerChance", m_triggerChanceCurve.Evaluate(level));
             return tooltipDataMap;

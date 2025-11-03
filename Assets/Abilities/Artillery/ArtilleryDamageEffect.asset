@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b304c3e891e349868fedf08976144b61, type: 3}
-  m_Name: DamageEffect
+  m_Name: ArtilleryDamageEffect
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
   m_durationPolicy: 0
   m_modifiers:
@@ -18,16 +18,34 @@ MonoBehaviour:
     m_modifierOperation: 0
     m_modifierMagnitude:
       m_calculationType: 1
-      m_flatValue: 12
+      m_flatValue: 0
       m_attributeBackedMagnitude:
         m_attributeSource: 1
         m_backingAttributeId: {fileID: 11400000, guid: bfeb83bfe84b6334db99a2ce99ac20b9, type: 2}
         m_coefficient:
-          m_useCurve: 0
-          m_flatFloat: 1
+          m_useCurve: 1
+          m_flatFloat: 0
           m_curve:
             serializedVersion: 2
-            m_Curve: []
+            m_Curve:
+            - serializedVersion: 3
+              time: 1
+              value: 3.4
+              inSlope: 0.39999998
+              outSlope: 0.39999998
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 5
+              value: 5
+              inSlope: 0.39999998
+              outSlope: 0.39999998
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4

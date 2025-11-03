@@ -7,13 +7,15 @@ namespace AbilitySystem.Ability.Attributes
 {
     public class AttributeModifierInstance
     {
-        public AttributeSet Source;
-        public AttributeModifier Modifier;
+        public readonly AttributeSet Source;
+        public readonly AttributeModifier Modifier;
+        public readonly int Level;
 
-        public AttributeModifierInstance(AttributeSet source, AttributeModifier attributeModifier)
+        public AttributeModifierInstance(AttributeSet source, AttributeModifier attributeModifier, int level)
         {
             Source = source;
             Modifier = attributeModifier;
+            Level = level;
         }
     }
     

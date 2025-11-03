@@ -35,10 +35,10 @@ namespace AbilitySystem.Ability.AttributeSets
             switch (mod.Modifier.Operation)
             {
                 case ModifierOperation.Add:
-                    attribute.SetCurrentValue(attribute.CurrentValue + CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude), false);
+                    attribute.SetCurrentValue(attribute.CurrentValue + CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
                     break;
                 case ModifierOperation.Override:
-                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude), false);
+                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -84,10 +84,10 @@ namespace AbilitySystem.Ability.AttributeSets
                 switch (mod.Modifier.Operation)
                 {
                     case ModifierOperation.Add:
-                        addSum += CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude);
+                        addSum += CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level);
                         break;
                     case ModifierOperation.Override:
-                        overrideValue = CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude);
+                        overrideValue = CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -102,7 +102,7 @@ namespace AbilitySystem.Ability.AttributeSets
             attribute.BroadcastCurrentValue();
         }
 
-        private float CalculateModMagnitude(AttributeSet source, ModifierMagnitude modMagnitude)
+        private float CalculateModMagnitude(AttributeSet source, ModifierMagnitude modMagnitude, int level)
         {
             switch (modMagnitude.CalculationType)
             {
@@ -126,15 +126,15 @@ namespace AbilitySystem.Ability.AttributeSets
 
                     float backingAttributeValue = backingAttribute.CurrentValue;
                     
-                    float value = backingAttributeValue * CalculateCurveFloat(backedMagnitude.Coefficient, backingAttributeValue);
-                    value += CalculateCurveFloat(backedMagnitude.PostAdditiveValue, backingAttributeValue);
+                    float value = backingAttributeValue * CalculateCurveFloat(backedMagnitude.Coefficient, level);
+                    value += CalculateCurveFloat(backedMagnitude.PostAdditiveValue, level);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private float CalculateCurveFloat(CurveFloat curveFloat, float level = 1)
+        private float CalculateCurveFloat(CurveFloat curveFloat, float level)
         {
             return curveFloat.UseCurve ? curveFloat.Curve.Evaluate(level) : curveFloat.FlatFloat;
         }

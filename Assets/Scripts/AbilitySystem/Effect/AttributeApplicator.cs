@@ -13,7 +13,7 @@ namespace AbilitySystem.Effect
         {
             foreach (GameEffectScriptableObject attributeEffect in m_attributeEffects)
             {
-                m_effectsContainer.ApplyEffect(gameObject, attributeEffect);
+                m_effectsContainer.ApplyEffect(gameObject, attributeEffect, 1);
             }
         }
     }

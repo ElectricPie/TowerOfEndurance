@@ -100,7 +100,7 @@ public class EffectsContainer : MonoBehaviour
         }
     }
 
-    public void ApplyEffect(GameObject source, GameEffectScriptableObject effect)
+    public void ApplyEffect(GameObject source, GameEffectScriptableObject effect, int level)
     {
         AttributeSet sourceAttributeSet = source.GetComponent<AttributeSet>();
         
@@ -109,7 +109,7 @@ public class EffectsContainer : MonoBehaviour
             case DurationPolicy.Instant:
                 foreach (AttributeModifier modifier in effect.Modifiers)
                 {
-                    m_attributeSet.AddInstantModifier(new AttributeModifierInstance(sourceAttributeSet, modifier));
+                    m_attributeSet.AddInstantModifier(new AttributeModifierInstance(sourceAttributeSet, modifier, level));
                 }
                 break;
             case DurationPolicy.Periodic:
@@ -117,7 +117,7 @@ public class EffectsContainer : MonoBehaviour
             case DurationPolicy.Infinite:
                 foreach (AttributeModifier modifier in effect.Modifiers)
                 {
-                    m_attributeSet.AddPersistentModifier(new AttributeModifierInstance(sourceAttributeSet, modifier));
+                    m_attributeSet.AddPersistentModifier(new AttributeModifierInstance(sourceAttributeSet, modifier, level));
                 }
                 break;
             default:
