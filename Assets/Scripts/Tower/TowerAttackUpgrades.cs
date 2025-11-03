@@ -22,10 +22,11 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private GameEffectScriptableObject m_fireRateUpgradeEffect;
 
     private int m_damageLevel = 1;
-    private int m_fireRateLevel = 1;
     
     public float DamageUpgradeCost => CalculateUpgradeCost(m_damageLevel);
-    public float SpeedUpgradeCost => CalculateUpgradeCost(m_fireRateLevel);
+
+    public float SpeedUpgradeCost =>
+        CalculateUpgradeCost((int)m_towerAttributeSet.GetAttributeValue(m_fireRateLevelAttributeId));
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class TowerAttackUpgrades : MonoBehaviour
         };
         m_towerAttributeSet.GetAttribute(m_fireRateLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
         {
-            m_fireRateLevel = Mathf.FloorToInt(newValue);
+            OnSpeedCostChanged.Invoke(Mathf.FloorToInt(newValue));
         };
         
         BroadcastDamageValues(m_upgradeInitialCost);
@@ -73,8 +74,8 @@ public class TowerAttackUpgrades : MonoBehaviour
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = CalculateUpgradeCost(m_fireRateLevel);
-        
+        int fireRateLevel = (int)m_towerAttributeSet.GetAttributeValue(m_fireRateLevelAttributeId);
+        float upgradeCost = CalculateUpgradeCost(fireRateLevel);
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
             UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
@@ -83,27 +84,17 @@ public class TowerAttackUpgrades : MonoBehaviour
 
         m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect);
         
-        float nextUpgradeCost = CalculateUpgradeCost(m_fireRateLevel);
+        float nextUpgradeCost = CalculateUpgradeCost((int)m_towerAttributeSet.GetAttributeValue(m_fireRateLevelAttributeId));
         BroadcastFireRateValues(nextUpgradeCost);
     }
 
     private void BroadcastDamageValues(float upgradeCost)
     {
-        // UpgradeChangeMessage damageUpgradeMessage = new UpgradeChangeMessage(
-        //     upgradeCost,
-        //     m_attributeSet.Damage, 
-        //     m_attributeSet.DamageAt(m_attributeSet.DamageLevel + 1)
-        //     );
         OnDamageCostChanged.Invoke(upgradeCost);
     }
 
     private void BroadcastFireRateValues(float upgradeCost)
     {
-        // UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
-        //     upgradeCost,
-        //     m_attributeSet.FireRate, 
-        //     m_attributeSet.FireRateAt(m_attributeSet.FireRateLevel + 1)
-        //     );
         OnSpeedCostChanged.Invoke(upgradeCost);
     }
 }

@@ -59,6 +59,18 @@ public enum CalculationType
 }
 
 [Serializable]
+public class CurveFloat
+{
+    [SerializeField] private bool m_useCurve = false;
+    [SerializeField, HideIf("m_useCurve")] private float m_flatFloat;
+    [SerializeField, ShowIf("m_useCurve")] private AnimationCurve m_curve;
+
+    public bool UseCurve => m_useCurve;
+    public float FlatFloat => m_flatFloat;
+    public AnimationCurve Curve => m_curve;
+}
+
+[Serializable]
 public class ModifierMagnitude
 {
     [SerializeField] private CalculationType m_calculationType = CalculationType.Float;
@@ -76,12 +88,12 @@ public class ModifierMagnitude
 public class AttributeBackedMagnitude
 {
     [SerializeField] private AttributeIdScriptableObject m_backingAttributeId;
-    [SerializeField] private float m_coefficient = 1.0f;
-    [SerializeField] private float m_postAdditiveValue = 0.0f;
+    [SerializeField] private CurveFloat m_coefficient;
+    [SerializeField] private CurveFloat m_postAdditiveValue;
 
     public AttributeIdScriptableObject BackingAttributeId => m_backingAttributeId;
-    public float Coefficient => m_coefficient;
-    public float PostAdditiveValue => m_postAdditiveValue;
+    public CurveFloat Coefficient => m_coefficient;
+    public CurveFloat PostAdditiveValue => m_postAdditiveValue;
 }
 
 [Serializable]

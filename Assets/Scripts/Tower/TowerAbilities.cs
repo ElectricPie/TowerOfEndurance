@@ -135,7 +135,8 @@ public class TowerAbilities : MonoBehaviour
                 ability.TryActivate(target.gameObject);
             }
 
-            yield return new WaitForSeconds(m_attributeSet.GetAttributeValue(m_fireRateAttributeId));
+            float waitTime = m_attributeSet.GetAttributeValue(m_fireRateAttributeId);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 

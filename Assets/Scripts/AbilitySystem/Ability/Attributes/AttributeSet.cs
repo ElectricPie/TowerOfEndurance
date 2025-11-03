@@ -10,6 +10,14 @@ namespace AbilitySystem.Ability.Attributes
 
         private readonly Dictionary<AttributeIdScriptableObject, AttributeData> m_attributes = new Dictionary<AttributeIdScriptableObject, AttributeData>();
 
+        private void Update()
+        {
+            foreach (KeyValuePair<AttributeIdScriptableObject, AttributeData> attributePair in m_attributes)
+            {
+                Debug.Log($"{attributePair.Key.Name}: {attributePair.Value.CurrentValue}");
+            }
+        }
+
         public AttributeData GetAttribute(AttributeIdScriptableObject attributeId)
         {
             m_attributes.TryGetValue(attributeId, out AttributeData attribute);
@@ -20,14 +28,11 @@ namespace AbilitySystem.Ability.Attributes
         {
             AttributeData attribute = GetAttribute(attributeId);
             if (attribute == null)
-            {
                 return 0.0f;
-            }
             
-            RecalculateAttribute(attribute);
             return attribute.CurrentValue;
         } 
-
+        
         public void AddInstantModifier(AttributeModifier mod)
         {
             AttributeData attribute = GetAttribute(mod.AttributeId);
@@ -55,8 +60,23 @@ namespace AbilitySystem.Ability.Attributes
             if (attribute == null)
                 return;
             
+            if (mod.Magnitude.CalculationType == CalculationType.AttributeBacked)
+            {
+                AttributeData backingAttribute = GetAttribute(mod.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
+                backingAttribute.OnCurrentValueChangedEvent += _ => { RecalculateAttribute(attribute); };
+            }
+            
             attribute.Modifiers.Add(mod);
             RecalculateAttribute(attribute);
+        }
+
+        public void AddInfiniteModifier(AttributeModifier mod)
+        {
+            AttributeData attribute = GetAttribute(mod.AttributeId);
+            if (attribute == null)
+                return;
+            
+            
         }
         
         private void RecalculateAttribute(AttributeData attribute)
@@ -81,7 +101,10 @@ namespace AbilitySystem.Ability.Attributes
             }
 
             float newValue = baseValue + addSum;
-            attribute.CurrentValue = overrideValue ?? newValue;
+            attribute.BaseValue = overrideValue ?? newValue;
+            attribute.CurrentValue = attribute.BaseValue;
+            
+            attribute.BroadcastBaseValue();
             attribute.BroadcastCurrentValue();
         }
 
@@ -100,13 +123,20 @@ namespace AbilitySystem.Ability.Attributes
                         Debug.LogWarning($"Attempted to use backing attribute {backingAttributeName} on {gameObject.name}", this);
                         return 0;
                     }
+
+                    float backingAttributeValue = backingAttribute.CurrentValue;
                     
-                    float value = backingAttribute.CurrentValue * backedMagnitude.Coefficient;
-                    value += backedMagnitude.PostAdditiveValue;
+                    float value = backingAttributeValue * CalculateCurveFloat(backedMagnitude.Coefficient, backingAttributeValue);
+                    value += CalculateCurveFloat(backedMagnitude.PostAdditiveValue, backingAttributeValue);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private float CalculateCurveFloat(CurveFloat curveFloat, float level = 1)
+        {
+            return curveFloat.UseCurve ? curveFloat.Curve.Evaluate(level) : curveFloat.FlatFloat;
         }
         
         protected void Awake()
