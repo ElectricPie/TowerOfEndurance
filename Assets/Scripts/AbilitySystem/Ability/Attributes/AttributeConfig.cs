@@ -6,10 +6,10 @@ namespace AbilitySystem.Ability.Attributes
     [Serializable]
     public class AttributeConfig
     {
-        [SerializeField] private string m_name;
+        [SerializeField] private AttributeIdScriptableObject m_id;
         [SerializeField] private int m_initialValue;
 
-        public string Name => m_name;
+        public AttributeIdScriptableObject ID => m_id;
         public int InitialValue => m_initialValue;
     }
 }

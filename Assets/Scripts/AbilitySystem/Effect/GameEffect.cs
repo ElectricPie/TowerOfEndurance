@@ -1,4 +1,5 @@
 ﻿using System;
+using AbilitySystem.Ability.Attributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -74,11 +75,11 @@ public class ModifierMagnitude
 [Serializable]
 public class AttributeBackedMagnitude
 {
-    [SerializeField] private string m_backingAttribute = "";
+    [SerializeField] private AttributeIdScriptableObject m_backingAttributeId;
     [SerializeField] private float m_coefficient = 1.0f;
     [SerializeField] private float m_postAdditiveValue = 0.0f;
 
-    public string BackingAttribute => m_backingAttribute;
+    public AttributeIdScriptableObject BackingAttributeId => m_backingAttributeId;
     public float Coefficient => m_coefficient;
     public float PostAdditiveValue => m_postAdditiveValue;
 }
@@ -86,11 +87,11 @@ public class AttributeBackedMagnitude
 [Serializable]
 public class AttributeModifier
 {
-    [SerializeField] private string m_attribute = "";
+    [SerializeField] private AttributeIdScriptableObject m_attributeId;
     [SerializeField] private ModifierOperation m_modifierOperation = ModifierOperation.Add;
     [SerializeField] private ModifierMagnitude m_modifierMagnitude = new ModifierMagnitude();
 
-    public string AttributeName => m_attribute;
+    public AttributeIdScriptableObject AttributeId => m_attributeId;
     public ModifierOperation Operation => m_modifierOperation;
     public ModifierMagnitude Magnitude => m_modifierMagnitude;
 }

@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
   m_durationPolicy: 2
   m_modifiers:
-  - m_attribute: Damage
+  - m_attributeId: {fileID: 11400000, guid: bfeb83bfe84b6334db99a2ce99ac20b9, type: 2}
     m_modifierOperation: 1
     m_modifierMagnitude:
       m_calculationType: 1
       m_flatValue: 0
       m_attributeBackedMagnitude:
-        m_backingAttribute: DamageLevel
+        m_backingAttributeId: {fileID: 11400000, guid: b16c5f7e8b0fd8d448ad557cdd19761b, type: 2}
         m_coefficient: 1
         m_postAdditiveValue: 0
-  - m_attribute: FireRate
+  - m_attributeId: {fileID: 11400000, guid: 53191f57ba3caac4c906c4e09859824c, type: 2}
     m_modifierOperation: 1
     m_modifierMagnitude:
       m_calculationType: 1
       m_flatValue: 0
       m_attributeBackedMagnitude:
-        m_backingAttribute: FireRateLevel
+        m_backingAttributeId: {fileID: 11400000, guid: c4636ead7f1dbb6449c065d7ad85f7c3, type: 2}
         m_coefficient: 0.2
         m_postAdditiveValue: 0

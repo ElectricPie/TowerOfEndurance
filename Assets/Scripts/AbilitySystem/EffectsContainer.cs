@@ -123,11 +123,6 @@ public class EffectsContainer : MonoBehaviour
         }
     }
 
-    private void ApplyModifier(AttributeModifier modifier)
-    {
-        AttributeData attribute = m_attributeSet.GetAttribute(modifier.AttributeName);
-    }
-
     private void SetupPeriodicEffect(GameObject caster, GameEffect effect, int level)
     {
         if (m_effects.ContainsKey(effect.GetType()))

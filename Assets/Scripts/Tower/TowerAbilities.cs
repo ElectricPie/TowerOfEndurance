@@ -15,10 +15,12 @@ public class TowerAbilities : MonoBehaviour
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
+    [SerializeField] private AttributeIdScriptableObject m_damageAttributeId;
+    [SerializeField] private AttributeIdScriptableObject m_fireRateAttributeId;
+    
     private AbilityInstance m_basicAttackInstance;
-    // private TowerAttributeSet m_attributeSet;
-    private AttributeData m_damageAttribute;
-    private AttributeData m_fireRateAttribute;
+
+    private AttributeSet m_attributeSet;
     
     private IEnumerator m_attackCoroutine;
     private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
@@ -84,9 +86,7 @@ public class TowerAbilities : MonoBehaviour
     
     protected void Start()
     {
-        AttributeSet attributeSet = GetComponent<AttributeSet>();
-        m_damageAttribute = attributeSet.GetAttribute("Damage");
-        m_fireRateAttribute = attributeSet.GetAttribute("FireRate");
+        m_attributeSet = GetComponent<AttributeSet>();
         
         if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
@@ -135,7 +135,7 @@ public class TowerAbilities : MonoBehaviour
                 ability.TryActivate(target.gameObject);
             }
 
-            yield return new WaitForSeconds(m_fireRateAttribute.CurrentValue);
+            yield return new WaitForSeconds(m_attributeSet.GetAttributeValue(m_fireRateAttributeId));
         }
     }
 

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
   m_durationPolicy: 0
   m_modifiers:
-  - m_attribute: DamageLevel
+  - m_attributeId: {fileID: 11400000, guid: b16c5f7e8b0fd8d448ad557cdd19761b, type: 2}
     m_modifierOperation: 0
     m_modifierMagnitude:
       m_calculationType: 0
       m_flatValue: 1
       m_attributeBackedMagnitude:
-        m_backingAttribute: 
+        m_backingAttributeId: {fileID: 0}
         m_coefficient: 1
         m_postAdditiveValue: 0

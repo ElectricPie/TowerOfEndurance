@@ -8,17 +8,29 @@ namespace AbilitySystem.Ability.Attributes
     {
         [SerializeField] private List<AttributeSetScriptableObject> m_attributeLists;
 
-        private readonly Dictionary<string, AttributeData> m_attributes = new Dictionary<string, AttributeData>();
+        private readonly Dictionary<AttributeIdScriptableObject, AttributeData> m_attributes = new Dictionary<AttributeIdScriptableObject, AttributeData>();
 
-        public AttributeData GetAttribute(string attributeName)
+        public AttributeData GetAttribute(AttributeIdScriptableObject attributeId)
         {
-            m_attributes.TryGetValue(attributeName, out AttributeData attribute);
+            m_attributes.TryGetValue(attributeId, out AttributeData attribute);
             return attribute;
         }
 
+        public float GetAttributeValue(AttributeIdScriptableObject attributeId)
+        {
+            AttributeData attribute = GetAttribute(attributeId);
+            if (attribute == null)
+            {
+                return 0.0f;
+            }
+            
+            RecalculateAttribute(attribute);
+            return attribute.CurrentValue;
+        } 
+
         public void AddInstantModifier(AttributeModifier mod)
         {
-            AttributeData attribute = GetAttribute(mod.AttributeName);
+            AttributeData attribute = GetAttribute(mod.AttributeId);
             if (attribute == null)
                 return;
 
@@ -39,7 +51,7 @@ namespace AbilitySystem.Ability.Attributes
 
         public void AddPersistentModifier(AttributeModifier mod)
         {
-            AttributeData attribute = GetAttribute(mod.AttributeName);
+            AttributeData attribute = GetAttribute(mod.AttributeId);
             if (attribute == null)
                 return;
             
@@ -81,7 +93,7 @@ namespace AbilitySystem.Ability.Attributes
                     return modMagnitude.FlatValue;
                 case CalculationType.AttributeBacked:
                     AttributeBackedMagnitude backedMagnitude = modMagnitude.AttributeBackedMagnitude;
-                    string backingAttributeName = backedMagnitude.BackingAttribute;
+                    AttributeIdScriptableObject backingAttributeName = backedMagnitude.BackingAttributeId;
                     AttributeData backingAttribute = GetAttribute(backingAttributeName);
                     if (backingAttribute == null)
                     {
@@ -108,14 +120,14 @@ namespace AbilitySystem.Ability.Attributes
             {
                 foreach (AttributeConfig attribute in attributeList.Attributes)
                 {
-                    if (m_attributes.ContainsKey(attribute.Name))
+                    if (m_attributes.ContainsKey(attribute.ID))
                     {
-                        Debug.LogWarning($"Attempting to add duplicate \"{attribute.Name}\" attribute on {gameObject}", this);
+                        Debug.LogWarning($"Attempting to add duplicate \"{attribute.ID}\" attribute on {gameObject}", this);
                         continue;
                     }
                     
                     AttributeData newAttributeData = new AttributeData();
-                    m_attributes.Add(attribute.Name, newAttributeData);
+                    m_attributes.Add(attribute.ID, newAttributeData);
                 }
             }
         }

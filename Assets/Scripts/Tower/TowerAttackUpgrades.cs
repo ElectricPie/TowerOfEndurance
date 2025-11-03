@@ -15,6 +15,9 @@ public class TowerAttackUpgrades : MonoBehaviour
     [SerializeField] private float m_costMultiplier = 1.15f;
     [SerializeField] private float m_upgradeInitialCost = 5.0f;
 
+    [SerializeField] private AttributeIdScriptableObject m_damageLevelAttributeId;
+    [SerializeField] private AttributeIdScriptableObject m_fireRateLevelAttributeId;
+    
     [SerializeField] private GameEffectScriptableObject m_damageUpgradeEffect;
     [SerializeField] private GameEffectScriptableObject m_fireRateUpgradeEffect;
 
@@ -32,11 +35,11 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     private void Start()
     {
-        m_towerAttributeSet.GetAttribute("DamageLevel").OnCurrentValueChangedEvent += newValue =>
+        m_towerAttributeSet.GetAttribute(m_damageLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
         {
             m_damageLevel = Mathf.FloorToInt(newValue);
         };
-        m_towerAttributeSet.GetAttribute("FireRateLevel").OnCurrentValueChangedEvent += newValue =>
+        m_towerAttributeSet.GetAttribute(m_fireRateLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
         {
             m_fireRateLevel = Mathf.FloorToInt(newValue);
         };
