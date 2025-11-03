@@ -20,10 +20,11 @@ MonoBehaviour:
       m_calculationType: 1
       m_flatValue: 0
       m_attributeBackedMagnitude:
+        m_attributeSource: 0
         m_backingAttributeId: {fileID: 11400000, guid: b16c5f7e8b0fd8d448ad557cdd19761b, type: 2}
         m_coefficient:
           m_useCurve: 0
-          m_flatFloat: 20
+          m_flatFloat: 1.25
           m_curve:
             serializedVersion: 2
             m_Curve: []
@@ -45,6 +46,7 @@ MonoBehaviour:
       m_calculationType: 1
       m_flatValue: 0
       m_attributeBackedMagnitude:
+        m_attributeSource: 0
         m_backingAttributeId: {fileID: 11400000, guid: c4636ead7f1dbb6449c065d7ad85f7c3, type: 2}
         m_coefficient:
           m_useCurve: 0

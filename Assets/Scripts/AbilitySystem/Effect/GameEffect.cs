@@ -1,5 +1,6 @@
 ﻿using System;
 using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -82,12 +83,21 @@ public class ModifierMagnitude
 }
 
 [Serializable]
+public enum AttributeSource
+{
+    Target,
+    Source
+} 
+
+[Serializable]
 public class AttributeBackedMagnitude
 {
+    [SerializeField] private AttributeSource m_attributeSource;
     [SerializeField] private AttributeIdScriptableObject m_backingAttributeId;
     [SerializeField] private CurveFloat m_coefficient;
     [SerializeField] private CurveFloat m_postAdditiveValue;
 
+    public AttributeSource AttributeSource => m_attributeSource;
     public AttributeIdScriptableObject BackingAttributeId => m_backingAttributeId;
     public CurveFloat Coefficient => m_coefficient;
     public CurveFloat PostAdditiveValue => m_postAdditiveValue;

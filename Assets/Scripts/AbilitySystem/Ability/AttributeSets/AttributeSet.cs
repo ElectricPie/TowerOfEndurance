@@ -26,47 +26,47 @@ namespace AbilitySystem.Ability.AttributeSets
             return attribute.CurrentValue;
         } 
         
-        public void AddInstantModifier(AttributeModifier mod)
+        public void AddInstantModifier(AttributeModifierInstance mod)
         {
-            AttributeData attribute = GetAttribute(mod.AttributeId);
+            AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);
             if (attribute == null)
                 return;
 
-            switch (mod.Operation)
+            switch (mod.Modifier.Operation)
             {
                 case ModifierOperation.Add:
-                    attribute.SetCurrentValue(attribute.CurrentValue + CalculateModMagnitude(mod.Magnitude), false);
+                    attribute.SetCurrentValue(attribute.CurrentValue + CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude), false);
                     break;
                 case ModifierOperation.Override:
-                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Magnitude), false);
+                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude), false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             
             attribute.BroadcastCurrentValue();
-            AttributeValueChanged(mod.AttributeId, attribute);
+            AttributeValueChanged(mod.Modifier.AttributeId, attribute);
         }
 
-        public void AddPersistentModifier(AttributeModifier mod)
+        public void AddPersistentModifier(AttributeModifierInstance mod)
         {
-            AttributeData attribute = GetAttribute(mod.AttributeId);
+            AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);
             if (attribute == null)
                 return;
             
-            if (mod.Magnitude.CalculationType == CalculationType.AttributeBacked)
+            if (mod.Modifier.Magnitude.CalculationType == CalculationType.AttributeBacked)
             {
-                AttributeData backingAttribute = GetAttribute(mod.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
+                AttributeData backingAttribute = GetAttribute(mod.Modifier.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
                 backingAttribute.OnCurrentValueChangedEvent += _ =>
                 {
                     RecalculateAttribute(attribute);
-                    AttributeValueChanged(mod.AttributeId, attribute);
+                    AttributeValueChanged(mod.Modifier.AttributeId, attribute);
                 };
             }
             
             attribute.Modifiers.Add(mod);
             RecalculateAttribute(attribute);
-            AttributeValueChanged(mod.AttributeId, attribute);
+            AttributeValueChanged(mod.Modifier.AttributeId, attribute);
         }
         
         
@@ -79,15 +79,15 @@ namespace AbilitySystem.Ability.AttributeSets
             float addSum = 0.0f;
             float? overrideValue = null;
 
-            foreach (AttributeModifier mod in attribute.Modifiers)
+            foreach (AttributeModifierInstance mod in attribute.Modifiers)
             {
-                switch (mod.Operation)
+                switch (mod.Modifier.Operation)
                 {
                     case ModifierOperation.Add:
-                        addSum += CalculateModMagnitude(mod.Magnitude);
+                        addSum += CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude);
                         break;
                     case ModifierOperation.Override:
-                        overrideValue = CalculateModMagnitude(mod.Magnitude);
+                        overrideValue = CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -102,7 +102,7 @@ namespace AbilitySystem.Ability.AttributeSets
             attribute.BroadcastCurrentValue();
         }
 
-        private float CalculateModMagnitude(ModifierMagnitude modMagnitude)
+        private float CalculateModMagnitude(AttributeSet source, ModifierMagnitude modMagnitude)
         {
             switch (modMagnitude.CalculationType)
             {
@@ -111,7 +111,13 @@ namespace AbilitySystem.Ability.AttributeSets
                 case CalculationType.AttributeBacked:
                     AttributeBackedMagnitude backedMagnitude = modMagnitude.AttributeBackedMagnitude;
                     AttributeIdScriptableObject backingAttributeName = backedMagnitude.BackingAttributeId;
-                    AttributeData backingAttribute = GetAttribute(backingAttributeName);
+
+                    AttributeData backingAttribute;
+                    if (modMagnitude.AttributeBackedMagnitude.AttributeSource == AttributeSource.Target)
+                        backingAttribute = GetAttribute(backingAttributeName);
+                    else
+                        backingAttribute = source.GetAttribute(backingAttributeName);
+
                     if (backingAttribute == null)
                     {
                         Debug.LogWarning($"Attempted to use backing attribute {backingAttributeName} on {gameObject.name}", this);

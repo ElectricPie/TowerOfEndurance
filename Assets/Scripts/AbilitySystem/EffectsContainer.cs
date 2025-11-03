@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect;
 using UnityEngine;
@@ -82,31 +83,33 @@ public class EffectsContainer : MonoBehaviour
         m_attributeSet = GetComponent<AttributeSet>();
     }
 
-    public void ApplyEffect(GameObject caster, GameEffect effect, int level = 1)
+    public void ApplyEffect(GameObject source, GameEffect effect, int level = 1)
     {
         switch (effect.DurationPolicy)
         {
             case DurationPolicy.Instant:
                 effect.OnApplication(gameObject);
-                effect.Execute(caster, gameObject, level);
+                effect.Execute(source, gameObject, level);
                 effect.OnRemove();
                 break;
             case DurationPolicy.Periodic:
-                SetupPeriodicEffect(caster, effect, level);
+                SetupPeriodicEffect(source, effect, level);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    public void ApplyEffect(GameObject caster, GameEffectScriptableObject effect)
+    public void ApplyEffect(GameObject source, GameEffectScriptableObject effect)
     {
+        AttributeSet sourceAttributeSet = source.GetComponent<AttributeSet>();
+        
         switch (effect.DurationPolicy)
         {
             case DurationPolicy.Instant:
                 foreach (AttributeModifier modifier in effect.Modifiers)
                 {
-                    m_attributeSet.AddInstantModifier(modifier);
+                    m_attributeSet.AddInstantModifier(new AttributeModifierInstance(sourceAttributeSet, modifier));
                 }
                 break;
             case DurationPolicy.Periodic:
@@ -114,7 +117,7 @@ public class EffectsContainer : MonoBehaviour
             case DurationPolicy.Infinite:
                 foreach (AttributeModifier modifier in effect.Modifiers)
                 {
-                    m_attributeSet.AddPersistentModifier(modifier);
+                    m_attributeSet.AddPersistentModifier(new AttributeModifierInstance(sourceAttributeSet, modifier));
                 }
                 break;
             default:
