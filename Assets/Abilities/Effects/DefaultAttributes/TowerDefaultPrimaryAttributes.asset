@@ -14,7 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
   m_durationPolicy: 2
   m_modifiers:
-  - m_attribute: Level
+  - m_attribute: DamageLevel
+    m_modifierOperation: 1
+    m_modifierMagnitude:
+      m_calculationType: 0
+      m_flatValue: 1
+      m_attributeBackedMagnitude:
+        m_backingAttribute: 
+        m_coefficient: 1
+        m_postAdditiveValue: 0
+  - m_attribute: FireRateLevel
     m_modifierOperation: 1
     m_modifierMagnitude:
       m_calculationType: 0

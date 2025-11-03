@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSetScriptable
   m_attributes:
   - m_name: Damage
-    m_initialValue: 50
-  - m_name: Speed
-    m_initialValue: 20
-  - m_name: Level
-    m_initialValue: 0
+    m_initialValue: 5
+  - m_name: FireRate
+    m_initialValue: 5
+  - m_name: DamageLevel
+    m_initialValue: 1
+  - m_name: FireRateLevel
+    m_initialValue: 1

@@ -1,5 +1,6 @@
 using System;
 using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Effect;
 using UnityEngine;
 
 public class TowerAttackUpgrades : MonoBehaviour
@@ -8,13 +9,20 @@ public class TowerAttackUpgrades : MonoBehaviour
     public event Action<float> OnSpeedCostChanged = delegate { };
     
     [SerializeField] private PlayerMoney m_playerMoney;
-    [SerializeField] private TowerAttributeSet m_attributeSet;
+    [SerializeField] private AttributeSet m_towerAttributeSet;
+    [SerializeField] private EffectsContainer m_towerEffectContainer;
     
     [SerializeField] private float m_costMultiplier = 1.15f;
     [SerializeField] private float m_upgradeInitialCost = 5.0f;
 
-    public float DamageUpgradeCost => CalculateUpgradeCost(m_attributeSet.DamageLevel);
-    public float SpeedUpgradeCost => CalculateUpgradeCost(m_attributeSet.FireRateLevel);
+    [SerializeField] private GameEffectScriptableObject m_damageUpgradeEffect;
+    [SerializeField] private GameEffectScriptableObject m_fireRateUpgradeEffect;
+
+    private int m_damageLevel = 1;
+    private int m_fireRateLevel = 1;
+    
+    public float DamageUpgradeCost => CalculateUpgradeCost(m_damageLevel);
+    public float SpeedUpgradeCost => CalculateUpgradeCost(m_fireRateLevel);
 
     private void Awake()
     {
@@ -24,19 +32,28 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     private void Start()
     {
+        m_towerAttributeSet.GetAttribute("DamageLevel").OnValueChangedEvent += newValue =>
+        {
+            m_damageLevel = Mathf.FloorToInt(newValue);
+        };
+        m_towerAttributeSet.GetAttribute("FireRateLevel").OnValueChangedEvent += newValue =>
+        {
+            m_fireRateLevel = Mathf.FloorToInt(newValue);
+        };
+        
         BroadcastDamageValues(m_upgradeInitialCost);
         BroadcastFireRateValues(m_upgradeInitialCost);
     }
     
     private float CalculateUpgradeCost(int currentLevel)
     {
-        return Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, currentLevel - 1));
+        return 0; //Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, currentLevel - 1));
     }
 
     public void UpgradeDamage()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = CalculateUpgradeCost(m_attributeSet.DamageLevel);;
+        float upgradeCost = CalculateUpgradeCost(m_damageLevel);
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -44,16 +61,16 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_attributeSet.IncreaseDamageLevel();
+        m_towerEffectContainer.ApplyEffect(gameObject, m_damageUpgradeEffect);
         
-        float nextUpgradeCost = CalculateUpgradeCost(m_attributeSet.DamageLevel);
+        float nextUpgradeCost = CalculateUpgradeCost(m_damageLevel);
         BroadcastDamageValues(nextUpgradeCost);
     }
 
     public void UpgradeSpeed()
     {
         // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = CalculateUpgradeCost(m_attributeSet.FireRateLevel);
+        float upgradeCost = CalculateUpgradeCost(m_fireRateLevel);
         
         if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
         {
@@ -61,9 +78,9 @@ public class TowerAttackUpgrades : MonoBehaviour
             return;
         }
 
-        m_attributeSet.IncreaseFireRateLevel();
+        m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect);
         
-        float nextUpgradeCost = CalculateUpgradeCost(m_attributeSet.FireRateLevel);
+        float nextUpgradeCost = CalculateUpgradeCost(m_fireRateLevel);
         BroadcastFireRateValues(nextUpgradeCost);
     }
 

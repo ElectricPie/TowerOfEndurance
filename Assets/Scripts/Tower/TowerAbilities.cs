@@ -6,7 +6,7 @@ using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
 using UnityEngine;
 
-[RequireComponent(typeof(TowerAttributeSet))]
+// [RequireComponent(typeof(TowerAttributeSet))]
 public class TowerAbilities : MonoBehaviour
 {
     [SerializeField] private TowerWaves m_towerWaves;
@@ -16,7 +16,9 @@ public class TowerAbilities : MonoBehaviour
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
     private AbilityInstance m_basicAttackInstance;
-    private TowerAttributeSet m_attributeSet;
+    // private TowerAttributeSet m_attributeSet;
+    private AttributeData m_damageAttribute;
+    private AttributeData m_fireRateAttribute;
     
     private IEnumerator m_attackCoroutine;
     private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
@@ -80,9 +82,11 @@ public class TowerAbilities : MonoBehaviour
         }
     }
     
-    protected void Awake()
+    protected void Start()
     {
-        m_attributeSet = GetComponent<TowerAttributeSet>();
+        AttributeSet attributeSet = GetComponent<AttributeSet>();
+        m_damageAttribute = attributeSet.GetAttribute("Damage");
+        m_fireRateAttribute = attributeSet.GetAttribute("FireRate");
         
         if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
@@ -90,25 +94,25 @@ public class TowerAbilities : MonoBehaviour
         BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
         m_basicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
         
-        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
-        basicAttackAbilityData.OnTargetHit += target =>
-        {
-            if (!m_isActive)
-                return;
-            
-            if (target == null)
-                return;
-            
-            foreach (AbilityInstance ability in m_onBasicHitAbilities)
-            {
-                ability.TryActivate(target.gameObject);
-            }
-            
-            foreach (AbilityInstance ability in m_onAnyDamageAbilities)
-            {
-                ability.TryActivate(target.gameObject);
-            }
-        };
+        // BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
+        // basicAttackAbilityData.OnTargetHit += target =>
+        // {
+        //     if (!m_isActive)
+        //         return;
+        //     
+        //     if (target == null)
+        //         return;
+        //     
+        //     foreach (AbilityInstance ability in m_onBasicHitAbilities)
+        //     {
+        //         ability.TryActivate(target.gameObject);
+        //     }
+        //     
+        //     foreach (AbilityInstance ability in m_onAnyDamageAbilities)
+        //     {
+        //         ability.TryActivate(target.gameObject);
+        //     }
+        // };
 
         m_attackCoroutine = Fire();
         StartCoroutine(m_attackCoroutine);
@@ -131,7 +135,7 @@ public class TowerAbilities : MonoBehaviour
                 ability.TryActivate(target.gameObject);
             }
 
-            yield return new WaitForSeconds(m_attributeSet.FireRate);
+            yield return new WaitForSeconds(m_fireRateAttribute.CurrentValue);
         }
     }
 

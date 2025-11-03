@@ -20,15 +20,15 @@ MonoBehaviour:
       m_calculationType: 1
       m_flatValue: 0
       m_attributeBackedMagnitude:
-        m_backingAttribute: Level
+        m_backingAttribute: DamageLevel
         m_coefficient: 1
-        m_postAdditiveValue: 10
-  - m_attribute: Speed
+        m_postAdditiveValue: 0
+  - m_attribute: FireRate
     m_modifierOperation: 1
     m_modifierMagnitude:
       m_calculationType: 1
       m_flatValue: 0
       m_attributeBackedMagnitude:
-        m_backingAttribute: Level
-        m_coefficient: 4
-        m_postAdditiveValue: 5
+        m_backingAttribute: FireRateLevel
+        m_coefficient: 1
+        m_postAdditiveValue: 0
