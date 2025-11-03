@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AbilitySystem.Ability.Attributes
+namespace AbilitySystem.Ability.AttributeSets
 {
     public class TowerAttributeSet : AttributeSet
     { 

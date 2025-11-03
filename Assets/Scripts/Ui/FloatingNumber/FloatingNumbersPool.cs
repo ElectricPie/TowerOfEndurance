@@ -18,7 +18,7 @@ namespace Ui.FloatingNumber
         [SerializeField, Min(0)] private float m_showTime = 0.5f;
         [SerializeField] private Vector3 m_offsetFromUnit = new Vector3(0.0f, 2.0f, 0.0f);
 
-        [SerializeField] private AttributeIdScriptableObject m_healthAttributeId;
+        [SerializeField] private AttributeIdScriptableObject m_incomingDamageAttributeId;
         
         private ObjectPool<FloatingNumber> m_numberPool;
         
@@ -46,13 +46,13 @@ namespace Ui.FloatingNumber
 
             m_towerWaves.OnUnitSpawnedEvent += (newUnit, _) =>
             {
-                // newUnit.AttributeSet.GetAttribute(m_healthAttributeId).OnCurrentValueChangedEvent += newValue =>
-                // {
-                //     FloatingNumber floatingNumber = m_numberPool.Get();
-                //     floatingNumber.SetValue(newValue, newUnit.transform.position + m_offsetFromUnit, 1 / m_showTime);
-                //
-                //     StartCoroutine(HideNumber(floatingNumber));
-                // };
+                newUnit.AttributeSet.GetAttribute(m_incomingDamageAttributeId).OnCurrentValueChangedEvent += newValue =>
+                {
+                    FloatingNumber floatingNumber = m_numberPool.Get();
+                    floatingNumber.SetValue(newValue, newUnit.transform.position + m_offsetFromUnit, 1 / m_showTime);
+                
+                    StartCoroutine(HideNumber(floatingNumber));
+                };
             };
         }
 

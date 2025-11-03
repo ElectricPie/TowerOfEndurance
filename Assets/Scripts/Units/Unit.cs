@@ -1,10 +1,9 @@
 using System;
 using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
 using Character;
 using UnityEngine;
 
-[RequireComponent(typeof(AttributeSet)), RequireComponent(typeof(UnitLiveCost)), RequireComponent(typeof(UnitMoney)), 
- RequireComponent(typeof(EffectsContainer)), RequireComponent(typeof(CharacterPackAppearance))]
 public class Unit : MonoBehaviour
 {
     /// <summary>

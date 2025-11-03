@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Ability.Attributes;
 using UnityEngine;
 
-namespace AbilitySystem.Ability.Attributes
+namespace AbilitySystem.Ability.AttributeSets
 {
     public class AttributeSet : MonoBehaviour
     {
@@ -34,16 +35,17 @@ namespace AbilitySystem.Ability.Attributes
             switch (mod.Operation)
             {
                 case ModifierOperation.Add:
-                    attribute.CurrentValue += CalculateModMagnitude(mod.Magnitude);
+                    attribute.SetCurrentValue(attribute.CurrentValue + CalculateModMagnitude(mod.Magnitude), false);
                     break;
                 case ModifierOperation.Override:
-                    attribute.CurrentValue = CalculateModMagnitude(mod.Magnitude);
+                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Magnitude), false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             
             attribute.BroadcastCurrentValue();
+            AttributeValueChanged(mod.AttributeId, attribute);
         }
 
         public void AddPersistentModifier(AttributeModifier mod)
@@ -55,22 +57,22 @@ namespace AbilitySystem.Ability.Attributes
             if (mod.Magnitude.CalculationType == CalculationType.AttributeBacked)
             {
                 AttributeData backingAttribute = GetAttribute(mod.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
-                backingAttribute.OnCurrentValueChangedEvent += _ => { RecalculateAttribute(attribute); };
+                backingAttribute.OnCurrentValueChangedEvent += _ =>
+                {
+                    RecalculateAttribute(attribute);
+                    AttributeValueChanged(mod.AttributeId, attribute);
+                };
             }
             
             attribute.Modifiers.Add(mod);
             RecalculateAttribute(attribute);
-        }
-
-        public void AddInfiniteModifier(AttributeModifier mod)
-        {
-            AttributeData attribute = GetAttribute(mod.AttributeId);
-            if (attribute == null)
-                return;
-            
-            
+            AttributeValueChanged(mod.AttributeId, attribute);
         }
         
+        
+        protected virtual void AttributeValueChanged(AttributeIdScriptableObject attributeId, AttributeData attribute) {}
+        
+            
         private void RecalculateAttribute(AttributeData attribute)
         {
             float baseValue = attribute.BaseValue;
@@ -94,7 +96,7 @@ namespace AbilitySystem.Ability.Attributes
 
             float newValue = baseValue + addSum;
             attribute.BaseValue = overrideValue ?? newValue;
-            attribute.CurrentValue = attribute.BaseValue;
+            attribute.SetCurrentValue(attribute.BaseValue);
             
             attribute.BroadcastBaseValue();
             attribute.BroadcastCurrentValue();

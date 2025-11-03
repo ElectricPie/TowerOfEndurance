@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using AbilitySystem.Ability.Attributes;
 using UnityEngine;
 
-namespace AbilitySystem.Ability.Attributes
+namespace AbilitySystem.Ability.AttributeSets
 {
     [CreateAssetMenu(fileName = "New Attribute Set", menuName = "Ability System/Attribute/Attribute Set", order = 0)]
     public class AttributeSetScriptableObject : ScriptableObject

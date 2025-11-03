@@ -1,5 +1,5 @@
 ﻿using System;
-using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

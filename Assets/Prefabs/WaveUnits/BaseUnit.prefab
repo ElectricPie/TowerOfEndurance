@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 1983566677650419085}
   - component: {fileID: 6310768180494599512}
   - component: {fileID: 6044155177574091557}
-  - component: {fileID: 6574690437383138602}
   - component: {fileID: 3748232659942106222}
+  - component: {fileID: 8447766909208996928}
   m_Layer: 0
   m_Name: BaseUnit
   m_TagString: Untagged
@@ -217,20 +217,6 @@ MonoBehaviour:
   - {fileID: 8690693266961714019}
   - {fileID: 702638697819702302}
   - {fileID: 7047046956070761011}
---- !u!114 &6574690437383138602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113394094472918004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 192cda9cbed9409bb96a219535654f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSet
-  m_attributeLists:
-  - {fileID: 11400000, guid: 739f4fc2dca49cf4283631dbf4b42b02, type: 2}
 --- !u!114 &3748232659942106222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +233,22 @@ MonoBehaviour:
   m_attributeEffects:
   - {fileID: 11400000, guid: e4918e1fd0422d84a8256c65b091b34f, type: 2}
   - {fileID: 11400000, guid: bcbe5d35d6c6c0e4dbd0c9bc9f09e54d, type: 2}
+--- !u!114 &8447766909208996928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113394094472918004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c1cd2349084de5a60ec4ea4eaa7e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.AttributeSets.UnitAttributeSet
+  m_attributeLists:
+  - {fileID: 11400000, guid: 739f4fc2dca49cf4283631dbf4b42b02, type: 2}
+  m_incomingDamageAttributeId: {fileID: 11400000, guid: 92dfe29f7b0e5a141922cbd7af830400, type: 2}
+  m_healthAttributeId: {fileID: 11400000, guid: 6d857fa37d82f8543bca86be06b8a064, type: 2}
 --- !u!1 &1857225945720398400
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7941f3ad47a0431aac0622d5eeb4c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_attributeSet: {fileID: 6574690437383138602}
+  m_attributeSet: {fileID: 8447766909208996928}
   m_maxHealthAttributeId: {fileID: 11400000, guid: e477a6c4f925fe441bcc8d3a58d7d1b2, type: 2}
   m_healthAttributeId: {fileID: 11400000, guid: 6d857fa37d82f8543bca86be06b8a064, type: 2}
   m_slider: {fileID: 6467220243017896284}

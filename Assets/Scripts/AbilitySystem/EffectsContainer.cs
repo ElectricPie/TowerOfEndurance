@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect;
 using UnityEngine;
 
@@ -68,7 +68,6 @@ internal class GameEffectInstance
     }
 }
 
-[RequireComponent(typeof(AttributeSet))]
 public class EffectsContainer : MonoBehaviour
 {
     private readonly Dictionary<Type, PeriodicEffectContainer> m_effects =
