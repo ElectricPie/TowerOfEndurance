@@ -33,6 +33,8 @@ namespace AbilitySystem.Ability.Attributes
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
+            attribute.BroadcastCurrentValue();
         }
 
         public void AddPersistentModifier(AttributeModifier mod)
@@ -44,8 +46,7 @@ namespace AbilitySystem.Ability.Attributes
             attribute.Modifiers.Add(mod);
             RecalculateAttribute(attribute);
         }
-
-
+        
         private void RecalculateAttribute(AttributeData attribute)
         {
             float baseValue = attribute.BaseValue;
@@ -69,6 +70,7 @@ namespace AbilitySystem.Ability.Attributes
 
             float newValue = baseValue + addSum;
             attribute.CurrentValue = overrideValue ?? newValue;
+            attribute.BroadcastCurrentValue();
         }
 
         private float CalculateModMagnitude(ModifierMagnitude modMagnitude)

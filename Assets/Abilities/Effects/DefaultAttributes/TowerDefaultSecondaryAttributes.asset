@@ -30,5 +30,5 @@ MonoBehaviour:
       m_flatValue: 0
       m_attributeBackedMagnitude:
         m_backingAttribute: FireRateLevel
-        m_coefficient: 1
+        m_coefficient: 0.2
         m_postAdditiveValue: 0

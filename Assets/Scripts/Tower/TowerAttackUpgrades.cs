@@ -32,11 +32,11 @@ public class TowerAttackUpgrades : MonoBehaviour
 
     private void Start()
     {
-        m_towerAttributeSet.GetAttribute("DamageLevel").OnValueChangedEvent += newValue =>
+        m_towerAttributeSet.GetAttribute("DamageLevel").OnCurrentValueChangedEvent += newValue =>
         {
             m_damageLevel = Mathf.FloorToInt(newValue);
         };
-        m_towerAttributeSet.GetAttribute("FireRateLevel").OnValueChangedEvent += newValue =>
+        m_towerAttributeSet.GetAttribute("FireRateLevel").OnCurrentValueChangedEvent += newValue =>
         {
             m_fireRateLevel = Mathf.FloorToInt(newValue);
         };
@@ -47,7 +47,7 @@ public class TowerAttackUpgrades : MonoBehaviour
     
     private float CalculateUpgradeCost(int currentLevel)
     {
-        return 0; //Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, currentLevel - 1));
+        return Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, currentLevel - 1));
     }
 
     public void UpgradeDamage()
