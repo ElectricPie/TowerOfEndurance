@@ -10,14 +10,6 @@ namespace AbilitySystem.Ability.Attributes
 
         private readonly Dictionary<AttributeIdScriptableObject, AttributeData> m_attributes = new Dictionary<AttributeIdScriptableObject, AttributeData>();
 
-        private void Update()
-        {
-            foreach (KeyValuePair<AttributeIdScriptableObject, AttributeData> attributePair in m_attributes)
-            {
-                Debug.Log($"{attributePair.Key.Name}: {attributePair.Value.CurrentValue}");
-            }
-        }
-
         public AttributeData GetAttribute(AttributeIdScriptableObject attributeId)
         {
             m_attributes.TryGetValue(attributeId, out AttributeData attribute);

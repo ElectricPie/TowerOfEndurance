@@ -22,7 +22,7 @@ public class DamageEffect : GameEffect
             return;
 
         float damage = towerAttributeSet.Damage * m_damageModifierCurve.Evaluate(level);
-        target.GetComponent<UnitHealth>()?.Damage(damage, caster);
+        // target.GetComponent<UnitHealth>()?.Damage(damage, caster);
     }
 
     public override void OnApplication(GameObject target)

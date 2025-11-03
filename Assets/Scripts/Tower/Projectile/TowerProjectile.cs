@@ -44,7 +44,7 @@ public class TowerProjectile : MonoBehaviour
             return;
         }
 
-        target.HealthComponent.OnKilledEvent += OnTargetKilled;
+        target.OnKilledEvent += OnTargetKilled;
         
         m_movementComponent.TargetPos = targetPos;
         Target = target;
@@ -78,7 +78,7 @@ public class TowerProjectile : MonoBehaviour
         OnTimeoutEvent.Invoke(this);
     }
 
-    private void OnTargetKilled(GameObject target, GameObject killer)
+    private void OnTargetKilled(GameObject target)
     {
         CancelInvoke(nameof(Timeout));
         OnTargetKilledEvent.Invoke(this);

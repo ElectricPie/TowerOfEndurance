@@ -26,7 +26,7 @@ public class PlayerLivesManager : MonoBehaviour
 
     private void OnUnitsSpawned(Unit spawnedUnit, int waveNumber)
     {
-        spawnedUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
+        spawnedUnit.OnKilledEvent += OnUnitKilled;
 
         UnitLiveCost cost = spawnedUnit.LivesCostComponent;
         CurrentLives -= cost.LiveCost;
@@ -39,7 +39,7 @@ public class PlayerLivesManager : MonoBehaviour
         }
     }
 
-    private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killerGameObject)
+    private void OnUnitKilled(GameObject killedUnitGameObject)
     {
         UnitLiveCost cost = killedUnitGameObject.GetComponent<UnitLiveCost>();
         CurrentLives += cost.LiveCost;

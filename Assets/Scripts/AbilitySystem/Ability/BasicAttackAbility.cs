@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Effect;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -8,8 +9,10 @@ using Object = UnityEngine.Object;
 public class BasicAttackAbilityData : AbilityData, ISharedEffects
 {
     /* Editor Values */
-    [SerializeReference, BoxGroup("Base Attack")]
-    private DamageEffect m_baseAttackEffect;
+    // [SerializeReference, BoxGroup("Base Attack")]
+    // private DamageEffect m_baseAttackEffect;
+
+    [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
     [SerializeField] private TowerProjectile m_projectilePrefab = null;
     [SerializeField] private int m_poolSize = 10;
@@ -17,7 +20,7 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     public override AbilityData Clone()
     {
         BasicAttackAbilityData clone = (BasicAttackAbilityData)this.MemberwiseClone();
-        clone.m_baseAttackEffect = m_baseAttackEffect;
+        // clone.m_baseAttackEffect = m_baseAttackEffect;
         clone.m_projectilePrefab = m_projectilePrefab;
 
         return clone;
@@ -113,7 +116,8 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
 
     public float GetDamage(int level)
     {
-        return m_baseAttackEffect.DamageModifierCurve.Evaluate(level);
+        return 1.0f;
+        // return m_baseAttackEffect.DamageModifierCurve.Evaluate(level);
     }
 
     private Vector3 GetPredictedLocation(Vector3 targetCurrentPosition, Vector3 projectileSpawn)
@@ -157,7 +161,8 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
         if (target == null)
             return;
         
-        target.EffectsContainer.ApplyEffect(m_caster, m_baseAttackEffect, m_level);
+        // target.EffectsContainer.ApplyEffect(m_caster, m_baseAttackEffect, m_level);
+        target.EffectsContainer.ApplyEffect(m_caster, m_damageEffect);
     }
 }
 

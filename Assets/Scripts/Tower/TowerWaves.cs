@@ -52,7 +52,6 @@ public class TowerWaves : MonoBehaviour
         Unit newUnit = Instantiate<Unit>(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform);
         if (modifyUnit)
         {
-            newUnit.HealthComponent.UpdateMaxHealth(unitHealth, false);
             newUnit.MoneyComponent.MoneyWorth = moneyWorth;
         }
         
@@ -142,7 +141,7 @@ public class Wave
     public void AddUnit(Unit newUnit)
     {
         m_units.Add(newUnit);
-        newUnit.HealthComponent.OnKilledEvent += OnUnitKilled;
+        newUnit.OnKilledEvent += OnUnitKilled;
     }
 
     public Unit GetFirstUnit()
@@ -159,7 +158,7 @@ public class Wave
         return m_units[randomUnitIndex];
     }
 
-    private void OnUnitKilled(GameObject killedUnitGameObject, GameObject killer)
+    private void OnUnitKilled(GameObject killedUnitGameObject)
     {
         Unit killedUnit = killedUnitGameObject.GetComponent<Unit>();
         m_units.Remove(killedUnit);

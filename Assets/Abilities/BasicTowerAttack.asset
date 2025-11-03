@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2125d09159e545b99dc8ca33e76a69ba, type: 3}
   m_Name: BasicTowerAttack
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
-  m_label: Basic Attack
   m_abilityData:
     rid: 3214090471301185604
   references:
@@ -21,41 +20,40 @@ MonoBehaviour:
     - rid: 3214090471301185604
       type: {class: BasicAttackAbilityData, ns: , asm: Assembly-CSharp}
       data:
-        m_trigger: 0
-        m_baseAttackEffect:
-          rid: 3214090471301185605
-        m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
-        m_poolSize: 10
-    - rid: 3214090471301185605
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        m_durationPolicy: 0
-        m_periodicEffectValues:
-          m_duration: 1
-          m_period: 1
-          m_triggerOnApplication: 0
-        m_damageModifierCurve:
+        m_label: Basic Tower Attack
+        m_description: No Description
+        m_cost:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
-            time: 0
-            value: 1
+            time: 1
+            value: 10
             inSlope: 0
-            outSlope: 0
-            tangentMode: 34
+            outSlope: 10
+            tangentMode: 0
             weightedMode: 0
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 0
+            time: 10
+            value: 100
+            inSlope: 10
             outSlope: 0
-            tangentMode: 34
+            tangentMode: 0
             weightedMode: 0
             inWeight: 0
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        m_visualFx: {fileID: 0}
+        m_trigger: 0
+        m_triggerTime:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_maxLevel: 5
+        m_damageEffect: {fileID: 11400000, guid: 9cb0ae60b9e4de245ae598ae4bee1d40, type: 2}
+        m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
+        m_poolSize: 10

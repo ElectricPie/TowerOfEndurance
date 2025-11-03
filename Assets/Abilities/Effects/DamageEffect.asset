@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b304c3e891e349868fedf08976144b61, type: 3}
-  m_Name: FireRateUpgradeEffect
+  m_Name: DamageEffect
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
   m_durationPolicy: 0
   m_modifiers:
-  - m_attributeId: {fileID: 11400000, guid: c4636ead7f1dbb6449c065d7ad85f7c3, type: 2}
+  - m_attributeId: {fileID: 11400000, guid: 6d857fa37d82f8543bca86be06b8a064, type: 2}
     m_modifierOperation: 0
     m_modifierMagnitude:
       m_calculationType: 0
-      m_flatValue: 1
+      m_flatValue: -15
       m_attributeBackedMagnitude:
         m_backingAttributeId: {fileID: 0}
         m_coefficient:

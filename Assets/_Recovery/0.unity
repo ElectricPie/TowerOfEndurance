@@ -1084,8 +1084,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.TestAttributeApplicator
   m_effectsContainer: {fileID: 7371096466507088173}
-  m_primaryAttributes: {fileID: 11400000, guid: be666cb1953d4e4499569e61b765f994, type: 2}
-  m_secondaryAttributes: {fileID: 11400000, guid: 226e86afd120d5d4f9bdd8cb96a843d8, type: 2}
+  m_attributeEffects:
+  - {fileID: 11400000, guid: be666cb1953d4e4499569e61b765f994, type: 2}
+  - {fileID: 11400000, guid: 226e86afd120d5d4f9bdd8cb96a843d8, type: 2}
 --- !u!114 &7371096466507088173
 MonoBehaviour:
   m_ObjectHideFlags: 0
