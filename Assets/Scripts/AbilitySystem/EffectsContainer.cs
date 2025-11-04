@@ -1,45 +1,37 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect;
 using UnityEngine;
 
+// TODO: Reimplement fx on application/removal 
 internal class PeriodicEffectContainer
 {
-    public readonly GameEffect Effect;
+    public readonly GameEffectScriptableObject Effect;
     public readonly int Level;
     public event Action OnExpiration;
 
-    private readonly GameObject m_caster;
-    private readonly GameObject m_target;
+    public readonly AttributeSet Source;
     private float ExpirationTime { get; set; }
 
-    private PeriodicEffectContainer()
-    {
-    }
-
-    public PeriodicEffectContainer(GameObject caster, GameObject target, GameEffect effect, int level,
+    private PeriodicEffectContainer() { }
+    public PeriodicEffectContainer(AttributeSet source, GameEffectScriptableObject effect, int level,
         Action expirationCallback)
     {
-        m_caster = caster;
+        Source = source;
         Effect = effect;
-        m_target = target;
         Level = level;
 
         RefreshDuration();
         OnExpiration = expirationCallback;
-        effect.OnApplication(target);
-
-        if (Effect.PeriodicEffectValues.TriggerOnApplication)
-        {
-            Execute();
-        }
+        // effect.OnApplication(target);
     }
 
     public void RefreshDuration()
-    {
+    { 
         ExpirationTime = Time.time + Effect.PeriodicEffectValues.GetDurationAt(Level);
     }
 
@@ -49,32 +41,14 @@ internal class PeriodicEffectContainer
             return false;
 
         OnExpiration?.Invoke();
-        Effect.OnRemove();
+        // Effect.OnRemove();
         return true;
-    }
-
-    public void Execute()
-    {
-        Effect.Execute(m_caster, m_target, Level);
-    }
-}
-
-internal class GameEffectInstance
-{
-    private List<AttributeModifier> m_modifiers;
-
-    public GameEffectInstance(GameEffectScriptableObject effectScriptableObject)
-    {
-        m_modifiers = effectScriptableObject.Modifiers;
     }
 }
 
 public class EffectsContainer : MonoBehaviour
 {
-    private readonly Dictionary<Type, PeriodicEffectContainer> m_effects =
-        new Dictionary<Type, PeriodicEffectContainer>();
-
-    private readonly List<GameEffectInstance> m_infiniteEffects = new List<GameEffectInstance>();
+    private readonly List<PeriodicEffectContainer> m_periodicEffects = new List<PeriodicEffectContainer>();
 
     private AttributeSet m_attributeSet;
 
@@ -83,6 +57,7 @@ public class EffectsContainer : MonoBehaviour
         m_attributeSet = GetComponent<AttributeSet>();
     }
 
+    // TODO: Remove one all update to work with new attribute system
     public void ApplyEffect(GameObject source, GameEffect effect, int level = 1)
     {
         switch (effect.DurationPolicy)
@@ -93,7 +68,7 @@ public class EffectsContainer : MonoBehaviour
                 effect.OnRemove();
                 break;
             case DurationPolicy.Periodic:
-                SetupPeriodicEffect(source, effect, level);
+                // SetupPeriodicEffect(source, effect, level);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -113,11 +88,12 @@ public class EffectsContainer : MonoBehaviour
                 }
                 break;
             case DurationPolicy.Periodic:
+                SetupPeriodicEffect(sourceAttributeSet, effect, level);
                 break;
             case DurationPolicy.Infinite:
                 foreach (AttributeModifier modifier in effect.Modifiers)
                 {
-                    m_attributeSet.AddPersistentModifier(new AttributeModifierInstance(sourceAttributeSet, modifier, level));
+                    m_attributeSet.AddInfiniteModifier(new AttributeModifierInstance(sourceAttributeSet, modifier, level));
                 }
                 break;
             default:
@@ -125,33 +101,41 @@ public class EffectsContainer : MonoBehaviour
         }
     }
 
-    private void SetupPeriodicEffect(GameObject caster, GameEffect effect, int level)
+    private void SetupPeriodicEffect(AttributeSet source, GameEffectScriptableObject effect, int level)
     {
-        if (m_effects.ContainsKey(effect.GetType()))
+        // Refresh duration if effect exists
+        foreach (PeriodicEffectContainer periodicEffect in m_periodicEffects.Where(periodicEffect => periodicEffect.Effect == effect && periodicEffect.Source))
         {
-            m_effects[effect.GetType()].RefreshDuration();
+            periodicEffect.RefreshDuration();
             return;
         }
 
-        PeriodicEffectContainer effectContainer = new PeriodicEffectContainer(caster, gameObject, effect, level,
-            () => { m_effects.Remove(effect.GetType()); });
-        m_effects.Add(effect.GetType(), effectContainer);
+        PeriodicEffectContainer effectContainer = new PeriodicEffectContainer(source, effect, level,
+            () => { }); //m_effects.Remove(effect.GetType()); });
+        m_periodicEffects.Add(effectContainer);
         IEnumerator newTickCoroutine = PeriodicEffectCoroutine(effectContainer);
         StartCoroutine(newTickCoroutine);
     }
 
-    private static IEnumerator PeriodicEffectCoroutine(PeriodicEffectContainer effectContainer)
+    private IEnumerator PeriodicEffectCoroutine(PeriodicEffectContainer effectContainer)
     {
-        while (true)
+        if (effectContainer.Effect.PeriodicEffectValues.TriggerOnApplication)
         {
-            if (effectContainer.HasExpired())
+            foreach (AttributeModifier modifier in effectContainer.Effect.Modifiers)
             {
-                yield break;
-            }
-
-            yield return new WaitForSeconds(
-                effectContainer.Effect.PeriodicEffectValues.GetPeriodAt(effectContainer.Level));
-            effectContainer.Execute();
+                m_attributeSet.AddInstantModifier(new AttributeModifierInstance(effectContainer.Source, modifier, effectContainer.Level));
+            } 
         }
+        
+        while (!effectContainer.HasExpired())
+        {
+            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.GetPeriodAt(effectContainer.Level));
+            foreach (AttributeModifier modifier in effectContainer.Effect.Modifiers)
+            {
+                m_attributeSet.AddInstantModifier(new AttributeModifierInstance(effectContainer.Source, modifier, effectContainer.Level));
+            }
+        }
+
+        m_periodicEffects.Remove(effectContainer);
     }
 }

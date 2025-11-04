@@ -48,7 +48,7 @@ namespace AbilitySystem.Ability.AttributeSets
             AttributeValueChanged(mod.Modifier.AttributeId, attribute);
         }
 
-        public void AddPersistentModifier(AttributeModifierInstance mod)
+        public void AddInfiniteModifier(AttributeModifierInstance mod)
         {
             AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);
             if (attribute == null)

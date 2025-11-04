@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Effect;
 using UnityEngine;
 
 namespace AbilitySystem.Ability
@@ -8,16 +9,15 @@ namespace AbilitySystem.Ability
     public class PoisonTipAbilityData : AbilityData
     {
         /* Editor Values */
-        [SerializeReference] private DamageEffect m_damageEffect;
+        [SerializeField] private GameEffectScriptableObject m_damageEffectNew;
 
         public override AbilityData Clone()
         {
             PoisonTipAbilityData clone = (PoisonTipAbilityData)MemberwiseClone();
-            clone.m_damageEffect = m_damageEffect;
+            // clone.m_damageEffect = m_damageEffect;
 
             return clone;
         }
-
 
         /* Runtime Values */
         public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
@@ -29,7 +29,7 @@ namespace AbilitySystem.Ability
             if (effectsContainer == null)
                 return false;
 
-            effectsContainer.ApplyEffect(caster, m_damageEffect, level);
+            effectsContainer.ApplyEffect(caster, m_damageEffectNew, level);
             return true;
         }
 
@@ -37,10 +37,10 @@ namespace AbilitySystem.Ability
         {
             Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
             tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            tooltipDataMap.TryAdd("Duration", m_damageEffect.PeriodicEffectValues.GetDurationAt(level));
-            tooltipDataMap.TryAdd("Period", m_damageEffect.PeriodicEffectValues.GetPeriodAt(level));
-            tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
-            tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
+            // tooltipDataMap.TryAdd("Duration", m_damageEffect.PeriodicEffectValues.GetDurationAt(level));
+            // tooltipDataMap.TryAdd("Period", m_damageEffect.PeriodicEffectValues.GetPeriodAt(level));
+            // tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
+            // tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
             return tooltipDataMap;
         }
     }
