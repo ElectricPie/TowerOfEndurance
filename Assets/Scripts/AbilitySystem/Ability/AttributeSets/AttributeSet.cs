@@ -108,8 +108,8 @@ namespace AbilitySystem.Ability.AttributeSets
         {
             switch (modMagnitude.CalculationType)
             {
-                case CalculationType.Float:
-                    return modMagnitude.FlatValue;
+                case CalculationType.ScalableFloat:
+                    return modMagnitude.ScalableFloat.GetValue(level);
                 case CalculationType.AttributeBacked:
                     AttributeBackedMagnitude backedMagnitude = modMagnitude.AttributeBackedMagnitude;
                     AttributeIdScriptableObject backingAttributeName = backedMagnitude.BackingAttributeId;
@@ -127,18 +127,13 @@ namespace AbilitySystem.Ability.AttributeSets
                     }
 
                     float backingAttributeValue = backingAttribute.CurrentValue;
-                    
-                    float value = backingAttributeValue * CalculateCurveFloat(backedMagnitude.Coefficient, level);
-                    value += CalculateCurveFloat(backedMagnitude.PostAdditiveValue, level);
+
+                    float value = backingAttributeValue * backedMagnitude.Coefficient.GetValue(level);
+                    value += backedMagnitude.PostAdditiveValue.GetValue(level);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        private static float CalculateCurveFloat(ScalableFloat curveFloat, float level)
-        {
-            return curveFloat.Type == ScalableFloatType.Float ? curveFloat.FlatFloat : curveFloat.Curve.Evaluate(level);
         }
         
         protected void Awake()

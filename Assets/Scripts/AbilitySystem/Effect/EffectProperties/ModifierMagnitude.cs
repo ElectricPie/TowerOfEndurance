@@ -7,22 +7,21 @@ namespace AbilitySystem.Effect.EffectProperties
     [Serializable]
     public enum CalculationType
     {
-        Float,
+        ScalableFloat,
         AttributeBacked
     }
     
     [Serializable]
     public class ModifierMagnitude
     {
-        [SerializeField] private CalculationType m_calculationType = CalculationType.Float;
-        // TODO: Replace with CurveFloat
-        [SerializeField, ShowIf("m_calculationType", CalculationType.Float)] private float m_flatValue;
+        [SerializeField] private CalculationType m_calculationType = CalculationType.ScalableFloat;
+        [SerializeField, ShowIf("m_calculationType", CalculationType.ScalableFloat)] private ScalableFloat m_scalableFloat;
         [TitleGroup("Attribute Backed Magnitude")]
         [SerializeField, ShowIf("m_calculationType", CalculationType.AttributeBacked), HideLabel]
         private AttributeBackedMagnitude m_attributeBackedMagnitude;
 
         public CalculationType CalculationType => m_calculationType;
-        public float FlatValue => m_flatValue;
+        public ScalableFloat ScalableFloat => m_scalableFloat;
         public AttributeBackedMagnitude AttributeBackedMagnitude => m_attributeBackedMagnitude;
     }
 }

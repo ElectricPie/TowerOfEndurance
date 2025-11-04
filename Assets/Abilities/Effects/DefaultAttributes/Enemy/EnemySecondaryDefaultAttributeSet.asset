@@ -13,17 +13,100 @@ MonoBehaviour:
   m_Name: EnemySecondaryDefaultAttributeSet
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
   m_durationPolicy: 2
+  m_periodicEffectValues:
+    m_duration:
+      m_type: 0
+      m_value: 1
+      m_curve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 5
+          value: 5
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_period:
+      m_type: 0
+      m_value: 1
+      m_curve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 5
+          value: 5
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_triggerOnApplication: 0
   m_modifiers:
   - m_attributeId: {fileID: 11400000, guid: 6d857fa37d82f8543bca86be06b8a064, type: 2}
     m_modifierOperation: 1
     m_modifierMagnitude:
       m_calculationType: 1
-      m_flatValue: 20
+      m_scalableFloat:
+        m_type: 0
+        m_value: 1
+        m_curve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 5
+            value: 5
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
       m_attributeBackedMagnitude:
+        m_attributeSource: 0
         m_backingAttributeId: {fileID: 11400000, guid: e477a6c4f925fe441bcc8d3a58d7d1b2, type: 2}
         m_coefficient:
-          m_useCurve: 0
-          m_flatFloat: 1
+          m_type: 0
+          m_value: 1
           m_curve:
             serializedVersion: 2
             m_Curve: []
@@ -31,8 +114,8 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
         m_postAdditiveValue:
-          m_useCurve: 0
-          m_flatFloat: 0
+          m_type: 0
+          m_value: 0
           m_curve:
             serializedVersion: 2
             m_Curve: []

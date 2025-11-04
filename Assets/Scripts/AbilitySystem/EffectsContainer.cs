@@ -33,7 +33,7 @@ internal class PeriodicEffectContainer
 
     public void RefreshDuration()
     { 
-        ExpirationTime = Time.time + Effect.PeriodicEffectValues.GetDurationAt(Level);
+        ExpirationTime = Time.time + Effect.PeriodicEffectValues.Duration.GetValue(Level);
     }
 
     public bool HasExpired()
@@ -112,7 +112,7 @@ public class EffectsContainer : MonoBehaviour
         
         while (!effectContainer.HasExpired())
         {
-            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.GetPeriodAt(effectContainer.Level));
+            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.Period.GetValue(effectContainer.Level));
             foreach (AttributeModifier modifier in effectContainer.Effect.Modifiers)
             {
                 m_attributeSet.AddInstantModifier(new AttributeModifierInstance(effectContainer.Source, modifier, effectContainer.Level));

@@ -6,17 +6,15 @@ namespace AbilitySystem.Effect.EffectProperties
 {
     [Serializable]
     public class PeriodicEffectValues {
-        // TODO: Replace with CurveFloat
         [SerializeField, BoxGroup("Periodic Values")] 
-        private AnimationCurve m_duration = AnimationCurve.Linear(1, 1, 5, 5);
-        // TODO: Replace with CurveFloat
+        private ScalableFloat m_duration;
         [SerializeField, BoxGroup("Periodic Values")] 
-        private AnimationCurve m_period = AnimationCurve.Linear(1, 1, 5, 5);
+        private ScalableFloat m_period;
         [SerializeField, BoxGroup("Periodic Values")]
         private bool m_triggerOnApplication;
 
-        public float GetDurationAt(int level) => m_duration.Evaluate(level);
-        public float GetPeriodAt(int level) => m_period.Evaluate(level);
+        public ScalableFloat Duration => m_duration;
+        public ScalableFloat Period => m_period;
         public bool TriggerOnApplication => m_triggerOnApplication;
     }
 }
