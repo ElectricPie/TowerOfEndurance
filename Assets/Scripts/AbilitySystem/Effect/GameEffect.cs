@@ -22,8 +22,10 @@ public abstract class GameEffect
 
 [Serializable]
 public class PeriodicEffectValues {
+    // TODO: Replace with CurveFloat
     [SerializeField, BoxGroup("Periodic")] 
     private AnimationCurve m_duration = AnimationCurve.Linear(1, 1, 5, 5);
+    // TODO: Replace with CurveFloat
     [SerializeField, BoxGroup("Periodic")] 
     private AnimationCurve m_period = AnimationCurve.Linear(1, 1, 5, 5);
     [SerializeField, BoxGroup("Periodic")]
@@ -72,6 +74,7 @@ public class CurveFloat
 public class ModifierMagnitude
 {
     [SerializeField] private CalculationType m_calculationType = CalculationType.Float;
+    // TODO: Replace with CurveFloat
     [SerializeField, ShowIf("m_calculationType", CalculationType.Float)] private float m_flatValue;
 
     [SerializeField, ShowIf("m_calculationType", CalculationType.AttributeBacked)]
