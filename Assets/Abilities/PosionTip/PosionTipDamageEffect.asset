@@ -73,7 +73,7 @@ MonoBehaviour:
         m_attributeSource: 1
         m_backingAttributeId: {fileID: 11400000, guid: bfeb83bfe84b6334db99a2ce99ac20b9, type: 2}
         m_coefficient:
-          m_useCurve: 1
+          m_type: 1
           m_flatFloat: 0
           m_curve:
             serializedVersion: 2
@@ -100,7 +100,7 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
         m_postAdditiveValue:
-          m_useCurve: 0
+          m_type: 0
           m_flatFloat: 0
           m_curve:
             serializedVersion: 2

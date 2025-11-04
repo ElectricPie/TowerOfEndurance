@@ -136,9 +136,9 @@ namespace AbilitySystem.Ability.AttributeSets
             }
         }
 
-        private float CalculateCurveFloat(ScalableFloat curveFloat, float level)
+        private static float CalculateCurveFloat(ScalableFloat curveFloat, float level)
         {
-            return curveFloat.UseCurve ? curveFloat.Curve.Evaluate(level) : curveFloat.FlatFloat;
+            return curveFloat.Type == ScalableFloatType.Float ? curveFloat.FlatFloat : curveFloat.Curve.Evaluate(level);
         }
         
         protected void Awake()

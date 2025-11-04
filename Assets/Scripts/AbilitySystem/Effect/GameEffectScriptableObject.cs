@@ -16,7 +16,7 @@ namespace AbilitySystem.Effect
     public class GameEffectScriptableObject : ScriptableObject
     {
         [SerializeField] private DurationPolicy m_durationPolicy = DurationPolicy.Instant;
-        [SerializeField, ShowIf("m_durationPolicy", DurationPolicy.Periodic)] private PeriodicEffectValues m_periodicEffectValues;
+        [SerializeField, ShowIf("m_durationPolicy", DurationPolicy.Periodic), HideLabel] private PeriodicEffectValues m_periodicEffectValues;
         [SerializeField] private List<AttributeModifier> m_modifiers;
 
         public DurationPolicy DurationPolicy => m_durationPolicy;

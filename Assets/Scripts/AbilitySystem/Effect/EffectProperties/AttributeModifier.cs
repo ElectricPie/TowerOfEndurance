@@ -1,5 +1,6 @@
 ﻿using System;
 using AbilitySystem.Ability.Attributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace AbilitySystem.Effect.EffectProperties
@@ -16,7 +17,8 @@ namespace AbilitySystem.Effect.EffectProperties
     {
         [SerializeField] private AttributeIdScriptableObject m_attributeId;
         [SerializeField] private ModifierOperation m_modifierOperation = ModifierOperation.Add;
-        [SerializeField] private ModifierMagnitude m_modifierMagnitude = new ModifierMagnitude();
+        [TitleGroup("Magnitude")]
+        [SerializeField, HideLabel] private ModifierMagnitude m_modifierMagnitude = new ModifierMagnitude();
 
         public AttributeIdScriptableObject AttributeId => m_attributeId;
         public ModifierOperation Operation => m_modifierOperation;
