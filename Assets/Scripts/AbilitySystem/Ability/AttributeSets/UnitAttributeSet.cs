@@ -14,7 +14,6 @@ namespace AbilitySystem.Ability.AttributeSets
 
             if (attributeId == m_incomingDamageAttributeId)
             {
-                Debug.Log("Hello");
                 AttributeData healthAttribute = GetAttribute(m_healthAttributeId);
                 healthAttribute.SetCurrentValue(healthAttribute.CurrentValue - attribute.CurrentValue);
                 attribute.SetCurrentValue(0, false);;

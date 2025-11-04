@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
-public class BasicAttackAbilityData : AbilityData, ISharedEffects
+[Serializable]
+public class BasicAttackAbilityData : AbilityData
 {
     /* Editor Values */
-    // [SerializeReference, BoxGroup("Base Attack")]
-    // private DamageEffect m_baseAttackEffect;
-
     [SerializeField] private AttributeIdScriptableObject m_damageLevelAttributeId;
     [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
@@ -109,13 +106,6 @@ public class BasicAttackAbilityData : AbilityData, ISharedEffects
     {
         return new Dictionary<string, object>();
     }
-
-    /* ISharedEffects Interface begin */
-    public List<GameEffect> GetEffects()
-    {
-        return null;
-    }
-    /* ISharedEffects Interface end */
 
     public float GetDamage(int level)
     {

@@ -12,8 +12,7 @@ namespace AbilitySystem.Ability
         /* Editor Values */
         [SerializeField] private AnimationCurve m_triggerChanceCurve;
         [SerializeField, Min(0)] private int m_targetCount;
-        [SerializeReference] private DamageEffect m_damageEffect = new DamageEffect();
-        [SerializeField] private GameEffectScriptableObject m_damageEffectNew;
+        [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
         public override AbilityData Clone()
         {
@@ -48,7 +47,7 @@ namespace AbilitySystem.Ability
             for (int i = 0; i < m_targetCount; i++)
             {
                 Unit randomTarget = m_towerWaves.GetRandomUnit();
-                randomTarget.EffectsContainer.ApplyEffect(caster, m_damageEffectNew, level);
+                randomTarget.EffectsContainer.ApplyEffect(caster, m_damageEffect, level);
             }
 
             return true;

@@ -17,85 +17,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1858585951208472677
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        m_durationPolicy: 0
-        m_periodicEffectValues:
-          m_duration:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 5
-              value: 5
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_period:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 5
-              value: 5
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_triggerOnApplication: 0
-        m_damageModifierCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 1
-            value: 3.4
-            inSlope: 0.39999998
-            outSlope: 0.39999998
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 5
-            value: 5
-            inSlope: 0.39999998
-            outSlope: 0.39999998
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_visualFx: {fileID: 0}
     - rid: 3214090471301185598
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
@@ -162,6 +83,4 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         m_targetCount: 2
-        m_damageEffect:
-          rid: 1858585951208472677
-        m_damageEffectNew: {fileID: 11400000, guid: f5fd5bce1d3f17b4cb3194012338d70b, type: 2}
+        m_damageEffect: {fileID: 11400000, guid: f5fd5bce1d3f17b4cb3194012338d70b, type: 2}

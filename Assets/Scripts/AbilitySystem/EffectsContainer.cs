@@ -5,6 +5,7 @@ using System.Linq;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect;
+using AbilitySystem.Effect.EffectProperties;
 using UnityEngine;
 
 // TODO: Reimplement fx on application/removal 
@@ -55,24 +56,6 @@ public class EffectsContainer : MonoBehaviour
     protected void Awake()
     {
         m_attributeSet = GetComponent<AttributeSet>();
-    }
-
-    // TODO: Remove one all update to work with new attribute system
-    public void ApplyEffect(GameObject source, GameEffect effect, int level = 1)
-    {
-        switch (effect.DurationPolicy)
-        {
-            case DurationPolicy.Instant:
-                effect.OnApplication(gameObject);
-                effect.Execute(source, gameObject, level);
-                effect.OnRemove();
-                break;
-            case DurationPolicy.Periodic:
-                // SetupPeriodicEffect(source, effect, level);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 
     public void ApplyEffect(GameObject source, GameEffectScriptableObject effect, int level)

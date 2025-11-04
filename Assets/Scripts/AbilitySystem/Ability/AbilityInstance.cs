@@ -14,7 +14,7 @@ public class AbilityInitData
 public sealed class AbilityInstance
 {
     public int Level { get; private set; } = 1;
-    public AbilityData AbilityData { get; private set; }
+    public AbilityData AbilityData { get; }
     
     private readonly GameObject m_caster;
     

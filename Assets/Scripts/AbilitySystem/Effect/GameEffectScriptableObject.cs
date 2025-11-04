@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
+using AbilitySystem.Effect.EffectProperties;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace AbilitySystem.Effect
 {
+    public enum DurationPolicy
+    {
+        Instant,
+        Periodic,
+        Infinite
+    }
+    
     [CreateAssetMenu(fileName = "New Game Effect", menuName = "Ability System/Game Effect", order = 0)]
     public class GameEffectScriptableObject : ScriptableObject
     {

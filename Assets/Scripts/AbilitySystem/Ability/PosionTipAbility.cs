@@ -14,7 +14,6 @@ namespace AbilitySystem.Ability
         public override AbilityData Clone()
         {
             PoisonTipAbilityData clone = (PoisonTipAbilityData)MemberwiseClone();
-            // clone.m_damageEffect = m_damageEffect;
 
             return clone;
         }

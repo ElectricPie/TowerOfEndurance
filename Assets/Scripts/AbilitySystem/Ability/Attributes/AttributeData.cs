@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AbilitySystem.Ability.AttributeSets;
-using AbilitySystem.Effect;
+using AbilitySystem.Effect.EffectProperties;
 
 namespace AbilitySystem.Ability.Attributes
 {

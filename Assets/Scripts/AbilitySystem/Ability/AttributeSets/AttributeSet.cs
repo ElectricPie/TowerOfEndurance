@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Effect.EffectProperties;
 using UnityEngine;
+using Waves;
 
 namespace AbilitySystem.Ability.AttributeSets
 {
@@ -134,7 +136,7 @@ namespace AbilitySystem.Ability.AttributeSets
             }
         }
 
-        private float CalculateCurveFloat(CurveFloat curveFloat, float level)
+        private float CalculateCurveFloat(ScalableFloat curveFloat, float level)
         {
             return curveFloat.UseCurve ? curveFloat.Curve.Evaluate(level) : curveFloat.FlatFloat;
         }
