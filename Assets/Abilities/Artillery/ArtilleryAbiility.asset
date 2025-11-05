@@ -19,8 +19,10 @@ MonoBehaviour:
     Cost:
     [Cost]'
   m_cost:
+    serializedVersion: 2
     m_Curve:
-    - time: 1
+    - serializedVersion: 3
+      time: 1
       value: 10
       inSlope: 0
       outSlope: 10
@@ -28,7 +30,8 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - time: 10
+    - serializedVersion: 3
+      time: 10
       value: 100
       inSlope: 10
       outSlope: 0
@@ -41,32 +44,18 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_trigger: 0
   m_triggerTime:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_maxLevel: 5
   m_abilityData:
-    rid: 3214090471301185598
-  m_abilityDataOld:
-    rid: 1858585980978593966
+    rid: 1858585995365056512
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1858585980978593966
-      type: {class: ArtilleryAbilityDataOld, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
-      data:
-        m_triggerChanceCurve:
-          m_Curve: []
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_targetCount: 2
-        m_damageEffect: {fileID: 11400000, guid: f5fd5bce1d3f17b4cb3194012338d70b, type: 2}
-        m_towerWaves: {fileID: 0}
-    - rid: 3214090471301185598
+    - rid: 1858585995365056512
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_triggerChanceCurve:
@@ -87,9 +76,10 @@ MonoBehaviour:
             weightedMode: 0
             inWeight: 0.33333334
             outWeight: 0
+          serializedVersion: 2
+          m_Curve: []
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
         m_targetCount: 2
         m_damageEffect: {fileID: 11400000, guid: f5fd5bce1d3f17b4cb3194012338d70b, type: 2}
-        m_towerWaves: {fileID: 0}

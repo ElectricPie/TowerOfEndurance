@@ -6,40 +6,38 @@ using UnityEngine;
 namespace AbilitySystem.Ability
 {
     [Serializable]
-    public class DeathSentenceAbility : AbilityDataOld
+    public class DeathSentenceAbilityData : AbilityData
     {
-        /* Editor Values */
         [SerializeField] private GameEffectScriptableObject m_damageEffect;
-        
-        /* Runtime Values */
+
+        public GameEffectScriptableObject DamageEffect => m_damageEffect;
+        public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
+        {
+            return new DeathSentenceAbilityInstance(initData);
+        }
+    }
+
+    public class DeathSentenceAbilityInstance : AbilityInstance
+    {
+        private DeathSentenceAbilityData m_abilityData;
         private TowerWaves m_towerWaves;
 
-        public override void Init(AbilityInitData initData)
+        public DeathSentenceAbilityInstance(AbilityInitData initData) : base(initData)
         {
+            if (initData.AbilityData is not DeathSentenceAbilityData deathSentenceAbilityData)
+                throw new Exception("Tried to initialize Death Sentence ability with non DeathSentenceAbilityData");
+            
+            m_abilityData = deathSentenceAbilityData;
             m_towerWaves = initData.Source.GetComponent<TowerWaves>();
         }
-
-        public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
+        
+        public override void TryActivate(GameObject target = null)
         {
             Unit randomUnit = m_towerWaves.GetRandomUnit();
             if (randomUnit == null)
-                return false;
+                return;
 
-            randomUnit.EffectsContainer.ApplyEffect(caster, m_damageEffect, level);
-            
-            return true;
-        }
-
-        public override Dictionary<string, object> GetTooltipDataMap(int level)
-        {
-            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
-            // tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            // float attacks = m_damageEffect.PeriodicEffectValues.GetDurationAt(level) / m_damageEffect.PeriodicEffectValues.GetPeriodAt(level);
-            // tooltipDataMap.TryAdd("Attacks", attacks);
-            // tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
-            // tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
-            // tooltipDataMap.TryAdd("TriggerTime", GetTriggerTimeAt(level));
-            return tooltipDataMap;
+            randomUnit.EffectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
         }
     }
 }

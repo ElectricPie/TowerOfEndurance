@@ -13,7 +13,7 @@ namespace Ui.Ability
         [SerializeField] private Button m_button;
         
         private AbilityWidgetController m_abilityWidgetController;
-        private AbilityInstanceOld m_ability;
+        private AbilityInstance m_ability;
         
         protected void Awake()
         {
@@ -22,16 +22,16 @@ namespace Ui.Ability
             m_button.onClick.AddListener(OnClicked);
         }
         
-        public void Initialize(AbilityInstanceOld abilityInstanceOld)
+        public void Initialize(AbilityInstance abilityInstance)
         {
-            m_ability = abilityInstanceOld;
-            m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
+            m_ability = abilityInstance;
+            m_abilityNameText.text = m_ability.Ability.Label;
         }
 
         public void OnClicked()
         {
             bool upgradedAbility = m_abilityWidgetController.TryUpgradeAbility(m_ability);
-            if (upgradedAbility && m_ability.Level >= m_ability.AbilityScriptableObject.MaxLevel)
+            if (upgradedAbility && m_ability.Level >= m_ability.Ability.MaxLevel)
             {
                 m_button.interactable = false;
             }
@@ -39,12 +39,12 @@ namespace Ui.Ability
 
         public AbilityScriptableObject GetAbilityData()
         {
-            return m_ability.AbilityScriptableObject;
+            return m_ability.Ability;
         }
 
         public float GetAbilityLevel()
         {
-            return m_ability.Level < m_ability.AbilityScriptableObject.MaxLevel ? m_ability.Level + 1 : m_ability.AbilityScriptableObject.MaxLevel;
+            return m_ability.Level < m_ability.Ability.MaxLevel ? m_ability.Level + 1 : m_ability.Ability.MaxLevel;
         }
     }
 }

@@ -7,53 +7,48 @@ using Random = UnityEngine.Random;
 namespace AbilitySystem.Ability
 {
     [Serializable]
-    public class ArtilleryAbilityDataOld : AbilityDataOld
+    public class ArtilleryAbilityData : AbilityData
     {
-        /* Editor Values */
         [SerializeField] private AnimationCurve m_triggerChanceCurve;
-        [SerializeField, Min(0)] private int m_targetCount;
+        [SerializeField, Min(0)] private int m_targetCount = 2;
         [SerializeField] private GameEffectScriptableObject m_damageEffect;
-
-        private float GetTriggerChance(int level)
+        
+        public AnimationCurve TriggerChance => m_triggerChanceCurve;
+        public int TargetCount => m_targetCount;
+        public GameEffectScriptableObject DamageEffect => m_damageEffect;
+        
+        public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
         {
-            return m_triggerChanceCurve.Evaluate(level);
+            return new ArtilleryAbilityInstance(initData);
         }
+    }
 
-        
-        /* Runtime Values */
-        private TowerWaves m_towerWaves;
-        
-        public override void Init(AbilityInitData initData)
+    public class ArtilleryAbilityInstance : AbilityInstance
+    {
+        private readonly ArtilleryAbilityData m_abilityData;
+        private readonly TowerWaves m_towerWaves;
+
+        public ArtilleryAbilityInstance(AbilityInitData initData) : base(initData)
         {
+            if (initData.AbilityData is not ArtilleryAbilityData artilleryAbilityData)
+                throw new Exception("Tried to initialize Artillery ability with non ArtilleryAbilityData");
+
+            m_abilityData = artilleryAbilityData;
             m_towerWaves = initData.Source.GetComponent<TowerWaves>();
         }
 
-        // Ignoring target for this one
-        public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
+        public override void TryActivate(GameObject target = null)
         {
             // Trigger chance needs to be below the abilities trigger chance
             int triggerChance = Random.Range(0, 100);
-            if (triggerChance > GetTriggerChance(level))
-                return false;
+            if (triggerChance > m_abilityData.TriggerChance.Evaluate(Level))
+                return;
 
-            for (int i = 0; i < m_targetCount; i++)
+            for (int i = 0; i < m_abilityData.TargetCount; i++)
             {
                 Unit randomTarget = m_towerWaves.GetRandomUnit();
-                randomTarget.EffectsContainer.ApplyEffect(caster, m_damageEffect, level);
+                randomTarget.EffectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
             }
-
-            return true;
-        }
-
-        public override Dictionary<string, object> GetTooltipDataMap(int level)
-        {
-            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
-            // tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            // tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
-            // tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
-            tooltipDataMap.TryAdd("TargetCount", m_targetCount);
-            tooltipDataMap.TryAdd("TriggerChance", m_triggerChanceCurve.Evaluate(level));
-            return tooltipDataMap;
         }
     }
 }

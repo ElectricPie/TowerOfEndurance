@@ -18,24 +18,29 @@ namespace AbilitySystem.Ability.BasicAttack
         public GameEffectScriptableObject DamageEffect => m_damageEffect;
         public TowerProjectile ProjectilePrefab => m_projectilePrefab;
         public int PoolSize => m_poolSize;
+        
+        public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
+        {
+            return new BasicAttackAbilityInstance(initData);
+        }
     }
 
     public class BasicAttackAbilityInstance : AbilityInstance
     {
         public event Action<Unit> OnTargetHit = delegate { };
 
-        private ObjectPool<TowerProjectile> m_projectilePool;
-        private float m_projectileSpeed;
-        private TowerWaves m_waveComponent;
+        private readonly ObjectPool<TowerProjectile> m_projectilePool;
+        private readonly float m_projectileSpeed;
+        private readonly TowerWaves m_waveComponent;
 
         private Unit m_currentTarget;
-        private GameObject m_source;
-        private BasicAttackAbilityData m_abilityData;
+        private readonly GameObject m_source;
+        private readonly BasicAttackAbilityData m_abilityData;
 
-        public override void Init(AbilityInitData initData)
+        public BasicAttackAbilityInstance(AbilityInitData initData) : base(initData)
         {
             if (initData.AbilityData is not BasicAttackAbilityData basicAttackAbilityData)
-                throw new Exception("Tried to initialized projectile ability with non TowerBasicAttackInitData");
+                throw new Exception("Tried to initialize Basic Attack ability with non BasicAttackAbilityData");
             m_abilityData = basicAttackAbilityData;
             
             if (m_abilityData.ProjectilePrefab == null)
@@ -82,18 +87,16 @@ namespace AbilitySystem.Ability.BasicAttack
                 m_abilityData.PoolSize * 2);
         }
 
-        public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
+        public override void TryActivate(GameObject target = null)
         {
             if (target == null)
-                return false;
+                return;
 
             m_currentTarget = target.GetComponent<Unit>();
             if (m_currentTarget == null)
-                return false;
+                return;
 
             m_projectilePool.Get();
-
-            return true;
         }
 
         private Vector3 GetPredictedLocation(Vector3 targetCurrentPosition, Vector3 projectileSpawn)
@@ -137,7 +140,7 @@ namespace AbilitySystem.Ability.BasicAttack
             if (target == null)
                 return;
 
-            target.EffectsContainer.ApplyEffect(m_source, m_abilityData.DamageEffect, 1);
+            target.EffectsContainer.ApplyEffect(m_source, m_abilityData.DamageEffect, Level);
         }
     }
 }

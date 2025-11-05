@@ -69,15 +69,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_maxLevel: 5
   m_abilityData:
-    rid: -2
-  m_abilityDataOld:
-    rid: 1858585980978593968
+    rid: 1858585991287930984
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1858585980978593968
-      type: {class: DeathSentenceAbility, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
+    - rid: 1858585991287930984
+      type: {class: DeathSentenceAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_damageEffect: {fileID: 11400000, guid: 54ef232a9503da6408163402749822f7, type: 2}

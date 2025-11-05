@@ -25,11 +25,5 @@ namespace AbilitySystem.Ability
         
         public float GetCostAt(int level) => m_cost.Evaluate(level);
         public float GetTriggerTimeAt(int level) => m_triggerTime.Evaluate(level);
-        
-        [Header("Old Values")]
-        [SerializeReference] private AbilityDataOld m_abilityDataOld;
-
-        // public string Label => m_abilityData.Label;
-        public AbilityDataOld AbilityDataOld => m_abilityDataOld;
     }
 }
