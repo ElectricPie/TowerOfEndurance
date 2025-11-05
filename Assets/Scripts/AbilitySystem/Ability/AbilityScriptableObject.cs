@@ -14,19 +14,22 @@ namespace AbilitySystem.Ability
         [SerializeField, ShowIf("m_trigger", AbilityTrigger.Timed)]
         private AnimationCurve m_triggerTime;
         [SerializeField] private int m_maxLevel = 5;
+
+        [SerializeReference] private AbilityData m_abilityData;
         
         public string Label => m_label;
         public string Description => m_description;
         public AbilityTrigger Trigger => m_trigger;
         public int MaxLevel => m_maxLevel;
+        public AbilityData AbilityData => m_abilityData;
         
         public float GetCostAt(int level) => m_cost.Evaluate(level);
         public float GetTriggerTimeAt(int level) => m_triggerTime.Evaluate(level);
         
         [Header("Old Values")]
-        [SerializeReference] private AbilityData m_abilityData;
+        [SerializeReference] private AbilityDataOld m_abilityDataOld;
 
         // public string Label => m_abilityData.Label;
-        public AbilityData AbilityData => m_abilityData;
+        public AbilityDataOld AbilityDataOld => m_abilityDataOld;
     }
 }

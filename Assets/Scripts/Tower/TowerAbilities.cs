@@ -5,6 +5,7 @@ using System.Linq;
 using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
+using AbilitySystem.Ability.BasicAttack;
 using UnityEngine;
 
 public class TowerAbilities : MonoBehaviour
@@ -18,49 +19,49 @@ public class TowerAbilities : MonoBehaviour
     [SerializeField] private AttributeIdScriptableObject m_damageAttributeId;
     [SerializeField] private AttributeIdScriptableObject m_fireRateAttributeId;
     
-    private AbilityInstance m_basicAttackInstance;
+    private AbilityInstance m_basicAttackInstanceOld;
 
     private AttributeSet m_attributeSet;
     
     private IEnumerator m_attackCoroutine;
-    private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
-    private readonly HashSet<AbilityInstance> m_onBasicHitAbilities = new HashSet<AbilityInstance>();
-    private readonly HashSet<AbilityInstance> m_onAnyDamageAbilities = new HashSet<AbilityInstance>(); // TODO: Get when other abilities deal damage
+    private readonly HashSet<AbilityInstanceOld> m_onBasicAttackAbilities = new HashSet<AbilityInstanceOld>();
+    private readonly HashSet<AbilityInstanceOld> m_onBasicHitAbilities = new HashSet<AbilityInstanceOld>();
+    private readonly HashSet<AbilityInstanceOld> m_onAnyDamageAbilities = new HashSet<AbilityInstanceOld>(); // TODO: Get when other abilities deal damage
     private readonly HashSet<TimedAbilityInstance> m_timedAbilities = new HashSet<TimedAbilityInstance>();
     
-    private readonly HashSet<AbilityInstance> m_allAbilities = new HashSet<AbilityInstance>();
+    private readonly HashSet<AbilityInstanceOld> m_allAbilities = new HashSet<AbilityInstanceOld>();
 
     private bool m_isActive = true;
     
-    public AbilityInstance AddAbility(AbilityScriptableObject newAbility)
+    public AbilityInstanceOld AddAbility(AbilityScriptableObject newAbility)
     {
-        AbilityInitData newInitData = new AbilityInitData(gameObject);
-        AbilityInstance newAbilityInstance = new AbilityInstance(newAbility, newInitData);
+        AbilityInitData newInitData = new AbilityInitData(gameObject, newAbility.AbilityData);
+        AbilityInstanceOld newAbilityInstanceOld = new AbilityInstanceOld(newAbility, newInitData);
         
         switch (newAbility.Trigger)
         {
             case AbilityTrigger.OnBasicAttackFired:
-                m_onBasicAttackAbilities.Add(newAbilityInstance);
+                m_onBasicAttackAbilities.Add(newAbilityInstanceOld);
                 break;
             case AbilityTrigger.OnBasicAttackHit:
-                m_onBasicHitAbilities.Add(newAbilityInstance);
+                m_onBasicHitAbilities.Add(newAbilityInstanceOld);
                 break;
             case AbilityTrigger.OnAnyDamage:
-                m_onAnyDamageAbilities.Add(newAbilityInstance);
+                m_onAnyDamageAbilities.Add(newAbilityInstanceOld);
                 break;
             case AbilityTrigger.Timed:
-                IEnumerator newTimedAbilityCoroutine = TimedAbilityCoroutine(newAbilityInstance);
+                IEnumerator newTimedAbilityCoroutine = TimedAbilityCoroutine(newAbilityInstanceOld);
                 if (m_isActive){
                     StartCoroutine(newTimedAbilityCoroutine);
                 }
-                m_timedAbilities.Add(new TimedAbilityInstance(newAbilityInstance, newTimedAbilityCoroutine));
+                m_timedAbilities.Add(new TimedAbilityInstance(newAbilityInstanceOld, newTimedAbilityCoroutine));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
         
-        m_allAbilities.Add(newAbilityInstance);
-        return newAbilityInstance;
+        m_allAbilities.Add(newAbilityInstanceOld);
+        return newAbilityInstanceOld;
     }
 
     public bool HasAbilityOfType(AbilityScriptableObject ability)
@@ -91,10 +92,12 @@ public class TowerAbilities : MonoBehaviour
         if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
 
-        BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
-        m_basicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject, initData);
+        // BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
+        AbilityInitData initData = new AbilityInitData(gameObject, m_basicAttackScriptableObject.AbilityData);
+        m_basicAttackInstanceOld = new BasicAttackAbilityInstance();
+        m_basicAttackInstanceOld.Init(initData);
         
-        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
+        BasicAttackAbilityInstance basicAttackAbilityData = (BasicAttackAbilityInstance)m_basicAttackInstanceOld;
         basicAttackAbilityData.OnTargetHit += target =>
         {
             if (!m_isActive)
@@ -103,12 +106,12 @@ public class TowerAbilities : MonoBehaviour
             if (target == null)
                 return;
             
-            foreach (AbilityInstance ability in m_onBasicHitAbilities)
+            foreach (AbilityInstanceOld ability in m_onBasicHitAbilities)
             {
                 ability.TryActivate(target.gameObject);
             }
             
-            foreach (AbilityInstance ability in m_onAnyDamageAbilities)
+            foreach (AbilityInstanceOld ability in m_onAnyDamageAbilities)
             {
                 ability.TryActivate(target.gameObject);
             }
@@ -129,8 +132,8 @@ public class TowerAbilities : MonoBehaviour
                 continue;
             }
 
-            m_basicAttackInstance.TryActivate(target.gameObject);
-            foreach (AbilityInstance ability in m_onBasicAttackAbilities)
+            m_basicAttackInstanceOld.TryActivate(target.gameObject, gameObject);
+            foreach (AbilityInstanceOld ability in m_onBasicAttackAbilities)
             {
                 ability.TryActivate(target.gameObject);
             }
@@ -140,7 +143,7 @@ public class TowerAbilities : MonoBehaviour
         }
     }
 
-    private IEnumerator TimedAbilityCoroutine(AbilityInstance ability)
+    private IEnumerator TimedAbilityCoroutine(AbilityInstanceOld ability)
     {
         yield return new WaitForSeconds(ability.AbilityScriptableObject.GetTriggerTimeAt(ability.Level));
         while (m_isActive)
@@ -158,10 +161,10 @@ public class TowerAbilities : MonoBehaviour
     
     private readonly struct TimedAbilityInstance : IEquatable<TimedAbilityInstance>
     {
-        public readonly AbilityInstance Ability;
+        public readonly AbilityInstanceOld Ability;
         public readonly IEnumerator Coroutine;
         
-        public TimedAbilityInstance(AbilityInstance ability, IEnumerator coroutine)
+        public TimedAbilityInstance(AbilityInstanceOld ability, IEnumerator coroutine)
         {
             Ability = ability;
             Coroutine = coroutine;

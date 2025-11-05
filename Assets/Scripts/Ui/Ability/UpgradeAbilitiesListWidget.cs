@@ -16,7 +16,7 @@ namespace Ui.Ability
             m_abilityWidgetController.OnAbilityPurchasedEvent += OnAbilityPurchased;
         }
 
-        private void OnAbilityPurchased(AbilityInstance newAbility)
+        private void OnAbilityPurchased(AbilityInstanceOld newAbility)
         {
             UpgradeAbilityButton newButton = Instantiate(m_abilityUpgradeButtonPrefab, m_upgradeAbilitiesListContent);
             newButton.Initialize(newAbility);

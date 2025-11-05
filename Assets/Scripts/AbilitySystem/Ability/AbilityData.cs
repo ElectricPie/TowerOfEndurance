@@ -1,28 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using EditorAttributes;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public abstract class AbilityData
+public abstract class AbilityDataOld
 {
-    public virtual AbilityData Clone()
-    {
-        AbilityData clone = (AbilityData)MemberwiseClone();
-        return clone;
-    }
-    
     public virtual void Init(AbilityInitData initData) { }
-
     public virtual bool TryActivate(GameObject target, GameObject caster, int level = 1)
     {
         return false;
     }
-
-    public abstract Dictionary<string, object> GetTooltipDataMap(int level);
+    public virtual Dictionary<string, object> GetTooltipDataMap(int level)
+    {
+        return new Dictionary<string, object>();
+    }
 }
+
+
+/// <summary>
+/// This is a 
+/// </summary>
+[Serializable]
+public abstract class AbilityData
+{
+    public virtual void Init(AbilityInitData initData) { }
+    public virtual bool TryActivate(GameObject target, GameObject caster, int level = 1)
+    {
+        return false;
+    }
+    public virtual Dictionary<string, object> GetTooltipDataMap(int level)
+    {
+        return new Dictionary<string, object>();
+    }
+}
+
 
 public enum AbilityTrigger
 {

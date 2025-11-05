@@ -18,10 +18,8 @@ MonoBehaviour:
 
     Cost: [Cost]'
   m_cost:
-    serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
-      time: 1
+    - time: 1
       value: 10
       inSlope: 0
       outSlope: 10
@@ -29,8 +27,7 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 10
+    - time: 10
       value: 100
       inSlope: 10
       outSlope: 0
@@ -43,7 +40,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_trigger: 0
   m_triggerTime:
-    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -51,48 +47,16 @@ MonoBehaviour:
   m_maxLevel: 5
   m_abilityData:
     rid: 2200126782196154368
+  m_abilityDataOld:
+    rid: 1858585980978593962
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1858585980978593962
+      type: {class: PoisonTipAbilityDataOld, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
+      data: {m_damageEffectNew: {fileID: 11400000, guid: 7ade102921968a94bbe1f10584153d43, type: 2}}
     - rid: 2200126782196154368
       type: {class: PoisonTipAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
-      data:
-        m_label: Posion TIp
-        m_description: 'Posions the enemy dealing [DamagePercent]%({[TowerDamage]
-          * [DamageModifier]}) of the towers base damage every [Period]s over [Duration]s.
-
-          Cost:
-          [Cost]'
-        m_cost:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 1
-            value: 10
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 5
-            value: 50
-            inSlope: 10
-            outSlope: 10
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_trigger: 0
-        m_triggerTime:
-          serializedVersion: 2
-          m_Curve: []
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_maxLevel: 5
-        m_damageEffectNew: {fileID: 11400000, guid: 7ade102921968a94bbe1f10584153d43, type: 2}
+      data: {m_damageEffectNew: {fileID: 11400000, guid: 7ade102921968a94bbe1f10584153d43, type: 2}}

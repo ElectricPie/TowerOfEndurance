@@ -1058,6 +1058,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7371096466507088172}
+    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7371096466507088180}
   m_SourcePrefab: {fileID: 100100000, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
 --- !u!114 &7371096466507088171
 MonoBehaviour:
@@ -1113,6 +1116,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSet
   m_attributeLists:
   - {fileID: 11400000, guid: 62226771766050149afd9b9bc82f8a11, type: 2}
+--- !u!114 &7371096466507088180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115168429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf99beefc464fe58d0a68b538812689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.BasicAttack.BasicAttackData
+  m_projectileSpawnOffset: {x: 0, y: 2.5, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

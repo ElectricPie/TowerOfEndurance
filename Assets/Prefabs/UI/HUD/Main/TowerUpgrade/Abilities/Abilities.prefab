@@ -1665,7 +1665,7 @@ MonoBehaviour:
   m_contentTransform: {fileID: 2325847475906461235}
   m_buyableAbilities:
   - {fileID: 11400000, guid: d7368fc6243c59f47a4f8b7f859c0628, type: 2}
-  - {fileID: 11400000, guid: caa1b67ec0846cc49b2ccb89cbdc4ec1, type: 2}
+  - {fileID: 11400000, guid: c528f4eab9cb7114897122c4e11a0231, type: 2}
   - {fileID: 11400000, guid: 03af9137bd5997541ac0456a9629d2a3, type: 2}
 --- !u!114 &2699890543444404201
 MonoBehaviour:

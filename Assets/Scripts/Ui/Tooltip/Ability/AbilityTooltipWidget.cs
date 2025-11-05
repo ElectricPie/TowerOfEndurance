@@ -44,7 +44,7 @@ namespace Ui.Tooltip.Ability
             string resultTitle = abilityData.Label;
             m_titleText.text = resultTitle;
 
-            Dictionary<string, object> tooltipDataMap = abilityData.AbilityData.GetTooltipDataMap(abilityTooltipData.Level);
+            Dictionary<string, object> tooltipDataMap = abilityData.AbilityDataOld.GetTooltipDataMap(abilityTooltipData.Level);
             tooltipDataMap.Add("TowerDamage", m_towerAttributeSet.Damage);
             // Format any [] placeholders in the description
             string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(tooltipDataMap, abilityData.Description);

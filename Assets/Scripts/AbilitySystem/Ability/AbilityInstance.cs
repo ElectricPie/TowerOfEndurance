@@ -1,22 +1,33 @@
-﻿using AbilitySystem.Ability;
+﻿using System;
+using AbilitySystem.Ability;
 using UnityEngine;
 
 public class AbilityInitData
 {
-    public GameObject Caster { get; protected set; } 
+    public GameObject Source { get; } 
+    public AbilityData AbilityData { get; }
     
     private AbilityInitData() {}
-    public AbilityInitData(GameObject caster)
+    public AbilityInitData(GameObject source, AbilityData abilityData)
     {
-        Caster = caster;
+        Source = source;
+        AbilityData = abilityData;
     }
 }
 
-public sealed class AbilityInstance
+
+[Serializable]
+public abstract class AbilityInstance
+{
+    public abstract void Init(AbilityInitData initData);
+    public abstract bool TryActivate(GameObject target, GameObject caster, int level = 1);
+}
+
+public sealed class AbilityInstanceOld
 {
     public int Level { get; private set; } = 1;
     public AbilityScriptableObject AbilityScriptableObject { get; }
-    public AbilityData AbilityData { get; }
+    public AbilityDataOld AbilityDataOld => AbilityScriptableObject.AbilityDataOld;
     
     private readonly GameObject m_caster;
     
@@ -28,13 +39,12 @@ public sealed class AbilityInstance
         return AbilityScriptableObject.GetCostAt(Level + 1);
     }
     
-    private AbilityInstance() { }
-    public AbilityInstance(AbilityScriptableObject ability, AbilityInitData initData)
+    private AbilityInstanceOld() { }
+    public AbilityInstanceOld(AbilityScriptableObject ability, AbilityInitData initData)
     {
         AbilityScriptableObject = ability;
-        AbilityData = ability.AbilityData.Clone();
-        AbilityData.Init(initData);
-        m_caster = initData.Caster;
+        AbilityDataOld.Init(initData);
+        m_caster = initData.Source;
     }
 
     public void Upgrade()
@@ -44,7 +54,7 @@ public sealed class AbilityInstance
     
     public bool TryActivate(GameObject target = null)
     {
-        return AbilityData.TryActivate(target, m_caster, Level);
+        return AbilityDataOld.TryActivate(target, m_caster, Level);
     }
 
     public void SetLevel(int newLevel)

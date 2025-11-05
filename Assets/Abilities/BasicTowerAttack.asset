@@ -47,47 +47,17 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_maxLevel: 5
   m_abilityData:
-    rid: 3214090471301185604
+    rid: 1858585980978593944
+  m_abilityDataOld:
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 3214090471301185604
-      type: {class: BasicAttackAbilityData, ns: , asm: Assembly-CSharp}
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1858585980978593944
+      type: {class: BasicAttackAbilityData, ns: AbilitySystem.Ability.BasicAttack, asm: Assembly-CSharp}
       data:
-        m_label: Basic Tower Attack
-        m_description: No Description
-        m_cost:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 1
-            value: 10
-            inSlope: 0
-            outSlope: 10
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 10
-            value: 100
-            inSlope: 10
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_trigger: 0
-        m_triggerTime:
-          serializedVersion: 2
-          m_Curve: []
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_maxLevel: 5
         m_damageEffect: {fileID: 11400000, guid: 9cb0ae60b9e4de245ae598ae4bee1d40, type: 2}
         m_projectilePrefab: {fileID: 733946917715905344, guid: f7ec665cdade3129c8ac1b47a75c588f, type: 3}
         m_poolSize: 10

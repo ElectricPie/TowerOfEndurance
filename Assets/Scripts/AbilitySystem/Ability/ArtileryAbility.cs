@@ -7,20 +7,12 @@ using Random = UnityEngine.Random;
 namespace AbilitySystem.Ability
 {
     [Serializable]
-    public class ArtilleryAbilityData : AbilityData
+    public class ArtilleryAbilityDataOld : AbilityDataOld
     {
         /* Editor Values */
         [SerializeField] private AnimationCurve m_triggerChanceCurve;
         [SerializeField, Min(0)] private int m_targetCount;
         [SerializeField] private GameEffectScriptableObject m_damageEffect;
-
-        public override AbilityData Clone()
-        {
-            ArtilleryAbilityData clone = (ArtilleryAbilityData)MemberwiseClone();
-            clone.m_triggerChanceCurve = m_triggerChanceCurve;
-
-            return clone;
-        }
 
         private float GetTriggerChance(int level)
         {
@@ -33,7 +25,7 @@ namespace AbilitySystem.Ability
         
         public override void Init(AbilityInitData initData)
         {
-            m_towerWaves = initData.Caster.GetComponent<TowerWaves>();
+            m_towerWaves = initData.Source.GetComponent<TowerWaves>();
         }
 
         // Ignoring target for this one

@@ -13,7 +13,7 @@ namespace Ui.Ability
         [SerializeField] private Button m_button;
         
         private AbilityWidgetController m_abilityWidgetController;
-        private AbilityInstance m_ability;
+        private AbilityInstanceOld m_ability;
         
         protected void Awake()
         {
@@ -22,9 +22,9 @@ namespace Ui.Ability
             m_button.onClick.AddListener(OnClicked);
         }
         
-        public void Initialize(AbilityInstance abilityInstance)
+        public void Initialize(AbilityInstanceOld abilityInstanceOld)
         {
-            m_ability = abilityInstance;
+            m_ability = abilityInstanceOld;
             m_abilityNameText.text = m_ability.AbilityScriptableObject.Label;
         }
 

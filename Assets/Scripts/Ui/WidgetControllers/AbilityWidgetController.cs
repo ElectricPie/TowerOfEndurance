@@ -9,7 +9,7 @@ namespace Ui.WidgetControllers
 {
     public class AbilityWidgetController : WidgetController
     {
-        public event Action<AbilityInstance> OnAbilityPurchasedEvent = delegate { };
+        public event Action<AbilityInstanceOld> OnAbilityPurchasedEvent = delegate { };
         
         private TowerAbilities m_towerAbilities;
         private PlayerMoney m_playerMoney;
@@ -38,7 +38,7 @@ namespace Ui.WidgetControllers
             if (!m_playerMoney.RemoveMoney(abilityToBuy.GetCostAt(1))) 
                 return;
             
-            AbilityInstance newAbility = m_towerAbilities.AddAbility(abilityToBuy);
+            AbilityInstanceOld newAbility = m_towerAbilities.AddAbility(abilityToBuy);
             OnAbilityPurchasedEvent.Invoke(newAbility);
             m_purchaseButtons.Remove(buttonGameObject);
             Object.Destroy(buttonGameObject);
@@ -62,13 +62,13 @@ namespace Ui.WidgetControllers
             if (!m_playerMoney.RemoveMoney(cost)) 
                 return;
             
-            AbilityInstance newAbility = m_towerAbilities.AddAbility(randomAbilityEntry.Value);
+            AbilityInstanceOld newAbility = m_towerAbilities.AddAbility(randomAbilityEntry.Value);
             OnAbilityPurchasedEvent.Invoke(newAbility);
             m_purchaseButtons.Remove(randomAbilityEntry.Key);
             Object.Destroy(randomAbilityEntry.Key);
         }
 
-        public bool TryUpgradeAbility(AbilityInstance abilityToUpgrade)
+        public bool TryUpgradeAbility(AbilityInstanceOld abilityToUpgrade)
         {
             // Check for sufficient money
             if (!m_playerMoney.RemoveMoney(abilityToUpgrade.GetCostForNextLevel())) 

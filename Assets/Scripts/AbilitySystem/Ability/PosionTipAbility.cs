@@ -6,17 +6,10 @@ using UnityEngine;
 namespace AbilitySystem.Ability
 {
     [Serializable]
-    public class PoisonTipAbilityData : AbilityData
+    public class PoisonTipAbilityDataOld : AbilityDataOld
     {
         /* Editor Values */
         [SerializeField] private GameEffectScriptableObject m_damageEffectNew;
-
-        public override AbilityData Clone()
-        {
-            PoisonTipAbilityData clone = (PoisonTipAbilityData)MemberwiseClone();
-
-            return clone;
-        }
 
         /* Runtime Values */
         public override bool TryActivate(GameObject target, GameObject caster, int level = 1)

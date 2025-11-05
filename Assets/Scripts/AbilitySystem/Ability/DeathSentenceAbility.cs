@@ -6,25 +6,17 @@ using UnityEngine;
 namespace AbilitySystem.Ability
 {
     [Serializable]
-    public class DeathSentenceAbility : AbilityData
+    public class DeathSentenceAbility : AbilityDataOld
     {
         /* Editor Values */
         [SerializeField] private GameEffectScriptableObject m_damageEffect;
-
-        public override AbilityData Clone()
-        {
-            DeathSentenceAbility clone = (DeathSentenceAbility)MemberwiseClone();
-
-            return clone;
-        }
-        
         
         /* Runtime Values */
         private TowerWaves m_towerWaves;
 
         public override void Init(AbilityInitData initData)
         {
-            m_towerWaves = initData.Caster.GetComponent<TowerWaves>();
+            m_towerWaves = initData.Source.GetComponent<TowerWaves>();
         }
 
         public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
