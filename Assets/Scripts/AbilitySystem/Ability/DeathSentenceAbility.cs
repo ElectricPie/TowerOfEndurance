@@ -41,12 +41,12 @@ namespace AbilitySystem.Ability
         public override Dictionary<string, object> GetTooltipDataMap(int level)
         {
             Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
-            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
+            // tooltipDataMap.TryAdd("Cost", GetCostAt(level));
             // float attacks = m_damageEffect.PeriodicEffectValues.GetDurationAt(level) / m_damageEffect.PeriodicEffectValues.GetPeriodAt(level);
             // tooltipDataMap.TryAdd("Attacks", attacks);
             // tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
             // tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
-            tooltipDataMap.TryAdd("TriggerTime", GetTriggerTimeAt(level));
+            // tooltipDataMap.TryAdd("TriggerTime", GetTriggerTimeAt(level));
             return tooltipDataMap;
         }
     }

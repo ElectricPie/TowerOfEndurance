@@ -7,7 +7,6 @@ using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
 using UnityEngine;
 
-// [RequireComponent(typeof(TowerAttributeSet))]
 public class TowerAbilities : MonoBehaviour
 {
     [SerializeField] private TowerWaves m_towerWaves;
@@ -36,9 +35,9 @@ public class TowerAbilities : MonoBehaviour
     public AbilityInstance AddAbility(AbilityScriptableObject newAbility)
     {
         AbilityInitData newInitData = new AbilityInitData(gameObject);
-        AbilityInstance newAbilityInstance = new AbilityInstance(newAbility.AbilityData, newInitData);
+        AbilityInstance newAbilityInstance = new AbilityInstance(newAbility, newInitData);
         
-        switch (newAbility.AbilityData.Trigger)
+        switch (newAbility.Trigger)
         {
             case AbilityTrigger.OnBasicAttackFired:
                 m_onBasicAttackAbilities.Add(newAbilityInstance);
@@ -64,9 +63,9 @@ public class TowerAbilities : MonoBehaviour
         return newAbilityInstance;
     }
 
-    public bool HasAbilityOfType(AbilityData ability)
+    public bool HasAbilityOfType(AbilityScriptableObject ability)
     {
-        return m_allAbilities.Any(abilityInstance => abilityInstance.AbilityData.GetType() == ability.GetType());
+        return m_allAbilities.Any(abilityInstance => abilityInstance.AbilityScriptableObject == ability);
     }
 
     public void StopAllAbilities()
@@ -93,27 +92,27 @@ public class TowerAbilities : MonoBehaviour
             throw new Exception($"{name} is missing Basic Attack ability");
 
         BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
-        m_basicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
+        m_basicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject, initData);
         
-        // BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
-        // basicAttackAbilityData.OnTargetHit += target =>
-        // {
-        //     if (!m_isActive)
-        //         return;
-        //     
-        //     if (target == null)
-        //         return;
-        //     
-        //     foreach (AbilityInstance ability in m_onBasicHitAbilities)
-        //     {
-        //         ability.TryActivate(target.gameObject);
-        //     }
-        //     
-        //     foreach (AbilityInstance ability in m_onAnyDamageAbilities)
-        //     {
-        //         ability.TryActivate(target.gameObject);
-        //     }
-        // };
+        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
+        basicAttackAbilityData.OnTargetHit += target =>
+        {
+            if (!m_isActive)
+                return;
+            
+            if (target == null)
+                return;
+            
+            foreach (AbilityInstance ability in m_onBasicHitAbilities)
+            {
+                ability.TryActivate(target.gameObject);
+            }
+            
+            foreach (AbilityInstance ability in m_onAnyDamageAbilities)
+            {
+                ability.TryActivate(target.gameObject);
+            }
+        };
 
         m_attackCoroutine = Fire();
         StartCoroutine(m_attackCoroutine);
@@ -143,11 +142,11 @@ public class TowerAbilities : MonoBehaviour
 
     private IEnumerator TimedAbilityCoroutine(AbilityInstance ability)
     {
-        yield return new WaitForSeconds(ability.AbilityData.GetTriggerTimeAt(ability.Level));
+        yield return new WaitForSeconds(ability.AbilityScriptableObject.GetTriggerTimeAt(ability.Level));
         while (m_isActive)
         {
             ability.TryActivate();
-            yield return new WaitForSeconds(ability.AbilityData.GetTriggerTimeAt(ability.Level));
+            yield return new WaitForSeconds(ability.AbilityScriptableObject.GetTriggerTimeAt(ability.Level));
         }
     }
 
@@ -156,8 +155,6 @@ public class TowerAbilities : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position + m_projectileSpawnPointOffset, 0.5f);
     }
-    
-    
     
     private readonly struct TimedAbilityInstance : IEquatable<TimedAbilityInstance>
     {

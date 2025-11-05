@@ -11,7 +11,6 @@ using Object = UnityEngine.Object;
 public class BasicAttackAbilityData : AbilityData
 {
     /* Editor Values */
-    [SerializeField] private AttributeIdScriptableObject m_damageLevelAttributeId;
     [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
     [SerializeField] private TowerProjectile m_projectilePrefab = null;

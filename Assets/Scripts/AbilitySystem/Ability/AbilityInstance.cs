@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AbilitySystem.Ability;
+using UnityEngine;
 
 public class AbilityInitData
 {
@@ -14,22 +15,24 @@ public class AbilityInitData
 public sealed class AbilityInstance
 {
     public int Level { get; private set; } = 1;
+    public AbilityScriptableObject AbilityScriptableObject { get; }
     public AbilityData AbilityData { get; }
     
     private readonly GameObject m_caster;
     
     public float GetCostForNextLevel()
     {
-        if (Level >= AbilityData.MaxLevel)
+        if (Level >= AbilityScriptableObject.MaxLevel)
             return -1.0f;
         
-        return AbilityData.GetCostAt(Level + 1);
+        return AbilityScriptableObject.GetCostAt(Level + 1);
     }
     
     private AbilityInstance() { }
-    public AbilityInstance(AbilityData abilityData, AbilityInitData initData)
+    public AbilityInstance(AbilityScriptableObject ability, AbilityInitData initData)
     {
-        AbilityData = abilityData.Clone();
+        AbilityScriptableObject = ability;
+        AbilityData = ability.AbilityData.Clone();
         AbilityData.Init(initData);
         m_caster = initData.Caster;
     }

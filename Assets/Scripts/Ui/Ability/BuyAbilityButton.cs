@@ -43,9 +43,9 @@ namespace Ui.Ability
             m_abilityNameText.text = m_ability.Label;
         }
 
-        public AbilityData GetAbilityData()
+        public AbilityScriptableObject GetAbilityData()
         {
-            return m_ability.AbilityData;
+            return m_ability;
         }
 
         public float GetAbilityLevel()

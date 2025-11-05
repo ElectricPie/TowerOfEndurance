@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
 using TMPro;
@@ -8,11 +9,11 @@ namespace Ui.Tooltip.Ability
 {
     public class AbilityTooltipData : TooltipData
     {
-        public AbilityData Ability { get; }
+        public AbilityScriptableObject Ability { get; }
         public int Level { get; }
         
         public AbilityTooltipData() {}
-        public AbilityTooltipData(AbilityData ability, int level)
+        public AbilityTooltipData(AbilityScriptableObject ability, int level)
         {
             Ability = ability;
             Level = level;
@@ -39,11 +40,11 @@ namespace Ui.Tooltip.Ability
                 return;
             }
 
-            AbilityData abilityData = abilityTooltipData.Ability;
+            AbilityScriptableObject abilityData = abilityTooltipData.Ability;
             string resultTitle = abilityData.Label;
             m_titleText.text = resultTitle;
 
-            Dictionary<string, object> tooltipDataMap = abilityData.GetTooltipDataMap(abilityTooltipData.Level);
+            Dictionary<string, object> tooltipDataMap = abilityData.AbilityData.GetTooltipDataMap(abilityTooltipData.Level);
             tooltipDataMap.Add("TowerDamage", m_towerAttributeSet.Damage);
             // Format any [] placeholders in the description
             string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(tooltipDataMap, abilityData.Description);

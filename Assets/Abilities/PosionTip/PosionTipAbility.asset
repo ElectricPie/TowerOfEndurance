@@ -12,72 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2125d09159e545b99dc8ca33e76a69ba, type: 3}
   m_Name: PosionTipAbility
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
+  m_label: Posion TIp
+  m_description: 'Posions the enemy dealing [DamagePercent]%({[TowerDamage] * [DamageModifier]})
+    of the towers base damage every [Period]s over [Duration]s.
+
+    Cost: [Cost]'
+  m_cost:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 10
+      inSlope: 0
+      outSlope: 10
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 10
+      value: 100
+      inSlope: 10
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_trigger: 0
+  m_triggerTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_maxLevel: 5
   m_abilityData:
     rid: 2200126782196154368
   references:
     version: 2
     RefIds:
-    - rid: 1858585958685343835
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        m_durationPolicy: 0
-        m_periodicEffectValues:
-          m_duration:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 5
-              value: 5
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_period:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 5
-              value: 5
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_triggerOnApplication: 0
-        m_damageModifierCurve:
-          serializedVersion: 2
-          m_Curve: []
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        m_visualFx: {fileID: 0}
     - rid: 2200126782196154368
       type: {class: PoisonTipAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
@@ -119,6 +95,4 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         m_maxLevel: 5
-        m_damageEffect:
-          rid: 1858585958685343835
         m_damageEffectNew: {fileID: 11400000, guid: 7ade102921968a94bbe1f10584153d43, type: 2}

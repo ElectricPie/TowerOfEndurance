@@ -1,8 +1,10 @@
-﻿namespace Ui.Tooltip.Ability
+﻿using AbilitySystem.Ability;
+
+namespace Ui.Tooltip.Ability
 {
     public interface IAbilityTooltipInterface
     {
-        public AbilityData GetAbilityData();
+        public AbilityScriptableObject GetAbilityData();
         public float GetAbilityLevel();
     }
 }

@@ -12,6 +12,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2125d09159e545b99dc8ca33e76a69ba, type: 3}
   m_Name: DeathSentanceAbility
   m_EditorClassIdentifier: 
+  m_label: Death Sentance
+  m_description: 'Attacks a random enemy [Attacks] times every [TriggerTime]s dealing
+    [DamagePercent]%({[TowerDamage] * [DamageModifier]})  of the towers base damage
+
+    Cost:
+    [Cost]'
+  m_cost:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 20
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 10
+      value: 100
+      inSlope: 10
+      outSlope: 10
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_trigger: 3
+  m_triggerTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 8.5
+      inSlope: -0.875
+      outSlope: -0.875
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5
+      value: 5
+      inSlope: -0.875
+      outSlope: -0.875
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_maxLevel: 5
   m_abilityData:
     rid: 3214090476972933228
   references:

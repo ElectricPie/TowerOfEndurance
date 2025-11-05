@@ -56,7 +56,7 @@ namespace AbilitySystem.Ability
         public override Dictionary<string, object> GetTooltipDataMap(int level)
         {
             Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
-            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
+            // tooltipDataMap.TryAdd("Cost", GetCostAt(level));
             // tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
             // tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
             tooltipDataMap.TryAdd("TargetCount", m_targetCount);
