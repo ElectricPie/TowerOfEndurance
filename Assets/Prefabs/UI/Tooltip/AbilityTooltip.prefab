@@ -518,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ui.Tooltip.AbilityTooltipWidget
   m_titleText: {fileID: 4137702931751998390}
   m_descriptionText: {fileID: 2632832333622709951}
+  m_towerDamageAttributeId: {fileID: 11400000, guid: bfeb83bfe84b6334db99a2ce99ac20b9, type: 2}
 --- !u!114 &741713702654827952
 MonoBehaviour:
   m_ObjectHideFlags: 0

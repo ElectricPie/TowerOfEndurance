@@ -16,6 +16,28 @@ namespace AbilitySystem.Ability
         {
             return new PoisonTipAbilityInstance(initData);
         }
+
+        public override Dictionary<string, object> GetTooltipMap(int level, bool isMaxLevel)
+        {
+            if (!isMaxLevel && level >= 1)
+            {
+                level--;
+            }
+            
+            Dictionary<string, object> tooltipMap = new Dictionary<string, object>
+            {
+                { "DamagePercent", (20 + 20 * level).ToString() },
+                { "DamageModifierValue", (float)(0.2 + 0.2 * level) }, // To be multiplied by tower damage
+            };
+
+            if (m_damageEffect)
+            {
+                tooltipMap.Add("Period", m_damageEffect.PeriodicEffectValues.Period.GetValue(level));
+                tooltipMap.Add("Duration", m_damageEffect.PeriodicEffectValues.Duration.GetValue(level));
+            }
+
+            return tooltipMap;
+        }
     }
 
     public class PoisonTipAbilityInstance : AbilityInstance

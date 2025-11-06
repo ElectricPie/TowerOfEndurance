@@ -37,12 +37,12 @@ namespace Ui.Ability
             }
         }
 
-        public AbilityScriptableObject GetAbilityData()
+        public AbilityScriptableObject GetAbility()
         {
             return m_ability.Ability;
         }
 
-        public float GetAbilityLevel()
+        public int GetAbilityLevel()
         {
             return m_ability.Level < m_ability.Ability.MaxLevel ? m_ability.Level + 1 : m_ability.Ability.MaxLevel;
         }

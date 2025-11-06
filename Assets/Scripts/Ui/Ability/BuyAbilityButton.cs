@@ -43,12 +43,12 @@ namespace Ui.Ability
             m_abilityNameText.text = m_ability.Label;
         }
 
-        public AbilityScriptableObject GetAbilityData()
+        public AbilityScriptableObject GetAbility()
         {
             return m_ability;
         }
 
-        public float GetAbilityLevel()
+        public int GetAbilityLevel()
         {
             // Want the first level the ability can be bought at
             return 1;

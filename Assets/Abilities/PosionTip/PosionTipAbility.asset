@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PosionTipAbility
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
   m_label: Posion TIp
-  m_description: 'Posions the enemy dealing [DamagePercent]%({[TowerDamage] * [DamageModifier]})
+  m_description: 'Posions the enemy dealing [DamagePercent]%([DamageModifierValue])
     of the towers base damage every [Period]s over [Duration]s.
 
     Cost: [Cost]'

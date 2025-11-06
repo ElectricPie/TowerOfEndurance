@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;
@@ -24,12 +25,13 @@ namespace Ui.Tooltip.Ability
     {
         [SerializeField] private TMP_Text m_titleText;
         [SerializeField] private TMP_Text m_descriptionText;
-
-        private TowerAttributeSet m_towerAttributeSet;
+        [SerializeField] private AttributeIdScriptableObject m_towerDamageAttributeId;
+        
+        private AttributeSet m_towerAttributeSet;
 
         protected void Awake()
         {
-            m_towerAttributeSet = FindFirstObjectByType<TowerAttributeSet>();
+            m_towerAttributeSet = GameObject.FindGameObjectWithTag("Player").GetComponent<AttributeSet>();
         }
 
         public override void SetData(TooltipData data)
@@ -40,17 +42,24 @@ namespace Ui.Tooltip.Ability
                 return;
             }
 
-            AbilityScriptableObject abilityData = abilityTooltipData.Ability;
-            string resultTitle = abilityData.Label;
+            AbilityScriptableObject ability = abilityTooltipData.Ability;
+            string resultTitle = ability.Label;
             m_titleText.text = resultTitle;
 
-            // Dictionary<string, object> tooltipDataMap = abilityData.GetTooltipDataMap(abilityTooltipData.Level);
-            // tooltipDataMap.Add("TowerDamage", m_towerAttributeSet.Damage);
-            // // Format any [] placeholders in the description
-            // string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(tooltipDataMap, abilityData.Description);
-            // // Evaluate any expressions in {}
-            // resultDescription = ProcessExpressions(resultDescription);
-            // m_descriptionText.text = resultDescription;
+            float towerDamage = m_towerAttributeSet.GetAttributeValue(m_towerDamageAttributeId);
+
+            bool isMaxLevel = abilityTooltipData.Level >= ability.MaxLevel;
+            Dictionary<string, object> tooltipDataMap = ability.AbilityData.GetTooltipMap(abilityTooltipData.Level, isMaxLevel);
+            // Allows ability tooltips to use tower damage 
+            if (tooltipDataMap.TryGetValue("DamageModifierValue", out object damageModifier))
+            {
+                tooltipDataMap["DamageModifierValue"] = (float)damageModifier * towerDamage;
+            }
+            tooltipDataMap.Add("Cost", ability.GetCostAt(abilityTooltipData.Level));
+            
+            // Format any [] placeholders in the description
+            string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(tooltipDataMap, ability.Description);
+            m_descriptionText.text = resultDescription;
         }
     }
 }

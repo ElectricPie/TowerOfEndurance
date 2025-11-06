@@ -15,8 +15,8 @@ namespace Ui.Tooltip.Ability
         {
             Vector3 tooltipPosition = (Vector2)transform.position + m_tooltipOffset;
             AbilityTooltipData tooltipData = new AbilityTooltipData(
-                m_abilityTooltipInterface.GetAbilityData(), 
-                Mathf.CeilToInt(m_abilityTooltipInterface.GetAbilityLevel()));
+                m_abilityTooltipInterface.GetAbility(), 
+                m_abilityTooltipInterface.GetAbilityLevel());
             
             m_tooltipManager.ShowTooltip(tooltipData, tooltipPosition);
         }

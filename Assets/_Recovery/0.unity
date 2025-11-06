@@ -997,6 +997,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5894388254904635282, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_owner
       value: 

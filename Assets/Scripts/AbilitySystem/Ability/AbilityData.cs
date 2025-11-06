@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// This is a 
@@ -7,4 +8,9 @@
 public abstract class AbilityData
 {
     public abstract AbilityInstance CreateAbilityInstance(AbilityInitData initData);
+
+    public virtual Dictionary<string, object> GetTooltipMap(int level, bool isMaxLevel)
+    {
+        return new Dictionary<string, object>();
+    }
 }

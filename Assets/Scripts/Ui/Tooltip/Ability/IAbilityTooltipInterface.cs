@@ -4,7 +4,7 @@ namespace Ui.Tooltip.Ability
 {
     public interface IAbilityTooltipInterface
     {
-        public AbilityScriptableObject GetAbilityData();
-        public float GetAbilityLevel();
+        public AbilityScriptableObject GetAbility();
+        public int GetAbilityLevel();
     }
 }
