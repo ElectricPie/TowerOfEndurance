@@ -1489,6 +1489,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1784236966185784437, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+      propertyPath: m_FlexibleWidth
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3032883816551255411, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1629,6 +1633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lives
       objectReference: {fileID: 0}
+    - target: {fileID: 4040413843069989746, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+      propertyPath: m_FlexibleWidth
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 6416235070636485839, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1676,6 +1684,10 @@ PrefabInstance:
     - target: {fileID: 6897218069986382743, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011530737257955469, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
+      propertyPath: m_text
+      value: 00000
       objectReference: {fileID: 0}
     - target: {fileID: 9011530737257955469, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'

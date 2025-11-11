@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// This is a 
-/// </summary>
 [Serializable]
 public abstract class AbilityData
 {
