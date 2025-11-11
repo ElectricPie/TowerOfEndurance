@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: DeathSentanceAbility
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.AbilityScriptableObject
   m_label: Death Sentance
-  m_description: 'Attacks a random enemy [Attacks] times every [TriggerTime]s dealing    
-    [DamagePercent]%({[TowerDamage] * [DamageModifier]})  of the towers base damage
+  m_description: 'Attacks a random enemy [AttackAmount] times every [TriggerTime]s
+    dealing [TowerDamage] of the towers base damage
 
-    Cost:
-    [Cost]'
+    Cost: [Cost]'
   m_cost:
     serializedVersion: 2
     m_Curve:

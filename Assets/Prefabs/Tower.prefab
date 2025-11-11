@@ -13,8 +13,11 @@ GameObject:
   - component: {fileID: 7971336517557105522}
   - component: {fileID: 3314149860893733602}
   - component: {fileID: 4052425807144529552}
-  - component: {fileID: 5894388254904635282}
-  - component: {fileID: 1223471215192358387}
+  - component: {fileID: 5116278755287070859}
+  - component: {fileID: 1046280325562968384}
+  - component: {fileID: 7388342424732471600}
+  - component: {fileID: 7931230468775588796}
+  - component: {fileID: 2334715565773569858}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -87,9 +90,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerMoney: {fileID: 0}
-  m_attributeSet: {fileID: 1223471215192358387}
+  m_towerAttributeSet: {fileID: 5116278755287070859}
+  m_towerEffectContainer: {fileID: 7388342424732471600}
   m_costMultiplier: 1.15
   m_upgradeInitialCost: 5
+  m_damageLevelAttributeId: {fileID: 11400000, guid: b16c5f7e8b0fd8d448ad557cdd19761b, type: 2}
+  m_fireRateLevelAttributeId: {fileID: 11400000, guid: c4636ead7f1dbb6449c065d7ad85f7c3, type: 2}
+  m_damageUpgradeEffect: {fileID: 11400000, guid: bebddd839bac9fd4cb3b19b41b36ebae, type: 2}
+  m_fireRateUpgradeEffect: {fileID: 11400000, guid: 52907d2e12e1cf9428e925571e350861, type: 2}
 --- !u!114 &4052425807144529552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +113,9 @@ MonoBehaviour:
   m_towerWaves: {fileID: 7971336517557105522}
   m_basicAttackScriptableObject: {fileID: 11400000, guid: 28d7b40ebcfa3f04cab46c89477a57eb, type: 2}
   m_projectileSpawnPointOffset: {x: 0, y: 2.5, z: 0}
---- !u!114 &5894388254904635282
+  m_damageAttributeId: {fileID: 11400000, guid: bfeb83bfe84b6334db99a2ce99ac20b9, type: 2}
+  m_fireRateAttributeId: {fileID: 11400000, guid: 53191f57ba3caac4c906c4e09859824c, type: 2}
+--- !u!114 &5116278755287070859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,11 +124,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4416480666744996068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960116022f394952b4bf043729075959, type: 3}
+  m_Script: {fileID: 11500000, guid: 192cda9cbed9409bb96a219535654f1f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  m_owner: {fileID: 0}
---- !u!114 &1223471215192358387
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSet
+  m_attributeLists:
+  - {fileID: 11400000, guid: 62226771766050149afd9b9bc82f8a11, type: 2}
+--- !u!114 &1046280325562968384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,59 +138,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 4416480666744996068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd60df38ca8d4fef8cd3fcd77119feca, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c64beb4ab844ffbb6d32de19cf5e7a2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  m_damageCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 50
-      value: 50
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_damageLevel: 1
-  m_fireRateCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 50
-      value: 50
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_fireRateLevel: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveCharacterLoadout
+--- !u!114 &7388342424732471600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416480666744996068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1ce8e42a954319821fe1072aaa7090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectsContainer
+--- !u!114 &7931230468775588796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416480666744996068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb717423bcb4420a7dcfeb36af82bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.TestAttributeApplicator
+  m_effectsContainer: {fileID: 7388342424732471600}
+  m_attributeEffects:
+  - {fileID: 11400000, guid: be666cb1953d4e4499569e61b765f994, type: 2}
+  - {fileID: 11400000, guid: 226e86afd120d5d4f9bdd8cb96a843d8, type: 2}
+--- !u!114 &2334715565773569858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416480666744996068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf99beefc464fe58d0a68b538812689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.BasicAttack.BasicAttackData
+  m_projectileSpawnOffset: {x: 0, y: 2.5, z: 0}
 --- !u!1001 &7155740735048003876
 PrefabInstance:
   m_ObjectHideFlags: 0

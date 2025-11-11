@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &115168429 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-  m_PrefabInstance: {fileID: 7371096466507088160}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &334040871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5724807243824251611, guid: 3d3750f839374a242a268c3a3b361942, type: 3}
@@ -361,7 +356,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7971336517557105522, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
   m_PrefabInstance: {fileID: 7371096466507088160}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115168429}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 826c1638b89b605caa1be0757835fa54, type: 3}
@@ -954,24 +949,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_towerAttributeSet
+      propertyPath: m_damageAttributeId
       value: 
-      objectReference: {fileID: 7371096466507088174}
+      objectReference: {fileID: 11400000, guid: b16c5f7e8b0fd8d448ad557cdd19761b, type: 2}
     - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_damageUpgradeEffect
+      propertyPath: m_fireRateAttributeId
       value: 
-      objectReference: {fileID: 11400000, guid: bebddd839bac9fd4cb3b19b41b36ebae, type: 2}
-    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_towerEffectContainer
-      value: 
-      objectReference: {fileID: 7371096466507088173}
-    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      propertyPath: m_fireRateUpgradeEffect
-      value: 
-      objectReference: {fileID: 11400000, guid: 52907d2e12e1cf9428e925571e350861, type: 2}
+      objectReference: {fileID: 11400000, guid: 53191f57ba3caac4c906c4e09859824c, type: 2}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5894388254904635282, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_owner
@@ -1017,77 +1008,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1223471215192358387, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7371096466507088174}
-    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7371096466507088171}
-    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7371096466507088173}
-    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7371096466507088172}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
---- !u!114 &7371096466507088171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115168429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c64beb4ab844ffbb6d32de19cf5e7a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveCharacterLoadout
---- !u!114 &7371096466507088172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115168429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb717423bcb4420a7dcfeb36af82bf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.TestAttributeApplicator
-  m_effectsContainer: {fileID: 7371096466507088173}
-  m_primaryAttributes: {fileID: 11400000, guid: be666cb1953d4e4499569e61b765f994, type: 2}
-  m_secondaryAttributes: {fileID: 11400000, guid: 226e86afd120d5d4f9bdd8cb96a843d8, type: 2}
---- !u!114 &7371096466507088173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115168429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1ce8e42a954319821fe1072aaa7090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EffectsContainer
---- !u!114 &7371096466507088174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115168429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 192cda9cbed9409bb96a219535654f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSet
-  m_attributeLists:
-  - {fileID: 11400000, guid: 62226771766050149afd9b9bc82f8a11, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
