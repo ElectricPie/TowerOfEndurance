@@ -1,89 +1,86 @@
 using System;
 using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
+using AbilitySystem.Effect;
 using UnityEngine;
 
-public class TowerAttackUpgrades : MonoBehaviour
+namespace Tower
 {
-    public event Action<float> OnDamageCostChanged = delegate { };
-    public event Action<float> OnSpeedCostChanged = delegate { };
-    
-    [SerializeField] private PlayerMoney m_playerMoney;
-    [SerializeField] private TowerAttributeSet m_attributeSet;
-    
-    [SerializeField] private float m_costMultiplier = 1.15f;
-    [SerializeField] private float m_upgradeInitialCost = 5.0f;
-
-    public float DamageUpgradeCost => CalculateUpgradeCost(m_attributeSet.DamageLevel);
-    public float SpeedUpgradeCost => CalculateUpgradeCost(m_attributeSet.FireRateLevel);
-
-    private void Awake()
+    public class TowerAttackUpgrades : MonoBehaviour
     {
-        if (m_playerMoney == null)
-            throw new Exception($"TowerAttackUpgrade on {name} is missing reference to PlayerMoney script");
-    }
+        public event Action<float> OnDamageCostChanged = delegate { };
+        public event Action<float> OnSpeedCostChanged = delegate { };
 
-    private void Start()
-    {
-        BroadcastDamageValues(m_upgradeInitialCost);
-        BroadcastFireRateValues(m_upgradeInitialCost);
-    }
-    
-    private float CalculateUpgradeCost(int currentLevel)
-    {
-        return Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, currentLevel - 1));
-    }
+        [SerializeField] private PlayerMoney m_playerMoney;
+        [SerializeField] private AttributeSet m_towerAttributeSet;
+        [SerializeField] private EffectsContainer m_towerEffectContainer;
 
-    public void UpgradeDamage()
-    {
-        // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = CalculateUpgradeCost(m_attributeSet.DamageLevel);;
-        
-        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
+        [SerializeField] private float m_costMultiplier = 1.15f;
+        [SerializeField] private float m_upgradeInitialCost = 5.0f;
+
+        [SerializeField] private AttributeIdScriptableObject m_damageLevelAttributeId;
+        [SerializeField] private AttributeIdScriptableObject m_fireRateLevelAttributeId;
+
+        [SerializeField] private GameEffectScriptableObject m_damageUpgradeEffect;
+        [SerializeField] private GameEffectScriptableObject m_fireRateUpgradeEffect;
+
+        public float DamageUpgradeCost { get; private set; }
+        public float SpeedUpgradeCost { get; private set; }
+
+        private void Awake()
         {
-            UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
-            return;
+            if (m_playerMoney == null)
+                throw new Exception($"TowerAttackUpgrade on {name} is missing reference to PlayerMoney script");
         }
 
-        m_attributeSet.IncreaseDamageLevel();
-        
-        float nextUpgradeCost = CalculateUpgradeCost(m_attributeSet.DamageLevel);
-        BroadcastDamageValues(nextUpgradeCost);
-    }
-
-    public void UpgradeSpeed()
-    {
-        // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-        float upgradeCost = CalculateUpgradeCost(m_attributeSet.FireRateLevel);
-        
-        if (!m_playerMoney.RemoveMoney(upgradeCost) && UIErrorMessage.Instance != null)
+        private void Start()
         {
-            UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
-            return;
+            // Damage setup
+            m_towerAttributeSet.GetAttribute(m_damageLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
+            {
+                DamageUpgradeCost = CalculateUpgradeCost(Mathf.CeilToInt(newValue));
+                OnDamageCostChanged.Invoke(DamageUpgradeCost);
+            };
+            DamageUpgradeCost = m_towerAttributeSet.GetAttributeValue(m_damageLevelAttributeId);
+            OnDamageCostChanged.Invoke(DamageUpgradeCost);
+
+            // Fire rate setup
+            m_towerAttributeSet.GetAttribute(m_fireRateLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
+            {
+                SpeedUpgradeCost = CalculateUpgradeCost(Mathf.CeilToInt(newValue));
+                OnSpeedCostChanged.Invoke(SpeedUpgradeCost);
+            };
+            SpeedUpgradeCost = m_towerAttributeSet.GetAttributeValue(m_fireRateLevelAttributeId);
+            OnSpeedCostChanged.Invoke(SpeedUpgradeCost);
         }
 
-        m_attributeSet.IncreaseFireRateLevel();
-        
-        float nextUpgradeCost = CalculateUpgradeCost(m_attributeSet.FireRateLevel);
-        BroadcastFireRateValues(nextUpgradeCost);
-    }
+        private float CalculateUpgradeCost(int currentLevel)
+        {
+            return Mathf.Ceil(m_upgradeInitialCost * Mathf.Pow(m_costMultiplier, currentLevel - 1));
+        }
 
-    private void BroadcastDamageValues(float upgradeCost)
-    {
-        // UpgradeChangeMessage damageUpgradeMessage = new UpgradeChangeMessage(
-        //     upgradeCost,
-        //     m_attributeSet.Damage, 
-        //     m_attributeSet.DamageAt(m_attributeSet.DamageLevel + 1)
-        //     );
-        OnDamageCostChanged.Invoke(upgradeCost);
-    }
+        public void UpgradeDamage()
+        {
+            // Cost is rounded up to remove any decimals and to ensure the cost always goes up
+            if (!m_playerMoney.RemoveMoney(DamageUpgradeCost) && UIErrorMessage.Instance != null)
+            {
+                UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
+                return;
+            }
 
-    private void BroadcastFireRateValues(float upgradeCost)
-    {
-        // UpgradeChangeMessage speedUpgradeMessage = new UpgradeChangeMessage(
-        //     upgradeCost,
-        //     m_attributeSet.FireRate, 
-        //     m_attributeSet.FireRateAt(m_attributeSet.FireRateLevel + 1)
-        //     );
-        OnSpeedCostChanged.Invoke(upgradeCost);
+            m_towerEffectContainer.ApplyEffect(gameObject, m_damageUpgradeEffect, 1);
+        }
+
+        public void UpgradeSpeed()
+        {
+            // Cost is rounded up to remove any decimals and to ensure the cost always goes up
+            if (!m_playerMoney.RemoveMoney(SpeedUpgradeCost) && UIErrorMessage.Instance != null)
+            {
+                UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
+                return;
+            }
+
+            m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect, 1);
+        }
     }
 }

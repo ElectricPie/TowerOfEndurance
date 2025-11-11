@@ -22,7 +22,7 @@ namespace Ui.Ability
             foreach (AbilityScriptableObject ability in m_buyableAbilities)
             {
                 // Don't add abilities the tower already has the ability
-                if (m_towerAbilities.HasAbilityOfType(ability.AbilityData))
+                if (m_towerAbilities.HasAbilityOfType(ability))
                 {
                     Debug.LogWarning($"Tower already has ability {ability.Label}, not adding to buyable list.");
                     continue;

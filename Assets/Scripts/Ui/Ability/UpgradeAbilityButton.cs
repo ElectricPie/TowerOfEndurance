@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using AbilitySystem.Ability;
+using TMPro;
 using Ui.Tooltip.Ability;
 using Ui.WidgetControllers;
 using UnityEngine;
@@ -24,26 +25,26 @@ namespace Ui.Ability
         public void Initialize(AbilityInstance abilityInstance)
         {
             m_ability = abilityInstance;
-            m_abilityNameText.text = m_ability.AbilityData.Label;
+            m_abilityNameText.text = m_ability.Ability.Label;
         }
 
         public void OnClicked()
         {
             bool upgradedAbility = m_abilityWidgetController.TryUpgradeAbility(m_ability);
-            if (upgradedAbility && m_ability.Level >= m_ability.AbilityData.MaxLevel)
+            if (upgradedAbility && m_ability.Level >= m_ability.Ability.MaxLevel)
             {
                 m_button.interactable = false;
             }
         }
 
-        public AbilityData GetAbilityData()
+        public AbilityScriptableObject GetAbility()
         {
-            return m_ability.AbilityData;
+            return m_ability.Ability;
         }
 
-        public float GetAbilityLevel()
+        public int GetAbilityLevel()
         {
-            return m_ability.Level < m_ability.AbilityData.MaxLevel ? m_ability.Level + 1 : m_ability.AbilityData.MaxLevel;
+            return m_ability.Level < m_ability.Ability.MaxLevel ? m_ability.Level + 1 : m_ability.Ability.MaxLevel;
         }
     }
 }

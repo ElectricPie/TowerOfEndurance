@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
+using AbilitySystem.Ability.AttributeSets;
+using AbilitySystem.Ability.BasicAttack;
 using UnityEngine;
 
-[RequireComponent(typeof(TowerAttributeSet))]
 public class TowerAbilities : MonoBehaviour
 {
     [SerializeField] private TowerWaves m_towerWaves;
@@ -15,8 +16,12 @@ public class TowerAbilities : MonoBehaviour
 
     [SerializeField] private Vector3 m_projectileSpawnPointOffset;
 
-    private AbilityInstance m_basicAttackInstance;
-    private TowerAttributeSet m_attributeSet;
+    [SerializeField] private AttributeIdScriptableObject m_damageAttributeId;
+    [SerializeField] private AttributeIdScriptableObject m_fireRateAttributeId;
+    
+    private AbilityInstance m_basicAttackInstanceOld;
+
+    private AttributeSet m_attributeSet;
     
     private IEnumerator m_attackCoroutine;
     private readonly HashSet<AbilityInstance> m_onBasicAttackAbilities = new HashSet<AbilityInstance>();
@@ -30,10 +35,10 @@ public class TowerAbilities : MonoBehaviour
     
     public AbilityInstance AddAbility(AbilityScriptableObject newAbility)
     {
-        AbilityInitData newInitData = new AbilityInitData(gameObject);
-        AbilityInstance newAbilityInstance = new AbilityInstance(newAbility.AbilityData, newInitData);
+        AbilityInitData newInitData = new AbilityInitData(gameObject, newAbility);
+        AbilityInstance newAbilityInstance = newAbility.AbilityData.CreateAbilityInstance(newInitData);
         
-        switch (newAbility.AbilityData.Trigger)
+        switch (newAbility.Trigger)
         {
             case AbilityTrigger.OnBasicAttackFired:
                 m_onBasicAttackAbilities.Add(newAbilityInstance);
@@ -59,9 +64,9 @@ public class TowerAbilities : MonoBehaviour
         return newAbilityInstance;
     }
 
-    public bool HasAbilityOfType(AbilityData ability)
+    public bool HasAbilityOfType(AbilityScriptableObject ability)
     {
-        return m_allAbilities.Any(abilityInstance => abilityInstance.AbilityData.GetType() == ability.GetType());
+        return m_allAbilities.Any(abilityInstance => abilityInstance.Ability == ability);
     }
 
     public void StopAllAbilities()
@@ -80,17 +85,17 @@ public class TowerAbilities : MonoBehaviour
         }
     }
     
-    protected void Awake()
+    protected void Start()
     {
-        m_attributeSet = GetComponent<TowerAttributeSet>();
+        m_attributeSet = GetComponent<AttributeSet>();
         
         if (m_basicAttackScriptableObject == null)
             throw new Exception($"{name} is missing Basic Attack ability");
 
-        BasicAttackInitData initData = new BasicAttackInitData(gameObject, transform, m_projectileSpawnPointOffset);
-        m_basicAttackInstance = new AbilityInstance(m_basicAttackScriptableObject.AbilityData, initData);
+        AbilityInitData initData = new AbilityInitData(gameObject, m_basicAttackScriptableObject);
+        m_basicAttackInstanceOld = new BasicAttackAbilityInstance(initData);
         
-        BasicAttackAbilityData basicAttackAbilityData = (BasicAttackAbilityData)m_basicAttackInstance.AbilityData;
+        BasicAttackAbilityInstance basicAttackAbilityData = (BasicAttackAbilityInstance)m_basicAttackInstanceOld;
         basicAttackAbilityData.OnTargetHit += target =>
         {
             if (!m_isActive)
@@ -125,23 +130,24 @@ public class TowerAbilities : MonoBehaviour
                 continue;
             }
 
-            m_basicAttackInstance.TryActivate(target.gameObject);
+            m_basicAttackInstanceOld.TryActivate(target.gameObject);
             foreach (AbilityInstance ability in m_onBasicAttackAbilities)
             {
                 ability.TryActivate(target.gameObject);
             }
 
-            yield return new WaitForSeconds(m_attributeSet.FireRate);
+            float waitTime = m_attributeSet.GetAttributeValue(m_fireRateAttributeId);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 
-    private IEnumerator TimedAbilityCoroutine(AbilityInstance ability)
+    private IEnumerator TimedAbilityCoroutine(AbilityInstance abilityInstance)
     {
-        yield return new WaitForSeconds(ability.AbilityData.GetTriggerTimeAt(ability.Level));
+        yield return new WaitForSeconds(abilityInstance.Ability.GetTriggerTimeAt(abilityInstance.Level));
         while (m_isActive)
         {
-            ability.TryActivate();
-            yield return new WaitForSeconds(ability.AbilityData.GetTriggerTimeAt(ability.Level));
+            abilityInstance.TryActivate();
+            yield return new WaitForSeconds(abilityInstance.Ability.GetTriggerTimeAt(abilityInstance.Level));
         }
     }
 
@@ -150,8 +156,6 @@ public class TowerAbilities : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position + m_projectileSpawnPointOffset, 0.5f);
     }
-    
-    
     
     private readonly struct TimedAbilityInstance : IEquatable<TimedAbilityInstance>
     {

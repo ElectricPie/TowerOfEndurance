@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using AbilitySystem.Ability.Attributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -16,6 +17,8 @@ namespace Ui.FloatingNumber
         [SerializeField, Min(1)] private int m_poolSize = 20;
         [SerializeField, Min(0)] private float m_showTime = 0.5f;
         [SerializeField] private Vector3 m_offsetFromUnit = new Vector3(0.0f, 2.0f, 0.0f);
+
+        [SerializeField] private AttributeIdScriptableObject m_incomingDamageAttributeId;
         
         private ObjectPool<FloatingNumber> m_numberPool;
         
@@ -43,16 +46,14 @@ namespace Ui.FloatingNumber
 
             m_towerWaves.OnUnitSpawnedEvent += (newUnit, _) =>
             {
-                newUnit.HealthComponent.OnDamageTakenEvent += OnUnitTakeDamage;
+                newUnit.AttributeSet.GetAttribute(m_incomingDamageAttributeId).OnCurrentValueChangedEvent += newValue =>
+                {
+                    FloatingNumber floatingNumber = m_numberPool.Get();
+                    floatingNumber.SetValue(newValue, newUnit.transform.position + m_offsetFromUnit, 1 / m_showTime);
+                
+                    StartCoroutine(HideNumber(floatingNumber));
+                };
             };
-        }
-
-        private void OnUnitTakeDamage(GameObject unit, float damage)
-        {
-            FloatingNumber floatingNumber = m_numberPool.Get();
-            floatingNumber.SetValue(damage, unit.transform.position + m_offsetFromUnit, 1 / m_showTime);
-
-            StartCoroutine(HideNumber(floatingNumber));
         }
 
         private IEnumerator HideNumber(FloatingNumber floatingNumber)

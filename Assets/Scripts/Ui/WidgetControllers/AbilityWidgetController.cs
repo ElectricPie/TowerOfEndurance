@@ -27,7 +27,7 @@ namespace Ui.WidgetControllers
         public void TryBuyAbility(AbilityScriptableObject abilityToBuy, GameObject buttonGameObject)
         {
             // Prevent buying multiple of the same ability
-            if (m_towerAbilities.HasAbilityOfType(abilityToBuy.AbilityData))
+            if (m_towerAbilities.HasAbilityOfType(abilityToBuy))
             {
                 Debug.LogWarning($"Tower already has ability {abilityToBuy.Label}, cannot buy again.");
                 Object.Destroy(buttonGameObject);
@@ -35,7 +35,7 @@ namespace Ui.WidgetControllers
             }
 
             // Check for sufficient money
-            if (!m_playerMoney.RemoveMoney(abilityToBuy.AbilityData.GetCostAt(1))) 
+            if (!m_playerMoney.RemoveMoney(abilityToBuy.GetCostAt(1))) 
                 return;
             
             AbilityInstance newAbility = m_towerAbilities.AddAbility(abilityToBuy);
@@ -51,7 +51,7 @@ namespace Ui.WidgetControllers
             KeyValuePair<GameObject, AbilityScriptableObject> randomAbilityEntry = new List<KeyValuePair<GameObject, AbilityScriptableObject>>(m_purchaseButtons)[randomAbilityIndex];
             
             // Check it's not already owned and destroy the corresponding button if so
-            if (m_towerAbilities.HasAbilityOfType(randomAbilityEntry.Value.AbilityData))
+            if (m_towerAbilities.HasAbilityOfType(randomAbilityEntry.Value))
             {
                 Debug.LogWarning($"Tower already has ability {randomAbilityEntry}, cannot buy again.");
                 m_purchaseButtons.Remove(randomAbilityEntry.Key);
@@ -71,7 +71,7 @@ namespace Ui.WidgetControllers
         public bool TryUpgradeAbility(AbilityInstance abilityToUpgrade)
         {
             // Check for sufficient money
-            if (!m_playerMoney.RemoveMoney(abilityToUpgrade.GetCostForNextLevel())) 
+            if (!m_playerMoney.RemoveMoney(abilityToUpgrade.Ability.GetCostAt(abilityToUpgrade.Level + 1))) 
                 return false;
             
             abilityToUpgrade.Upgrade();

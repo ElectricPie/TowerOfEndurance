@@ -1,51 +1,38 @@
-﻿using UnityEngine;
+﻿using AbilitySystem.Ability;
+using UnityEngine;
 
 public class AbilityInitData
 {
-    public GameObject Caster { get; protected set; } 
+    public GameObject Source { get; }
+    public AbilityScriptableObject Ability { get; }
+    public AbilityData AbilityData => Ability.AbilityData;
     
     private AbilityInitData() {}
-    public AbilityInitData(GameObject caster)
+    public AbilityInitData(GameObject source, AbilityScriptableObject ability)
     {
-        Caster = caster;
+        Source = source;
+        Ability = ability;
     }
 }
 
-public sealed class AbilityInstance
+public abstract class AbilityInstance
 {
+    public AbilityScriptableObject Ability { get; private set; }
     public int Level { get; private set; } = 1;
-    public AbilityData AbilityData { get; private set; }
-    
-    private readonly GameObject m_caster;
-    
-    public float GetCostForNextLevel()
+    protected GameObject Source { get; private set; }
+
+    private AbilityInstance() {}
+    public AbilityInstance(AbilityInitData initData)
     {
-        if (Level >= AbilityData.MaxLevel)
-            return -1.0f;
-        
-        return AbilityData.GetCostAt(Level + 1);
+        Ability = initData.Ability;
+        Source = initData.Source;
     }
     
-    private AbilityInstance() { }
-    public AbilityInstance(AbilityData abilityData, AbilityInitData initData)
-    {
-        AbilityData = abilityData.Clone();
-        AbilityData.Init(initData);
-        m_caster = initData.Caster;
-    }
+    public abstract void TryActivate(GameObject target = null);
 
     public void Upgrade()
     {
         Level++;
     }
-    
-    public bool TryActivate(GameObject target = null)
-    {
-        return AbilityData.TryActivate(target, m_caster, Level);
-    }
 
-    public void SetLevel(int newLevel)
-    {
-        Level = Mathf.Max(1, newLevel);
-    }
 }

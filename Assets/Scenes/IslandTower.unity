@@ -846,6 +846,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5060817481088591531, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
+      propertyPath: m_startingMoney
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060817481088591531, guid: 35b93443c9ce990fe9d8f4510f5e8e58, type: 3}
       propertyPath: m_onAmountChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
@@ -933,10 +937,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1223471215192358387, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_attributeLists.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223471215192358387, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: 'm_attributeLists.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 62226771766050149afd9b9bc82f8a11, type: 2}
     - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_playerMoney
       value: 
       objectReference: {fileID: 6725663958928044032}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_attributeSet
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_towerAttributeSet
+      value: 
+      objectReference: {fileID: 7371096466507088174}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_damageUpgradeEffect
+      value: 
+      objectReference: {fileID: 11400000, guid: bebddd839bac9fd4cb3b19b41b36ebae, type: 2}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_towerEffectContainer
+      value: 
+      objectReference: {fileID: 7371096466507088173}
+    - target: {fileID: 3314149860893733602, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      propertyPath: m_fireRateUpgradeEffect
+      value: 
+      objectReference: {fileID: 11400000, guid: 52907d2e12e1cf9428e925571e350861, type: 2}
     - target: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       propertyPath: m_Name
       value: Tower
@@ -985,13 +1017,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1223471215192358387, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7371096466507088174}
+    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7371096466507088171}
+    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7371096466507088173}
+    - targetCorrespondingSourceObject: {fileID: 4416480666744996068, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7371096466507088172}
   m_SourcePrefab: {fileID: 100100000, guid: c61f0fbc88028f8078f04cdbc847a39d, type: 3}
 --- !u!114 &7371096466507088171
 MonoBehaviour:
@@ -1005,6 +1047,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c64beb4ab844ffbb6d32de19cf5e7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveCharacterLoadout
+--- !u!114 &7371096466507088172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115168429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb717423bcb4420a7dcfeb36af82bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.TestAttributeApplicator
+  m_effectsContainer: {fileID: 7371096466507088173}
+  m_primaryAttributes: {fileID: 11400000, guid: be666cb1953d4e4499569e61b765f994, type: 2}
+  m_secondaryAttributes: {fileID: 11400000, guid: 226e86afd120d5d4f9bdd8cb96a843d8, type: 2}
+--- !u!114 &7371096466507088173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115168429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1ce8e42a954319821fe1072aaa7090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectsContainer
+--- !u!114 &7371096466507088174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115168429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192cda9cbed9409bb96a219535654f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Ability.Attributes.AttributeSet
+  m_attributeLists:
+  - {fileID: 11400000, guid: 62226771766050149afd9b9bc82f8a11, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

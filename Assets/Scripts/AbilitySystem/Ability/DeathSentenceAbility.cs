@@ -1,52 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Effect;
+using AbilitySystem.Effect.EffectProperties;
 using UnityEngine;
 
 namespace AbilitySystem.Ability
 {
     [Serializable]
-    public class DeathSentenceAbility : AbilityData
+    public class DeathSentenceAbilityData : AbilityData
     {
-        /* Editor Values */
-        [SerializeReference] private DamageEffect m_damageEffect;
+        [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
-        public override AbilityData Clone()
+        public GameEffectScriptableObject DamageEffect => m_damageEffect;
+        public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
         {
-            DeathSentenceAbility clone = (DeathSentenceAbility)MemberwiseClone();
-
-            return clone;
-        }
-        
-        
-        /* Runtime Values */
-        private TowerWaves m_towerWaves;
-
-        public override void Init(AbilityInitData initData)
-        {
-            m_towerWaves = initData.Caster.GetComponent<TowerWaves>();
+            return new DeathSentenceAbilityInstance(initData);
         }
 
-        public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
+        public override Dictionary<string, object> GetTooltipMap(int level)
+        {
+            Dictionary<string, object> tooltipMap = new Dictionary<string, object>();
+
+            if (m_damageEffect)
+            {
+                PeriodicEffectValues periodicEffectValues = m_damageEffect.PeriodicEffectValues;
+                tooltipMap.Add("AttackAmount",  periodicEffectValues.Duration.GetValue(level) /  periodicEffectValues.Period.GetValue(level));
+            }
+
+            return tooltipMap;
+        }
+    }
+
+    public class DeathSentenceAbilityInstance : AbilityInstance
+    {
+        private readonly DeathSentenceAbilityData m_abilityData;
+        private readonly TowerWaves m_towerWaves;
+
+        public DeathSentenceAbilityInstance(AbilityInitData initData) : base(initData)
+        {
+            if (initData.AbilityData is not DeathSentenceAbilityData deathSentenceAbilityData)
+                throw new Exception("Tried to initialize Death Sentence ability with non DeathSentenceAbilityData");
+            
+            m_abilityData = deathSentenceAbilityData;
+            m_towerWaves = initData.Source.GetComponent<TowerWaves>();
+        }
+        
+        public override void TryActivate(GameObject target = null)
         {
             Unit randomUnit = m_towerWaves.GetRandomUnit();
             if (randomUnit == null)
-                return false;
+                return;
 
-            randomUnit.EffectsContainer.ApplyEffect(caster, m_damageEffect, level);
-            
-            return true;
-        }
-
-        public override Dictionary<string, object> GetTooltipDataMap(int level)
-        {
-            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
-            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            float attacks = m_damageEffect.PeriodicEffectValues.GetDurationAt(level) / m_damageEffect.PeriodicEffectValues.GetPeriodAt(level);
-            tooltipDataMap.TryAdd("Attacks", attacks);
-            tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
-            tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
-            tooltipDataMap.TryAdd("TriggerTime", GetTriggerTimeAt(level));
-            return tooltipDataMap;
+            randomUnit.EffectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
         }
     }
 }

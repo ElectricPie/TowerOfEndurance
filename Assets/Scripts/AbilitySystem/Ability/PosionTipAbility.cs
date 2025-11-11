@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AbilitySystem.Effect;
 using UnityEngine;
 
 namespace AbilitySystem.Ability
@@ -7,41 +8,54 @@ namespace AbilitySystem.Ability
     [Serializable]
     public class PoisonTipAbilityData : AbilityData
     {
-        /* Editor Values */
-        [SerializeReference] private DamageEffect m_damageEffect;
+        [SerializeField] private GameEffectScriptableObject m_damageEffect;
 
-        public override AbilityData Clone()
+        public GameEffectScriptableObject DamageEffect => m_damageEffect;
+
+        public override AbilityInstance CreateAbilityInstance(AbilityInitData initData)
         {
-            PoisonTipAbilityData clone = (PoisonTipAbilityData)MemberwiseClone();
-            clone.m_damageEffect = m_damageEffect;
-
-            return clone;
+            return new PoisonTipAbilityInstance(initData);
         }
 
-
-        /* Runtime Values */
-        public override bool TryActivate(GameObject target, GameObject caster, int level = 1)
+        public override Dictionary<string, object> GetTooltipMap(int level)
         {
-            if (target == null || caster == null)
-                return false;
+            Dictionary<string, object> tooltipMap = new Dictionary<string, object>
+            {
+                { "DamagePercent", (20 + 20 * level).ToString() },
+                { "DamageModifierValue", (float)(0.2 + 0.2 * level) } // To be multiplied by tower damage
+            };
+
+            if (m_damageEffect)
+            {
+                tooltipMap.Add("Period", m_damageEffect.PeriodicEffectValues.Period.GetValue(level));
+                tooltipMap.Add("Duration", m_damageEffect.PeriodicEffectValues.Duration.GetValue(level));
+            }
+
+            return tooltipMap;
+        }
+    }
+
+    public class PoisonTipAbilityInstance : AbilityInstance
+    {
+        private readonly PoisonTipAbilityData m_abilityData;
+
+        public PoisonTipAbilityInstance(AbilityInitData initData) : base(initData)
+        {
+            if (initData.AbilityData is not PoisonTipAbilityData poisonTipAbilityData)
+                throw new Exception("Tried to initialize Poison Tip ability with non PoisonTipAbilityData");
+            m_abilityData = poisonTipAbilityData;
+        }
+
+        public override void TryActivate(GameObject target = null)
+        {
+            if (target == null || Source == null)
+                return;
 
             EffectsContainer effectsContainer = target.GetComponent<EffectsContainer>();
             if (effectsContainer == null)
-                return false;
+                return;
 
-            effectsContainer.ApplyEffect(caster, m_damageEffect, level);
-            return true;
-        }
-
-        public override Dictionary<string, object> GetTooltipDataMap(int level)
-        {
-            Dictionary<string, object> tooltipDataMap = new Dictionary<string, object>();
-            tooltipDataMap.TryAdd("Cost", GetCostAt(level));
-            tooltipDataMap.TryAdd("Duration", m_damageEffect.PeriodicEffectValues.GetDurationAt(level));
-            tooltipDataMap.TryAdd("Period", m_damageEffect.PeriodicEffectValues.GetPeriodAt(level));
-            tooltipDataMap.TryAdd("DamagePercent", m_damageEffect.DamageModifierAt(level) * 100);
-            tooltipDataMap.TryAdd("DamageModifier", m_damageEffect.DamageModifierAt(level));
-            return tooltipDataMap;
+            effectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
         }
     }
 }

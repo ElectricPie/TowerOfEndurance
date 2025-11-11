@@ -50,3 +50,4 @@ MonoBehaviour:
   m_poolSize: 20
   m_showTime: 0.2
   m_offsetFromUnit: {x: 0, y: 2, z: 0}
+  m_incomingDamageAttributeId: {fileID: 11400000, guid: 92dfe29f7b0e5a141922cbd7af830400, type: 2}

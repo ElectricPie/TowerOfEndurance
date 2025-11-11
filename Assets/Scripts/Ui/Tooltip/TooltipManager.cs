@@ -22,7 +22,6 @@ namespace Ui.Tooltip
 
         public void HideTooltip()
         {
-            // TODO: Not hiding when ability is bought
             if (m_abilityTooltipInstance == null)
                 return;
 
