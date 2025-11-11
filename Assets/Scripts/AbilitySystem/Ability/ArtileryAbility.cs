@@ -21,6 +21,18 @@ namespace AbilitySystem.Ability
         {
             return new ArtilleryAbilityInstance(initData);
         }
+
+        public override Dictionary<string, object> GetTooltipMap(int level)
+        {
+            Dictionary<string, object> tooltipMap = new Dictionary<string, object>
+            {
+                { "DamagePercent", 340 + 40 * level},
+                { "DamageModifierValue", (float)(3.4 + 0.4 * level) }, // To be multiplied by tower damage
+                { "TargetCount", m_targetCount }
+            };
+
+            return tooltipMap;
+        }
     }
 
     public class ArtilleryAbilityInstance : AbilityInstance

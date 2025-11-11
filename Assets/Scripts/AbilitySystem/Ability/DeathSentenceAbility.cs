@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AbilitySystem.Effect;
+using AbilitySystem.Effect.EffectProperties;
 using UnityEngine;
 
 namespace AbilitySystem.Ability
@@ -15,12 +16,25 @@ namespace AbilitySystem.Ability
         {
             return new DeathSentenceAbilityInstance(initData);
         }
+
+        public override Dictionary<string, object> GetTooltipMap(int level)
+        {
+            Dictionary<string, object> tooltipMap = new Dictionary<string, object>();
+
+            if (m_damageEffect)
+            {
+                PeriodicEffectValues periodicEffectValues = m_damageEffect.PeriodicEffectValues;
+                tooltipMap.Add("AttackAmount",  periodicEffectValues.Duration.GetValue(level) /  periodicEffectValues.Period.GetValue(level));
+            }
+
+            return tooltipMap;
+        }
     }
 
     public class DeathSentenceAbilityInstance : AbilityInstance
     {
-        private DeathSentenceAbilityData m_abilityData;
-        private TowerWaves m_towerWaves;
+        private readonly DeathSentenceAbilityData m_abilityData;
+        private readonly TowerWaves m_towerWaves;
 
         public DeathSentenceAbilityInstance(AbilityInitData initData) : base(initData)
         {

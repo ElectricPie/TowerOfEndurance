@@ -17,17 +17,12 @@ namespace AbilitySystem.Ability
             return new PoisonTipAbilityInstance(initData);
         }
 
-        public override Dictionary<string, object> GetTooltipMap(int level, bool isMaxLevel)
+        public override Dictionary<string, object> GetTooltipMap(int level)
         {
-            if (!isMaxLevel && level >= 1)
-            {
-                level--;
-            }
-            
             Dictionary<string, object> tooltipMap = new Dictionary<string, object>
             {
                 { "DamagePercent", (20 + 20 * level).ToString() },
-                { "DamageModifierValue", (float)(0.2 + 0.2 * level) }, // To be multiplied by tower damage
+                { "DamageModifierValue", (float)(0.2 + 0.2 * level) } // To be multiplied by tower damage
             };
 
             if (m_damageEffect)

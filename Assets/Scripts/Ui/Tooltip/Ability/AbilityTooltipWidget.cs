@@ -48,14 +48,23 @@ namespace Ui.Tooltip.Ability
 
             float towerDamage = m_towerAttributeSet.GetAttributeValue(m_towerDamageAttributeId);
 
+            
             bool isMaxLevel = abilityTooltipData.Level >= ability.MaxLevel;
-            Dictionary<string, object> tooltipDataMap = ability.AbilityData.GetTooltipMap(abilityTooltipData.Level, isMaxLevel);
+            int abilityLevel = abilityTooltipData.Level;
+            if (!isMaxLevel && abilityLevel >= 1)
+            {
+                abilityLevel--;
+            }
+            
+            Dictionary<string, object> tooltipDataMap = ability.AbilityData.GetTooltipMap(abilityLevel);
             // Allows ability tooltips to use tower damage 
             if (tooltipDataMap.TryGetValue("DamageModifierValue", out object damageModifier))
             {
                 tooltipDataMap["DamageModifierValue"] = (float)damageModifier * towerDamage;
             }
+            tooltipDataMap.Add("TowerDamage", towerDamage);
             tooltipDataMap.Add("Cost", ability.GetCostAt(abilityTooltipData.Level));
+            tooltipDataMap.Add("TriggerTime", ability.GetTriggerTimeAt(abilityTooltipData.Level));
             
             // Format any [] placeholders in the description
             string resultDescription = FormatTooltipDescriptionWithTooltipDataMap(tooltipDataMap, ability.Description);

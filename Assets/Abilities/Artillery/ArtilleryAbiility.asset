@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: ArtilleryAbiility
   m_EditorClassIdentifier: Assembly-CSharp::AbilityScriptableObject
   m_label: Artillery
-  m_description: 'Has a chance when a basic attack hits to deal [DamagePercent]%({[TowerDamage]
-    * [DamageModifier]})  of the towers damage to [TargetCount] random targets
+  m_description: 'Has a chance when a basic attack hits to deal [DamagePercent]%([DamageModifierValue]) 
+    of the towers damage to [TargetCount] random targets
 
-    Cost:
-    [Cost]'
+    Cost: [Cost]'
   m_cost:
     serializedVersion: 2
     m_Curve:
@@ -59,8 +58,10 @@ MonoBehaviour:
       type: {class: ArtilleryAbilityData, ns: AbilitySystem.Ability, asm: Assembly-CSharp}
       data:
         m_triggerChanceCurve:
+          serializedVersion: 2
           m_Curve:
-          - time: 1
+          - serializedVersion: 3
+            time: 1
             value: 12
             inSlope: 2
             outSlope: 2
@@ -68,7 +69,8 @@ MonoBehaviour:
             weightedMode: 0
             inWeight: 0
             outWeight: 0.33333334
-          - time: 5
+          - serializedVersion: 3
+            time: 5
             value: 20
             inSlope: 2
             outSlope: 2
@@ -76,8 +78,6 @@ MonoBehaviour:
             weightedMode: 0
             inWeight: 0.33333334
             outWeight: 0
-          serializedVersion: 2
-          m_Curve: []
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
