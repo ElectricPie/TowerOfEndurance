@@ -9,6 +9,7 @@ namespace AbilitySystem.Effect.EffectProperties
     public enum ModifierOperation
     {
         Add,
+        Multiply,
         Override
     }
     

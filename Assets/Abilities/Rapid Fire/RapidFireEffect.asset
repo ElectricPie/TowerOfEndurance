@@ -71,12 +71,12 @@ MonoBehaviour:
     m_triggerOnApplication: 1
   m_modifiers:
   - m_attributeId: {fileID: 11400000, guid: 53191f57ba3caac4c906c4e09859824c, type: 2}
-    m_modifierOperation: 0
+    m_modifierOperation: 1
     m_modifierMagnitude:
       m_calculationType: 0
       m_scalableFloat:
         m_type: 0
-        m_value: -1.5
+        m_value: 0.25
         m_curve:
           serializedVersion: 2
           m_Curve:

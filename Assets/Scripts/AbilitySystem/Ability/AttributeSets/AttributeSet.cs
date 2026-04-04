@@ -46,10 +46,13 @@ namespace AbilitySystem.Ability.AttributeSets
                 case ModifierOperation.Override:
                     attribute.SetCurrentValue(CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
                     break;
+                case ModifierOperation.Multiply:
+                    attribute.SetCurrentValue(attribute.CurrentValue * CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             attribute.BroadcastCurrentValue();
             AttributeValueChanged(mod.Modifier.AttributeId, attribute);
         }
@@ -93,6 +96,7 @@ namespace AbilitySystem.Ability.AttributeSets
         private void RecalculateAttribute(AttributeData attribute)
         {
             float addSum = 0.0f;
+            float multiplyProduct = 1.0f;
             float? overrideValue = null;
 
             foreach (AttributeModifierInstance mod in attribute.Modifiers)
@@ -105,13 +109,16 @@ namespace AbilitySystem.Ability.AttributeSets
                     case ModifierOperation.Override:
                         overrideValue = CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level);
                         break;
+                    case ModifierOperation.Multiply:
+                        multiplyProduct *= CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level);
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
 
             float baseForCalculation = overrideValue ?? attribute.BaseValue;
-            attribute.SetCurrentValue(baseForCalculation + addSum);
+            attribute.SetCurrentValue((baseForCalculation + addSum) * multiplyProduct);
 
             attribute.BroadcastBaseValue();
             attribute.BroadcastCurrentValue();

@@ -71,7 +71,7 @@ MonoBehaviour:
     m_triggerOnApplication: 0
   m_modifiers:
   - m_attributeId: {fileID: 11400000, guid: bfeb83bfe84b6334db99a2ce99ac20b9, type: 2}
-    m_modifierOperation: 1
+    m_modifierOperation: 2
     m_modifierMagnitude:
       m_calculationType: 1
       m_scalableFloat:
@@ -123,7 +123,7 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
   - m_attributeId: {fileID: 11400000, guid: 53191f57ba3caac4c906c4e09859824c, type: 2}
-    m_modifierOperation: 1
+    m_modifierOperation: 2
     m_modifierMagnitude:
       m_calculationType: 1
       m_scalableFloat:
