@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Effect.EffectProperties;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Waves;
 
@@ -12,6 +13,9 @@ namespace AbilitySystem.Ability.AttributeSets
         [SerializeField] private List<AttributeSetScriptableObject> m_attributeLists;
 
         private readonly Dictionary<AttributeIdScriptableObject, AttributeData> m_attributes = new Dictionary<AttributeIdScriptableObject, AttributeData>();
+
+        [ShowInInspector, ReadOnly, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
+        private Dictionary<AttributeIdScriptableObject, AttributeData> DebugAttributes => m_attributes;
 
         public AttributeData GetAttribute(AttributeIdScriptableObject attributeId)
         {
@@ -55,7 +59,7 @@ namespace AbilitySystem.Ability.AttributeSets
             AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);
             if (attribute == null)
                 return;
-            
+
             if (mod.Modifier.Magnitude.CalculationType == CalculationType.AttributeBacked)
             {
                 AttributeData backingAttribute = GetAttribute(mod.Modifier.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
@@ -65,8 +69,19 @@ namespace AbilitySystem.Ability.AttributeSets
                     AttributeValueChanged(mod.Modifier.AttributeId, attribute);
                 };
             }
-            
+
             attribute.Modifiers.Add(mod);
+            RecalculateAttribute(attribute);
+            AttributeValueChanged(mod.Modifier.AttributeId, attribute);
+        }
+
+        public void RemoveInfiniteModifier(AttributeModifierInstance mod)
+        {
+            AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);
+            if (attribute == null)
+                return;
+
+            attribute.Modifiers.Remove(mod);
             RecalculateAttribute(attribute);
             AttributeValueChanged(mod.Modifier.AttributeId, attribute);
         }
@@ -77,7 +92,6 @@ namespace AbilitySystem.Ability.AttributeSets
             
         private void RecalculateAttribute(AttributeData attribute)
         {
-            float baseValue = attribute.BaseValue;
             float addSum = 0.0f;
             float? overrideValue = null;
 
@@ -96,10 +110,9 @@ namespace AbilitySystem.Ability.AttributeSets
                 }
             }
 
-            float newValue = baseValue + addSum;
-            attribute.BaseValue = overrideValue ?? newValue;
-            attribute.SetCurrentValue(attribute.BaseValue);
-            
+            float baseForCalculation = overrideValue ?? attribute.BaseValue;
+            attribute.SetCurrentValue(baseForCalculation + addSum);
+
             attribute.BroadcastBaseValue();
             attribute.BroadcastCurrentValue();
         }
@@ -154,6 +167,8 @@ namespace AbilitySystem.Ability.AttributeSets
                     }
                     
                     AttributeData newAttributeData = new AttributeData();
+                    newAttributeData.BaseValue = attribute.InitialValue;
+                    newAttributeData.SetCurrentValue(attribute.InitialValue);
                     m_attributes.Add(attribute.ID, newAttributeData);
                 }
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AbilitySystem.Ability;
 using AbilitySystem.Ability.Attributes;
 using AbilitySystem.Ability.AttributeSets;

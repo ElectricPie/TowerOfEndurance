@@ -437,6 +437,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 96392307504504187, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
+      propertyPath: m_buyableAbilities.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 96392307504504187, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
+      propertyPath: 'm_buyableAbilities.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 74007050cceb33c47a79676830a6e149, type: 2}
     - target: {fileID: 512639567133301716, guid: 80dedcfc4aa591f40ae5881b70e3d988, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

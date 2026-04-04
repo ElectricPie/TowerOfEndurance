@@ -48,14 +48,7 @@ namespace AbilitySystem.Ability
 
         public override void TryActivate(GameObject target = null)
         {
-            if (target == null || Source == null)
-                return;
-
-            EffectsContainer effectsContainer = target.GetComponent<EffectsContainer>();
-            if (effectsContainer == null)
-                return;
-
-            effectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
+            AbilitySystemUtilLibrary.ApplyEffectToTarget(m_abilityData.DamageEffect, target, Source, Level);
         }
     }
 }
