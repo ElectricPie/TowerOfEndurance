@@ -45,17 +45,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 10
-      inSlope: -1.25
-      outSlope: -1.25
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 5
-      value: 5
-      inSlope: -1.25
-      outSlope: -1.25
+      value: 10
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -74,28 +74,28 @@ MonoBehaviour:
       data:
         m_fireRateEffect: {fileID: 11400000, guid: 9153fbe7c880ee64f97dd4541233bb27, type: 2}
         m_duration:
-          m_type: 0
+          m_type: 1
           m_value: 2
           m_curve:
             serializedVersion: 2
             m_Curve:
             - serializedVersion: 3
               time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
+              value: 2
+              inSlope: 0.375
+              outSlope: 0.375
+              tangentMode: 34
               weightedMode: 0
               inWeight: 0
-              outWeight: 0
+              outWeight: 0.33333334
             - serializedVersion: 3
               time: 5
-              value: 5
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
+              value: 3.5
+              inSlope: 0.375
+              outSlope: 0.375
+              tangentMode: 34
               weightedMode: 0
-              inWeight: 0
+              inWeight: 0.33333334
               outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2

@@ -41,7 +41,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_trigger: 0
+  m_trigger: 1
   m_triggerTime:
     serializedVersion: 2
     m_Curve: []
