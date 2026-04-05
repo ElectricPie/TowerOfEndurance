@@ -46,8 +46,11 @@ namespace Ui.WidgetControllers
 
         public void TryBuyRandomAbility(float cost)
         {
+            if (m_purchaseButtons.Count == 0)
+                return;
+            
             // Get a random ability
-            int randomAbilityIndex = Random.Range(0, m_purchaseButtons.Count - 1);
+            int randomAbilityIndex = Random.Range(0, m_purchaseButtons.Count);
             KeyValuePair<GameObject, AbilityScriptableObject> randomAbilityEntry = new List<KeyValuePair<GameObject, AbilityScriptableObject>>(m_purchaseButtons)[randomAbilityIndex];
             
             // Check it's not already owned and destroy the corresponding button if so

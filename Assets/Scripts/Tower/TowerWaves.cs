@@ -83,7 +83,7 @@ public class TowerWaves : MonoBehaviour
         if (m_waves.Count == 0)
             return null;
 
-        int randomWaveIndex = Random.Range(0, m_waves.Count - 1);
+        int randomWaveIndex = Random.Range(0, m_waves.Count);
         Wave randomWave = m_waves[randomWaveIndex];
         return randomWave.GetRandomUnit();
     }
@@ -154,7 +154,7 @@ public class Wave
         if (m_units.Count == 0)
             return null;
 
-        int randomUnitIndex = Random.Range(0, m_units.Count - 1);
+        int randomUnitIndex = Random.Range(0, m_units.Count);
         return m_units[randomUnitIndex];
     }
 
