@@ -23,6 +23,8 @@ namespace Tower
 
         [SerializeField] private GameEffectScriptableObject m_damageUpgradeEffect;
         [SerializeField] private GameEffectScriptableObject m_fireRateUpgradeEffect;
+        
+        [SerializeField, Min(0)] private int m_upgradedEffectLevel = 1;
 
         public float DamageUpgradeCost { get; private set; }
         public float SpeedUpgradeCost { get; private set; }
@@ -68,7 +70,7 @@ namespace Tower
                 return;
             }
 
-            m_towerEffectContainer.ApplyEffect(gameObject, m_damageUpgradeEffect, 1);
+            m_towerEffectContainer.ApplyEffect(gameObject, m_damageUpgradeEffect, m_upgradedEffectLevel);
         }
 
         public void UpgradeSpeed()
@@ -80,7 +82,7 @@ namespace Tower
                 return;
             }
 
-            m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect, 1);
+            m_towerEffectContainer.ApplyEffect(gameObject, m_fireRateUpgradeEffect, m_upgradedEffectLevel);
         }
     }
 }
