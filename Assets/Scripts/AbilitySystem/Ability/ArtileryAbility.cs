@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using AbilitySystem.Effect;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -51,15 +52,17 @@ namespace AbilitySystem.Ability
 
         public override void TryActivate(GameObject target = null)
         {
-            // Trigger chance needs to be below the abilities trigger chance
             int triggerChance = Random.Range(0, 100);
             if (triggerChance > m_abilityData.TriggerChance.Evaluate(Level))
                 return;
 
-            for (int i = 0; i < m_abilityData.TargetCount; i++)
+            List<Unit> units = m_towerWaves.GetAllUnits();
+            units = units.OrderBy(_ => Random.value).ToList();
+
+            int count = Mathf.Min(m_abilityData.TargetCount, units.Count);
+            for (int i = 0; i < count; i++)
             {
-                Unit randomTarget = m_towerWaves.GetRandomUnit();
-                randomTarget.EffectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
+                units[i].EffectsContainer.ApplyEffect(Source, m_abilityData.DamageEffect, Level);
             }
         }
     }

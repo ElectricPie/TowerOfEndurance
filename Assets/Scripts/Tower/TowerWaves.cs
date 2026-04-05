@@ -116,6 +116,14 @@ public class TowerWaves : MonoBehaviour
         Gizmos.color = Color.red;
         m_spawnPattern.DrawnArea();
     }
+
+    public List<Unit> GetAllUnits()
+    {
+        List<Unit> allUnits = new List<Unit>();
+        foreach (Wave wave in m_waves)
+            allUnits.AddRange(wave.Units);
+        return allUnits;
+    }
 }
 
 public class Wave
@@ -124,6 +132,8 @@ public class Wave
     public readonly float RotationsPerMinute;
     public int RemainingUnits { get; private set; }
     public int WaveNumber { get; private set; }
+
+    public IReadOnlyList<Unit> Units => m_units;
 
     private readonly List<Unit> m_units;
 
