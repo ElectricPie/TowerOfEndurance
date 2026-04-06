@@ -12,10 +12,14 @@ namespace AbilitySystem.Ability.AttributeSets
     {
         [SerializeField] private List<AttributeSetScriptableObject> m_attributeLists;
 
-        private readonly Dictionary<AttributeIdScriptableObject, AttributeData> m_attributes = new Dictionary<AttributeIdScriptableObject, AttributeData>();
+        private readonly Dictionary<AttributeIdScriptableObject, AttributeData> m_attributes =
+            new Dictionary<AttributeIdScriptableObject, AttributeData>();
 
         [ShowInInspector, ReadOnly, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
         private Dictionary<AttributeIdScriptableObject, AttributeData> DebugAttributes => m_attributes;
+
+        private Dictionary<AttributeModifierInstance, Action<float>> m_backingAttributeCallbackHandles =
+            new Dictionary<AttributeModifierInstance, Action<float>>();
 
         public AttributeData GetAttribute(AttributeIdScriptableObject attributeId)
         {
@@ -28,10 +32,10 @@ namespace AbilitySystem.Ability.AttributeSets
             AttributeData attribute = GetAttribute(attributeId);
             if (attribute == null)
                 return 0.0f;
-            
+
             return attribute.CurrentValue;
-        } 
-        
+        }
+
         public void AddInstantModifier(AttributeModifierInstance mod)
         {
             AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);
@@ -41,13 +45,18 @@ namespace AbilitySystem.Ability.AttributeSets
             switch (mod.Modifier.Operation)
             {
                 case ModifierOperation.Add:
-                    attribute.SetCurrentValue(attribute.CurrentValue + CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
+                    attribute.SetCurrentValue(
+                        attribute.CurrentValue + CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level),
+                        false);
                     break;
                 case ModifierOperation.Override:
-                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
+                    attribute.SetCurrentValue(CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level),
+                        false);
                     break;
                 case ModifierOperation.Multiply:
-                    attribute.SetCurrentValue(attribute.CurrentValue * CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level), false);
+                    attribute.SetCurrentValue(
+                        attribute.CurrentValue * CalculateModMagnitude(mod.Source, mod.Modifier.Magnitude, mod.Level),
+                        false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -65,12 +74,16 @@ namespace AbilitySystem.Ability.AttributeSets
 
             if (mod.Modifier.Magnitude.CalculationType == CalculationType.AttributeBacked)
             {
-                AttributeData backingAttribute = GetAttribute(mod.Modifier.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
-                backingAttribute.OnCurrentValueChangedEvent += _ =>
+                AttributeData backingAttribute =
+                    GetAttribute(mod.Modifier.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
+
+                Action<float> handler = _ =>
                 {
                     RecalculateAttribute(attribute);
                     AttributeValueChanged(mod.Modifier.AttributeId, attribute);
                 };
+                backingAttribute.OnCurrentValueChangedEvent += handler;
+                m_backingAttributeCallbackHandles[mod] = handler;
             }
 
             attribute.Modifiers.Add(mod);
@@ -84,15 +97,23 @@ namespace AbilitySystem.Ability.AttributeSets
             if (attribute == null)
                 return;
 
+            if (m_backingAttributeCallbackHandles.TryGetValue(mod, out Action<float> handler))
+            {
+                attribute.OnCurrentValueChangedEvent -= handler;
+                m_backingAttributeCallbackHandles.Remove(mod);
+            }
+
             attribute.Modifiers.Remove(mod);
             RecalculateAttribute(attribute);
             AttributeValueChanged(mod.Modifier.AttributeId, attribute);
         }
-        
-        
-        protected virtual void AttributeValueChanged(AttributeIdScriptableObject attributeId, AttributeData attribute) {}
-        
-            
+
+
+        protected virtual void AttributeValueChanged(AttributeIdScriptableObject attributeId, AttributeData attribute)
+        {
+        }
+
+
         private void RecalculateAttribute(AttributeData attribute)
         {
             float addSum = 0.0f;
@@ -142,7 +163,8 @@ namespace AbilitySystem.Ability.AttributeSets
 
                     if (backingAttribute == null)
                     {
-                        Debug.LogWarning($"Attempted to use backing attribute {backingAttributeName} on {gameObject.name}", this);
+                        Debug.LogWarning(
+                            $"Attempted to use backing attribute {backingAttributeName} on {gameObject.name}", this);
                         return 0;
                     }
 
@@ -155,7 +177,7 @@ namespace AbilitySystem.Ability.AttributeSets
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         protected void Awake()
         {
             InitializeAttributes();
@@ -169,10 +191,11 @@ namespace AbilitySystem.Ability.AttributeSets
                 {
                     if (m_attributes.ContainsKey(attribute.ID))
                     {
-                        Debug.LogWarning($"Attempting to add duplicate \"{attribute.ID}\" attribute on {gameObject}", this);
+                        Debug.LogWarning($"Attempting to add duplicate \"{attribute.ID}\" attribute on {gameObject}",
+                            this);
                         continue;
                     }
-                    
+
                     AttributeData newAttributeData = new AttributeData();
                     newAttributeData.BaseValue = attribute.InitialValue;
                     newAttributeData.SetCurrentValue(attribute.InitialValue);
