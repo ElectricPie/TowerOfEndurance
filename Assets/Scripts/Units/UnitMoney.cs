@@ -6,9 +6,9 @@ public class UnitMoney : MonoBehaviour
 
     private void Awake()
     {
+        PlayerMoney playerMoney = FindFirstObjectByType<PlayerMoney>();
         gameObject.GetComponent<Unit>().OnKilledEvent += _ =>
         {
-            PlayerMoney playerMoney = FindFirstObjectByType<PlayerMoney>();
             playerMoney.AddMoney(MoneyWorth);
         };
     }
