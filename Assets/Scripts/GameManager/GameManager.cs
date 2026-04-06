@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Waves;
 
-[RequireComponent(typeof(GeneratedWaveSpawner))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -10,7 +8,7 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOverEvent = delegate { };
 
     private PlayerManager m_player;
-    private GeneratedWaveSpawner m_waveSpawner = null;
+    private WaveSpawner m_waveSpawner = null;
     private TowerAbilities m_towerAbilities = null;
 
     private void Awake()
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         
         // Get components
-        m_waveSpawner = GetComponent<GeneratedWaveSpawner>();
+        m_waveSpawner = GetComponent<WaveSpawner>();
         m_towerAbilities = FindFirstObjectByType<TowerAbilities>();
         
         // Get the player
