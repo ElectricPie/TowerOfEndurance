@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AbilitySystem.Ability.AttributeSets;
 using AbilitySystem.Effect.EffectProperties;
+using Sirenix.OdinInspector;
 
 namespace AbilitySystem.Ability.Attributes
 {
@@ -25,6 +26,7 @@ namespace AbilitySystem.Ability.Attributes
         private float m_currenValue;
         
         public float BaseValue;
+        [ShowInInspector]
         public float CurrentValue => m_currenValue;
 
         public event Action<float> OnBaseValueChangedEvent = delegate { };

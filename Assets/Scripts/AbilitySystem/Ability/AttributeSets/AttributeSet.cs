@@ -18,7 +18,7 @@ namespace AbilitySystem.Ability.AttributeSets
         [ShowInInspector, ReadOnly, DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
         private Dictionary<AttributeIdScriptableObject, AttributeData> DebugAttributes => m_attributes;
 
-        private Dictionary<AttributeModifierInstance, Action<float>> m_backingAttributeCallbackHandles =
+        private readonly Dictionary<AttributeModifierInstance, Action<float>> m_backingAttributeCallbackHandles =
             new Dictionary<AttributeModifierInstance, Action<float>>();
 
         public AttributeData GetAttribute(AttributeIdScriptableObject attributeId)
@@ -155,11 +155,11 @@ namespace AbilitySystem.Ability.AttributeSets
                     AttributeBackedMagnitude backedMagnitude = modMagnitude.AttributeBackedMagnitude;
                     AttributeIdScriptableObject backingAttributeName = backedMagnitude.BackingAttributeId;
 
-                    AttributeData backingAttribute;
-                    if (modMagnitude.AttributeBackedMagnitude.AttributeSource == AttributeSource.Target)
-                        backingAttribute = GetAttribute(backingAttributeName);
-                    else
-                        backingAttribute = source.GetAttribute(backingAttributeName);
+                    // Get backing attribute from source
+                    AttributeData backingAttribute = modMagnitude.AttributeBackedMagnitude.AttributeSource ==
+                                                     AttributeSource.Target
+                        ? GetAttribute(backingAttributeName)
+                        : source.GetAttribute(backingAttributeName);
 
                     if (backingAttribute == null)
                     {
