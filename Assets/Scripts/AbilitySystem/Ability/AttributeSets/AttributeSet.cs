@@ -155,11 +155,11 @@ namespace AbilitySystem.Ability.AttributeSets
                     AttributeBackedMagnitude backedMagnitude = modMagnitude.AttributeBackedMagnitude;
                     AttributeIdScriptableObject backingAttributeName = backedMagnitude.BackingAttributeId;
 
-                    // Get backing attribute from source
-                    AttributeData backingAttribute = modMagnitude.AttributeBackedMagnitude.AttributeSource ==
-                                                     AttributeSource.Target
-                        ? GetAttribute(backingAttributeName)
-                        : source.GetAttribute(backingAttributeName);
+                    AttributeData backingAttribute;
+                    if (modMagnitude.AttributeBackedMagnitude.AttributeSource == AttributeSource.Target)
+                        backingAttribute = GetAttribute(backingAttributeName);
+                    else
+                        backingAttribute = source.GetAttribute(backingAttributeName);
 
                     if (backingAttribute == null)
                     {
@@ -170,9 +170,17 @@ namespace AbilitySystem.Ability.AttributeSets
 
                     float backingAttributeValue = backingAttribute.CurrentValue;
 
-                    float value = backingAttributeValue * backedMagnitude.Coefficient.GetValue(level);
-                    value += backedMagnitude.PostAdditiveValue.GetValue(level);
-                    return value;
+                    switch (backedMagnitude.Mode)
+                    {
+                        case AttributeBackedMode.Multiply:
+                            float value = backingAttributeValue * backedMagnitude.Coefficient.GetValue(level);
+                            value += backedMagnitude.PostAdditiveValue.GetValue(level);
+                            return value;
+                        case AttributeBackedMode.LevelLookup:
+                            return backedMagnitude.Coefficient.GetValue(Mathf.RoundToInt(backingAttributeValue));
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 default:
                     throw new ArgumentOutOfRangeException();
             }
