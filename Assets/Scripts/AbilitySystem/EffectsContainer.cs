@@ -16,7 +16,7 @@ internal class PeriodicEffectContainer
     public event Action OnExpiration;
 
     public readonly AttributeSet Source;
-    private float ExpirationTime { get; set; }
+    public float ExpirationTime { get; private set; }
 
     private PeriodicEffectContainer() { }
     public PeriodicEffectContainer(AttributeSet source, GameEffectScriptableObject effect, int level,
@@ -102,23 +102,40 @@ public class EffectsContainer : MonoBehaviour
 
     private IEnumerator PeriodicEffectCoroutine(PeriodicEffectContainer effectContainer)
     {
+        const float tickTimeTolerance = 0.0001f;
+
         if (effectContainer.Effect.PeriodicEffectValues.TriggerOnApplication)
         {
-            foreach (AttributeModifier modifier in effectContainer.Effect.Modifiers)
-            {
-                m_attributeSet.AddInstantModifier(new AttributeModifierInstance(effectContainer.Source, modifier, effectContainer.Level));
-            } 
+            ApplyPeriodicTick(effectContainer);
         }
-        
-        while (!effectContainer.HasExpired())
+
+        float startTime = Time.time;
+        float period = effectContainer.Effect.PeriodicEffectValues.Period.GetValue(effectContainer.Level);
+        int ticksApplied = 0;
+
+        while (true)
         {
-            yield return new WaitForSeconds(effectContainer.Effect.PeriodicEffectValues.Period.GetValue(effectContainer.Level));
-            foreach (AttributeModifier modifier in effectContainer.Effect.Modifiers)
+            yield return null;
+
+            float lastDueTime = Mathf.Min(Time.time, effectContainer.ExpirationTime) + tickTimeTolerance;
+            while (startTime + (ticksApplied + 1) * period <= lastDueTime)
             {
-                m_attributeSet.AddInstantModifier(new AttributeModifierInstance(effectContainer.Source, modifier, effectContainer.Level));
+                ticksApplied++;
+                ApplyPeriodicTick(effectContainer);
             }
+
+            if (effectContainer.HasExpired())
+                break;
         }
 
         m_periodicEffects.Remove(effectContainer);
+    }
+
+    private void ApplyPeriodicTick(PeriodicEffectContainer effectContainer)
+    {
+        foreach (AttributeModifier modifier in effectContainer.Effect.Modifiers)
+        {
+            m_attributeSet.AddInstantModifier(new AttributeModifierInstance(effectContainer.Source, modifier, effectContainer.Level));
+        }
     }
 }
