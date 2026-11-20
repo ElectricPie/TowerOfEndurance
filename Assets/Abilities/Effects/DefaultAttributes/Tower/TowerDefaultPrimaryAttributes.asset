@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b304c3e891e349868fedf08976144b61, type: 3}
   m_Name: TowerDefaultPrimaryAttributes
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.GameEffectScriptableObject
-  m_durationPolicy: 2
+  m_durationPolicy: 0
   m_periodicEffectValues:
     m_duration:
       m_type: 0
