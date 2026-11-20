@@ -99,7 +99,12 @@ namespace AbilitySystem.Ability.AttributeSets
 
             if (m_backingAttributeCallbackHandles.TryGetValue(mod, out Action<float> handler))
             {
-                attribute.OnCurrentValueChangedEvent -= handler;
+                AttributeData backingAttribute =
+                    GetAttribute(mod.Modifier.Magnitude.AttributeBackedMagnitude.BackingAttributeId);
+                
+                if (backingAttribute != null)
+                    backingAttribute.OnCurrentValueChangedEvent -= handler;
+
                 m_backingAttributeCallbackHandles.Remove(mod);
             }
 
