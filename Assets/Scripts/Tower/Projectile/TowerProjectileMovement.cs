@@ -14,9 +14,9 @@ public class TowerProjectileMovement : MonoBehaviour
     
     private void MoveTowardsTarget()
     {
-        transform.LookAt(TargetPos);
-        
-        float moveDistance = m_speed * Time.deltaTime;
-        transform.Translate(Vector3.forward * moveDistance);
+        if (transform.position != TargetPos)
+            transform.LookAt(TargetPos);
+
+        transform.position = Vector3.MoveTowards(transform.position, TargetPos, m_speed * Time.deltaTime);
     }
 }
