@@ -23,7 +23,7 @@ namespace Tower
 
         [SerializeField] private GameEffectScriptableObject m_damageUpgradeEffect;
         [SerializeField] private GameEffectScriptableObject m_fireRateUpgradeEffect;
-        
+
         [SerializeField, Min(0)] private int m_upgradedEffectLevel = 1;
 
         public float DamageUpgradeCost { get; private set; }
@@ -38,22 +38,27 @@ namespace Tower
         private void Start()
         {
             // Damage setup
-            m_towerAttributeSet.GetAttribute(m_damageLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
+            SetupUpgradeCost(m_damageLevelAttributeId, cost =>
             {
-                DamageUpgradeCost = CalculateUpgradeCost(Mathf.CeilToInt(newValue));
-                OnDamageCostChanged.Invoke(DamageUpgradeCost);
-            };
-            DamageUpgradeCost = m_towerAttributeSet.GetAttributeValue(m_damageLevelAttributeId);
-            OnDamageCostChanged.Invoke(DamageUpgradeCost);
+                DamageUpgradeCost = cost;
+                OnDamageCostChanged.Invoke(cost);
+            });
 
             // Fire rate setup
-            m_towerAttributeSet.GetAttribute(m_fireRateLevelAttributeId).OnCurrentValueChangedEvent += newValue =>
+            SetupUpgradeCost(m_fireRateLevelAttributeId, cost =>
             {
-                SpeedUpgradeCost = CalculateUpgradeCost(Mathf.CeilToInt(newValue));
-                OnSpeedCostChanged.Invoke(SpeedUpgradeCost);
-            };
-            SpeedUpgradeCost = m_towerAttributeSet.GetAttributeValue(m_fireRateLevelAttributeId);
-            OnSpeedCostChanged.Invoke(SpeedUpgradeCost);
+                SpeedUpgradeCost = cost;
+                OnSpeedCostChanged.Invoke(cost);
+            });
+        }
+
+        private void SetupUpgradeCost(AttributeIdScriptableObject levelAttributeId, Action<float> onCostChanged)
+        {
+            AttributeData levelAttribute = m_towerAttributeSet.GetAttribute(levelAttributeId);
+            Action<float> updateCost = level => onCostChanged(CalculateUpgradeCost(Mathf.CeilToInt(level)));
+
+            levelAttribute.OnCurrentValueChangedEvent += updateCost;
+            updateCost(levelAttribute.CurrentValue);
         }
 
         private float CalculateUpgradeCost(int currentLevel)
@@ -64,9 +69,10 @@ namespace Tower
         public void UpgradeDamage()
         {
             // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-            if (!m_playerMoney.RemoveMoney(DamageUpgradeCost) && UIErrorMessage.Instance != null)
+            if (!m_playerMoney.RemoveMoney(DamageUpgradeCost))
             {
-                UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
+                UIErrorMessage.Instance?.ShowError("Insignificant money for upgrade");
+                
                 return;
             }
 
@@ -76,9 +82,10 @@ namespace Tower
         public void UpgradeSpeed()
         {
             // Cost is rounded up to remove any decimals and to ensure the cost always goes up
-            if (!m_playerMoney.RemoveMoney(SpeedUpgradeCost) && UIErrorMessage.Instance != null)
+            if (!m_playerMoney.RemoveMoney(SpeedUpgradeCost))
             {
-                UIErrorMessage.Instance.ShowError("Insignificant money for upgrade");
+                UIErrorMessage.Instance?.ShowError("Insignificant money for upgrade");
+                
                 return;
             }
 
