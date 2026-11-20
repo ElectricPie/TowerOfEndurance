@@ -265,18 +265,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8119568274115707128}
     m_Modifications:
-    - target: {fileID: 528035766336671802, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_MinWidth
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 528035766336671802, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_IgnoreLayout
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 528035766336671802, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 750577985938399355, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -440,10 +428,6 @@ PrefabInstance:
     - target: {fileID: 3844681227347834737, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_Name
       value: Money StatElement
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516258266190620836, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6416235070636485839, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y
@@ -677,10 +661,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8119568274115707128}
     m_Modifications:
-    - target: {fileID: 528035766336671802, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 750577985938399355, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -848,18 +828,6 @@ PrefabInstance:
     - target: {fileID: 3844681227347834737, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_Name
       value: Kills StatElement
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516258266190620836, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_MinHeight
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516258266190620836, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_IgnoreLayout
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516258266190620836, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6416235070636485839, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1097,10 +1065,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8119568274115707128}
     m_Modifications:
-    - target: {fileID: 528035766336671802, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 750577985938399355, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1264,10 +1228,6 @@ PrefabInstance:
     - target: {fileID: 3844681227347834737, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_Name
       value: Waves StatElement
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516258266190620836, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6416235070636485839, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_AnchorMax.y

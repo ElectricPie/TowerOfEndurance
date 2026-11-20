@@ -524,10 +524,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7517442456740924332}
     m_Modifications:
-    - target: {fileID: 528035766336671802, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
-      propertyPath: m_MinWidth
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 3215505496963913241, guid: 33715b98cc2c9219aae92747c07af282, type: 3}
       propertyPath: m_text
       value: 'Wave:'
