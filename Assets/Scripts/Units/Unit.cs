@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public event Action<GameObject> OnKilledEvent = delegate { };
 
     [SerializeField] private AttributeIdScriptableObject m_healthAttributeId;
+    [SerializeField] private AttributeIdScriptableObject m_maxHealthAttributeId;
     
     public AttributeSet AttributeSet { get; private set; }
     public UnitLiveCost LivesCostComponent { get; private set; }
@@ -28,6 +29,11 @@ public class Unit : MonoBehaviour
         MoneyComponent = GetComponent<UnitMoney>();
         EffectsContainer = GetComponent<EffectsContainer>();
         CharacterAppearance = GetComponentInChildren<CharacterPackAppearance>();
+    }
+
+    public void SetMaxHealth(float maxHealth)
+    {
+        AttributeSet.SetBaseValue(m_maxHealthAttributeId, maxHealth);
     }
     
     protected void Start()

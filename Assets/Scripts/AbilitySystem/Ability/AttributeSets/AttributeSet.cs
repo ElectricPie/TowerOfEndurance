@@ -37,6 +37,17 @@ namespace AbilitySystem.Ability.AttributeSets
             return attribute.CurrentValue;
         }
 
+        public void SetBaseValue(AttributeIdScriptableObject attributeId, float value)
+        {
+            AttributeData attribute = GetAttribute(attributeId);
+            if (attribute == null)
+                return;
+
+            attribute.BaseValue = value;
+            RecalculateAttribute(attribute);
+            AttributeValueChanged(attributeId, attribute);
+        }
+
         public void AddInstantModifier(AttributeModifierInstance mod)
         {
             AttributeData attribute = GetAttribute(mod.Modifier.AttributeId);

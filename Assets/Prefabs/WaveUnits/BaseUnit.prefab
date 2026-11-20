@@ -99,6 +99,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &4450138302096377592
 CapsuleCollider:
@@ -163,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_healthAttributeId: {fileID: 11400000, guid: 6d857fa37d82f8543bca86be06b8a064, type: 2}
+  m_maxHealthAttributeId: {fileID: 11400000, guid: e477a6c4f925fe441bcc8d3a58d7d1b2, type: 2}
 --- !u!114 &2993243509421894659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +233,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySystem.Effect.AttributeApplicator
   m_effectsContainer: {fileID: 6310768180494599512}
   m_attributeEffects:
-  - {fileID: 11400000, guid: e4918e1fd0422d84a8256c65b091b34f, type: 2}
   - {fileID: 11400000, guid: bcbe5d35d6c6c0e4dbd0c9bc9f09e54d, type: 2}
 --- !u!114 &8447766909208996928
 MonoBehaviour:
@@ -406,6 +407,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0

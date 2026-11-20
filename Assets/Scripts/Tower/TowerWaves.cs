@@ -52,6 +52,7 @@ public class TowerWaves : MonoBehaviour
         Unit newUnit = Instantiate<Unit>(unitPrefab, spawnPosition, Quaternion.identity, latestWave.WaveTransform.transform);
         if (modifyUnit)
         {
+            newUnit.SetMaxHealth(unitHealth);
             newUnit.MoneyComponent.MoneyWorth = moneyWorth;
         }
         
