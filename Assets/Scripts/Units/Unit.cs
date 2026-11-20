@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     public UnitMoney MoneyComponent { get; private set; }
     public EffectsContainer EffectsContainer { get; private set; }
     public CharacterPackAppearance CharacterAppearance { get; private set; }
+    public bool IsDead { get; private set; }
     
     
     private void Awake()
@@ -33,8 +34,9 @@ public class Unit : MonoBehaviour
     {
         AttributeSet.GetAttribute(m_healthAttributeId).OnCurrentValueChangedEvent += newValue =>
         {
-            if (newValue <= 0)
+            if (newValue <= 0 && !IsDead)
             {
+                IsDead = true;
                 OnKilledEvent.Invoke(gameObject);
                 Destroy(gameObject);
             }
