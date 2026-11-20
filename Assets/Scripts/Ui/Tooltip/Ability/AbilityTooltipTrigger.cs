@@ -13,7 +13,7 @@ namespace Ui.Tooltip.Ability
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Vector3 tooltipPosition = (Vector2)transform.position + m_tooltipOffset;
+            Vector3 tooltipPosition = GetTooltipPosition();
             AbilityTooltipData tooltipData = new AbilityTooltipData(
                 m_abilityTooltipInterface.GetAbility(), 
                 m_abilityTooltipInterface.GetAbilityLevel());
@@ -37,12 +37,20 @@ namespace Ui.Tooltip.Ability
         {
             m_tooltipManager.HideTooltip();
         }
+        
+        
+        private Vector3 GetTooltipPosition()
+        {
+            Canvas canvas = GetComponentInParent<Canvas>();
+            float scaleFactor = canvas != null ? canvas.rootCanvas.scaleFactor : 1.0f;
 
+            return (Vector2)transform.position + m_tooltipOffset * scaleFactor;
+        }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere((Vector2)transform.position + m_tooltipOffset, 10.0f);
+            Gizmos.DrawSphere(GetTooltipPosition(), 10.0f);
         }
     }
 }
